@@ -637,8 +637,14 @@ class ConversationFragment :
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     binding.toolbar.isBackInvokedCallbackEnabled = false
-
     binding.root.setUseWindowTypes(args.conversationScreenType == ConversationScreenType.NORMAL && !resources.getWindowSizeClass().isSplitPane())
+    if (args.conversationScreenType == ConversationScreenType.BUBBLE) {
+      binding.root.setNavigationBarInsetOverride(0)
+      view.post {
+        ViewCompat.requestApplyInsets(binding.root)
+        binding.root.requestLayout()
+      }
+    }
 
     disposables.bindTo(viewLifecycleOwner)
 
