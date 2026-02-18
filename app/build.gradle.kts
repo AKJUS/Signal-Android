@@ -2,6 +2,10 @@
 
 import com.android.build.api.dsl.ManagedVirtualDevice
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.Properties
 
 plugins {
@@ -516,7 +520,7 @@ android {
           val nightlyVersionCode = (canonicalVersionCode * maxHotfixVersions) + (getNightlyBuildNumber(tag) * 10) + nightlyBuffer
 
           variant.outputs.forEach { output ->
-            output.versionName.set(tag)
+            output.versionName.set("$tag | ${getLastCommitDateTimeUtc()}")
             output.versionCode.set(nightlyVersionCode)
           }
         }
@@ -804,6 +808,16 @@ fun getNightlyBuildNumber(tag: String?): Int {
 
   val match = Regex("-(\\d{3})$").find(tag)
   return match?.groupValues?.get(1)?.toIntOrNull() ?: 0
+}
+
+fun getLastCommitDateTimeUtc(): String {
+  val timestamp = providers.exec {
+    commandLine("git", "log", "-1", "--pretty=format:%ct")
+  }.standardOutput.asText.get().trim().toLong()
+  val instant = Instant.ofEpochSecond(timestamp)
+  val formatter = DateTimeFormatter.ofPattern("MMM d '@' HH:mm 'UTC'", Locale.US)
+    .withZone(ZoneOffset.UTC)
+  return formatter.format(instant)
 }
 
 fun getMapsKey(): String {
