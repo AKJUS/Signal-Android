@@ -29,8 +29,8 @@ sealed interface CameraScreenEvents {
   /** Zoom that happens when you pinch your fingers. */
   data class PinchZoom(val zoomFactor: Float) : CameraScreenEvents
 
-  /** Zoom that happens when you move your finger up and down during recording. */
-  data class LinearZoom(@param:FloatRange(from = 0.0, to = 1.0) val linearZoom: Float) : CameraScreenEvents
+  /** Zoom that happens when you move your finger up and down during recording. Positive values zoom in, negative values zoom out. */
+  data class LinearZoom(@param:FloatRange(from = -1.0, to = 1.0) val linearZoom: Float) : CameraScreenEvents
 
   /** Switches between available cameras (i.e. front and rear cameras). */
   data class SwitchCamera(val context: Context) : CameraScreenEvents
