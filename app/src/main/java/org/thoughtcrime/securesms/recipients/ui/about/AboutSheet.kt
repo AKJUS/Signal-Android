@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.os.bundleOf
 import androidx.core.widget.TextViewCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.Navigation
 import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.ComposeBottomSheetDialogFragment
@@ -96,43 +97,38 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
 
   @Composable
   override fun SheetContent() {
-    val recipient by viewModel.recipient
-    val groupsInCommonCount by viewModel.groupsInCommonCount
-    val verified by viewModel.verified
-    val memberLabel by viewModel.memberLabel
-    val canEditMemberLabel by viewModel.canEditMemberLabel
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val recipient = state.recipient ?: return
 
-    if (recipient.isPresent) {
-      Content(
-        model = AboutModel(
-          isSelf = recipient.get().isSelf,
-          displayName = recipient.get().getDisplayName(requireContext()),
-          shortName = recipient.get().getShortDisplayName(requireContext()),
-          profileName = recipient.get().profileName.toString(),
-          about = recipient.get().about,
-          verified = verified,
-          hasAvatar = recipient.get().profileAvatarFileDetails.hasFile(),
-          recipientForAvatar = recipient.get(),
-          formattedE164 = if (recipient.get().hasE164 && recipient.get().shouldShowE164) {
-            SignalE164Util.prettyPrint(recipient.get().requireE164())
-          } else {
-            null
-          },
-          profileSharing = recipient.get().isProfileSharing,
-          systemContact = recipient.get().isSystemContact,
-          groupsInCommon = groupsInCommonCount,
-          note = recipient.get().note ?: "",
-          memberLabel = memberLabel,
-          canEditMemberLabel = canEditMemberLabel
-        ),
-        onClickSignalConnections = this::openSignalConnectionsSheet,
-        onAvatarClicked = this::openProfilePhotoViewer,
-        onNoteClicked = this::openNoteSheet,
-        onUnverifiedProfileClicked = this::openUnverifiedProfileSheet,
-        onGroupsInCommonClicked = this::openGroupsInCommon,
-        onMemberLabelClicked = this::openMemberLabelScreen
-      )
-    }
+    Content(
+      model = AboutModel(
+        isSelf = recipient.isSelf,
+        displayName = recipient.getDisplayName(requireContext()),
+        shortName = recipient.getShortDisplayName(requireContext()),
+        profileName = recipient.profileName.toString(),
+        about = recipient.about,
+        verified = state.verified,
+        hasAvatar = recipient.profileAvatarFileDetails.hasFile(),
+        recipientForAvatar = recipient,
+        formattedE164 = if (recipient.hasE164 && recipient.shouldShowE164) {
+          SignalE164Util.prettyPrint(recipient.requireE164())
+        } else {
+          null
+        },
+        profileSharing = recipient.isProfileSharing,
+        systemContact = recipient.isSystemContact,
+        groupsInCommon = state.groupsInCommonCount,
+        note = recipient.note ?: "",
+        memberLabel = state.memberLabel,
+        canEditMemberLabel = state.canEditMemberLabel
+      ),
+      onClickSignalConnections = this::openSignalConnectionsSheet,
+      onAvatarClicked = this::openProfilePhotoViewer,
+      onNoteClicked = this::openNoteSheet,
+      onUnverifiedProfileClicked = this::openUnverifiedProfileSheet,
+      onGroupsInCommonClicked = this::openGroupsInCommon,
+      onMemberLabelClicked = this::openMemberLabelScreen
+    )
   }
 
   private fun openSignalConnectionsSheet() {
