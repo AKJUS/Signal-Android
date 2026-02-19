@@ -266,6 +266,26 @@ object MediaCodecCompat {
       return true
     }
 
+    // On older APIs, the extractor may not populate KEY_COLOR_TRANSFER or HDR metadata keys.
+    // Check the HEVC profile as a fallback: Main 10 and its HDR variants indicate 10-bit
+    // content that typically requires HDR-capable decoders.
+    val mime = try { format.getString(MediaFormat.KEY_MIME) } catch (_: Exception) { null }
+    if (mime.equals("video/hevc", ignoreCase = true)) {
+      try {
+        val profile = format.getInteger(MediaFormat.KEY_PROFILE)
+        if (profile == CodecProfileLevel.HEVCProfileMain10 ||
+          profile == CodecProfileLevel.HEVCProfileMain10HDR10 ||
+          profile == CodecProfileLevel.HEVCProfileMain10HDR10Plus
+        ) {
+          return true
+        }
+      } catch (_: NullPointerException) {
+        // key doesn't exist
+      } catch (_: ClassCastException) {
+        // key exists but wrong type
+      }
+    }
+
     return false
   }
 }

@@ -20,6 +20,7 @@ package org.thoughtcrime.securesms.video.videoconverter;
 
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
+import android.media.MediaExtractor;
 import android.media.MediaFormat;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import org.thoughtcrime.securesms.video.interfaces.MediaInput;
 import org.thoughtcrime.securesms.video.interfaces.Muxer;
 import org.thoughtcrime.securesms.video.videoconverter.exceptions.EncodingException;
 import org.thoughtcrime.securesms.video.videoconverter.muxer.StreamingMuxer;
+import org.thoughtcrime.securesms.video.videoconverter.utils.MediaCodecCompat;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -226,7 +228,33 @@ public final class MediaConverter {
             }
         }
         if (exception != null) {
-            throw new EncodingException("Transcode failed", exception);
+            EncodingException encodingException = new EncodingException("Transcode failed", exception);
+            if (videoTrackConverter != null) {
+                encodingException.isHdrInput     = videoTrackConverter.isHdrInput();
+                encodingException.toneMapApplied = videoTrackConverter.isToneMapApplied();
+                encodingException.decoderName    = videoTrackConverter.getDecoderName();
+                encodingException.encoderName    = videoTrackConverter.getEncoderName();
+            } else {
+                // VideoTrackConverter failed during creation. Try to determine HDR
+                // status independently so the caller can classify the failure.
+                try {
+                    final MediaExtractor extractor = mInput.createExtractor();
+                    try {
+                        for (int i = 0; i < extractor.getTrackCount(); i++) {
+                            final MediaFormat format = extractor.getTrackFormat(i);
+                            if (getMimeTypeFor(format).startsWith("video/")) {
+                                encodingException.isHdrInput = MediaCodecCompat.isHdrVideo(format);
+                                break;
+                            }
+                        }
+                    } finally {
+                        extractor.release();
+                    }
+                } catch (Exception e) {
+                    Log.w(TAG, "Could not determine HDR status for failed transcode", e);
+                }
+            }
+            throw encodingException;
         }
 
         return mdatContentLength;

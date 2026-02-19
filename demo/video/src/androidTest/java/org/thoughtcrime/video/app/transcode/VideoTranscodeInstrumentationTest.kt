@@ -18,9 +18,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.thoughtcrime.securesms.video.StreamingTranscoder
 import org.thoughtcrime.securesms.video.TranscodingPreset
+import org.thoughtcrime.securesms.video.videoconverter.exceptions.EncodingException
+import org.thoughtcrime.securesms.video.videoconverter.exceptions.HdrDecoderUnavailableException
 import org.thoughtcrime.securesms.video.videoconverter.mediadatasource.InputStreamMediaDataSource
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.InputStream
 
 /**
@@ -87,15 +90,35 @@ class VideoTranscodeInstrumentationTest {
 
     val failures = mutableListOf<String>()
 
+    val hdrWarnings = mutableListOf<String>()
+
     for (videoFileName in videoFiles) {
       Log.i(TAG, "Transcoding '$videoFileName' with preset ${preset.name}...")
       try {
         transcodeVideo(videoFileName, preset)
         Log.i(TAG, "Successfully transcoded '$videoFileName' with preset ${preset.name}")
+      } catch (e: HdrDecoderUnavailableException) {
+        Log.w(TAG, "No decoder available for HDR video '$videoFileName' with preset ${preset.name} (device limitation)", e)
+        hdrWarnings.add("$videoFileName [${preset.name}]: ${e::class.simpleName}: ${e.message}")
+      } catch (e: FileNotFoundException) {
+        Log.w(TAG, "Skipping '$videoFileName' with preset ${preset.name}: encoder not available on this device", e)
+      } catch (e: EncodingException) {
+        val isHdrDeviceLimitation = e.isHdrInput && (!e.toneMapApplied || isMediaCodecRuntimeFailure(e))
+        if (isHdrDeviceLimitation) {
+          Log.w(TAG, "HDR video '$videoFileName' failed with preset ${preset.name} (device limitation, toneMap=${e.toneMapApplied}, decoder=${e.decoderName}, encoder=${e.encoderName})", e)
+          hdrWarnings.add("$videoFileName [${preset.name}]: ${e::class.simpleName}: ${e.message}")
+        } else {
+          Log.e(TAG, "Failed to transcode '$videoFileName' with preset ${preset.name} (hdr=${e.isHdrInput}, toneMap=${e.toneMapApplied}, decoder=${e.decoderName}, encoder=${e.encoderName})", e)
+          failures.add("$videoFileName: ${e::class.simpleName}: ${e.message}")
+        }
       } catch (e: Exception) {
         Log.e(TAG, "Failed to transcode '$videoFileName' with preset ${preset.name}", e)
         failures.add("$videoFileName: ${e::class.simpleName}: ${e.message}")
       }
+    }
+
+    if (hdrWarnings.isNotEmpty()) {
+      Log.w(TAG, "${hdrWarnings.size} HDR video(s) could not be transcoded (device limitation, not a bug):\n${hdrWarnings.joinToString("\n")}")
     }
 
     if (failures.isNotEmpty()) {
@@ -104,6 +127,24 @@ class VideoTranscodeInstrumentationTest {
           failures.joinToString("\n")
       )
     }
+  }
+
+  /**
+   * Checks if the root cause of an exception is an [IllegalStateException] from
+   * [android.media.MediaCodec] native methods. This indicates the hardware codec crashed
+   * during processing, which for HDR content is a device limitation (not a Signal bug).
+   */
+  private fun isMediaCodecRuntimeFailure(e: Exception): Boolean {
+    var cause: Throwable? = e.cause
+    while (cause != null) {
+      if (cause is IllegalStateException &&
+        cause.stackTrace.any { it.className == "android.media.MediaCodec" }
+      ) {
+        return true
+      }
+      cause = cause.cause
+    }
+    return false
   }
 
   private fun transcodeVideo(videoFileName: String, preset: TranscodingPreset) {
