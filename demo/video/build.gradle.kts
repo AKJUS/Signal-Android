@@ -3,9 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+import java.util.Properties
+
 plugins {
   id("signal-sample-app")
   alias(libs.plugins.compose.compiler)
+}
+
+val localPropertiesFile = File(rootProject.projectDir, "local.properties")
+val localProperties: Properties? = if (localPropertiesFile.exists()) {
+  Properties().apply { localPropertiesFile.inputStream().use { load(it) } }
+} else {
+  null
 }
 
 android {
@@ -47,6 +56,16 @@ android {
   packaging {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    }
+  }
+
+  sourceSets {
+    val sampleVideosPath = localProperties?.getProperty("sample.videos.dir")
+    if (sampleVideosPath != null) {
+      val sampleVideosDir = File(rootProject.projectDir, sampleVideosPath)
+      if (sampleVideosDir.isDirectory) {
+        getByName("androidTest").assets.srcDir(sampleVideosDir)
+      }
     }
   }
 }
