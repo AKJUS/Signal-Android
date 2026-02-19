@@ -41,6 +41,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("WeakerAccess")
 public final class MediaConverter {
@@ -325,22 +329,38 @@ public final class MediaConverter {
      * found.
      */
     static MediaCodecInfo selectCodec(final String mimeType) {
-        final int numCodecs = MediaCodecList.getCodecCount();
-        for (int i = 0; i < numCodecs; i++) {
-            final MediaCodecInfo codecInfo = MediaCodecList.getCodecInfoAt(i);
+        final List<MediaCodecInfo> codecs = selectCodecs(mimeType);
+        return codecs.isEmpty() ? null : codecs.get(0);
+    }
 
-            if (!codecInfo.isEncoder()) {
-                continue;
-            }
+    /**
+     * Returns all codecs capable of encoding the specified MIME type, ordered with hardware-preferred
+     * codecs ({@link MediaCodecList#REGULAR_CODECS}) first, then additional codecs from
+     * {@link MediaCodecList#ALL_CODECS} (includes software), deduplicated by name.
+     */
+    static List<MediaCodecInfo> selectCodecs(final String mimeType) {
+        final List<MediaCodecInfo> candidates = new ArrayList<>();
+        final Set<String> seen = new HashSet<>();
 
-            final String[] types = codecInfo.getSupportedTypes();
-            for (String type : types) {
-                if (type.equalsIgnoreCase(mimeType)) {
-                    return codecInfo;
+        for (MediaCodecInfo codecInfo : new MediaCodecList(MediaCodecList.REGULAR_CODECS).getCodecInfos()) {
+            if (!codecInfo.isEncoder()) continue;
+            for (String type : codecInfo.getSupportedTypes()) {
+                if (type.equalsIgnoreCase(mimeType) && seen.add(codecInfo.getName())) {
+                    candidates.add(codecInfo);
                 }
             }
         }
-        return null;
+
+        for (MediaCodecInfo codecInfo : new MediaCodecList(MediaCodecList.ALL_CODECS).getCodecInfos()) {
+            if (!codecInfo.isEncoder()) continue;
+            for (String type : codecInfo.getSupportedTypes()) {
+                if (type.equalsIgnoreCase(mimeType) && seen.add(codecInfo.getName())) {
+                    candidates.add(codecInfo);
+                }
+            }
+        }
+
+        return candidates;
     }
 
     interface Output {

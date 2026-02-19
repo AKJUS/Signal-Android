@@ -29,9 +29,14 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunnerArguments["clearPackageData"] = "true"
     vectorDrawables {
       useSupportLibrary = true
     }
+  }
+
+  testOptions {
+    execution = "ANDROIDX_TEST_ORCHESTRATOR"
   }
 
   buildTypes {
@@ -62,7 +67,7 @@ android {
   sourceSets {
     val sampleVideosPath = localProperties?.getProperty("sample.videos.dir")
     if (sampleVideosPath != null) {
-      val sampleVideosDir = File(rootProject.projectDir, sampleVideosPath)
+      val sampleVideosDir = File(sampleVideosPath)
       if (sampleVideosDir.isDirectory) {
         getByName("androidTest").assets.srcDir(sampleVideosDir)
       }
@@ -85,4 +90,5 @@ dependencies {
   androidTestImplementation(testLibs.junit.junit)
   androidTestImplementation(testLibs.androidx.test.runner)
   androidTestImplementation(testLibs.androidx.test.ext.junit.ktx)
+  androidTestUtil(testLibs.androidx.test.orchestrator)
 }
