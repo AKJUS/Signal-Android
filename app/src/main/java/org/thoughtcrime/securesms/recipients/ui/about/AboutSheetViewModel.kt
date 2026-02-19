@@ -13,15 +13,20 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabel
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
+import org.thoughtcrime.securesms.util.RemoteConfig
 import java.util.Optional
 
 class AboutSheetViewModel(
   recipientId: RecipientId,
-  repository: AboutSheetRepository = AboutSheetRepository()
+  groupId: GroupId.V2? = null,
+  private val repository: AboutSheetRepository = AboutSheetRepository()
 ) : ViewModel() {
 
   private val _recipient: MutableState<Optional<Recipient>> = mutableStateOf(Optional.empty())
@@ -32,6 +37,14 @@ class AboutSheetViewModel(
 
   private val _verified: MutableState<Boolean> = mutableStateOf(false)
   val verified: State<Boolean> = _verified
+
+  private val _memberLabel: MutableState<MemberLabel?> = mutableStateOf(null)
+  val memberLabel: State<MemberLabel?> = _memberLabel
+
+  private val _canEditMemberLabel: MutableState<Boolean> = mutableStateOf(false)
+  val canEditMemberLabel: State<Boolean> = _canEditMemberLabel
+
+  private val disposables = CompositeDisposable()
 
   private val recipientDisposable: Disposable = Recipient
     .observable(recipientId)
@@ -54,8 +67,29 @@ class AboutSheetViewModel(
       _verified.value = it
     }
 
+  init {
+    disposables.addAll(recipientDisposable, groupsInCommonDisposable, verifiedDisposable)
+
+    if (groupId != null && RemoteConfig.sendMemberLabels) {
+      observeMemberLabel(groupId)
+    }
+  }
+
+  private fun observeMemberLabel(groupId: GroupId.V2) {
+    disposables.add(
+      repository.getMemberLabel(groupId)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy { _memberLabel.value = it.orElse(null) }
+    )
+
+    disposables.add(
+      repository.canEditMemberLabel(groupId)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy { _canEditMemberLabel.value = it }
+    )
+  }
+
   override fun onCleared() {
-    recipientDisposable.dispose()
-    groupsInCommonDisposable.dispose()
+    disposables.dispose()
   }
 }

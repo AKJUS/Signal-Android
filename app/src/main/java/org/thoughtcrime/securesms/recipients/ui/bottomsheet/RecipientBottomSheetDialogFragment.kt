@@ -70,7 +70,8 @@ class RecipientBottomSheetDialogFragment : FixedRoundedCornerBottomSheetDialogFr
     fun show(fragmentManager: FragmentManager, recipientId: RecipientId, groupId: GroupId?) {
       val recipient = Recipient.resolved(recipientId)
       if (recipient.isSelf) {
-        AboutSheet.create(recipient).show(fragmentManager, BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG)
+        AboutSheet.create(recipient, groupId as? GroupId.V2)
+          .show(fragmentManager, BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG)
       } else {
         val args = Bundle()
         val fragment = RecipientBottomSheetDialogFragment()

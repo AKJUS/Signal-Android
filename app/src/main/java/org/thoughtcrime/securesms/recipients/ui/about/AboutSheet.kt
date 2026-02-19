@@ -6,6 +6,7 @@
 package org.thoughtcrime.securesms.recipients.ui.about
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.os.bundleOf
 import androidx.core.widget.TextViewCompat
+import androidx.navigation.Navigation
 import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.ComposeBottomSheetDialogFragment
 import org.signal.core.ui.compose.DayNightPreviews
@@ -50,7 +52,10 @@ import org.thoughtcrime.securesms.AvatarPreviewActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.AvatarImage
 import org.thoughtcrime.securesms.components.emoji.EmojiTextView
+import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsFragmentDirections
 import org.thoughtcrime.securesms.conversation.v2.UnverifiedProfileNameBottomSheet
+import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabel
 import org.thoughtcrime.securesms.groups.ui.incommon.GroupsInCommonActivity
 import org.thoughtcrime.securesms.nicknames.ViewNoteSheet
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -66,14 +71,15 @@ import org.signal.core.ui.R as CoreUiR
 class AboutSheet : ComposeBottomSheetDialogFragment() {
 
   companion object {
-
     private const val RECIPIENT_ID = "recipient_id"
+    private const val VIEWING_FROM_GROUP_ID = "viewing_from_group_id"
 
     @JvmStatic
-    fun create(recipient: Recipient): AboutSheet {
+    fun create(recipient: Recipient, viewingFromGroupId: GroupId.V2? = null): AboutSheet {
       return AboutSheet().apply {
         arguments = bundleOf(
-          RECIPIENT_ID to recipient.id
+          RECIPIENT_ID to recipient.id,
+          VIEWING_FROM_GROUP_ID to viewingFromGroupId
         )
       }
     }
@@ -81,11 +87,11 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
 
   override val peekHeightPercentage: Float = 1f
 
-  private val recipientId: RecipientId
-    get() = requireArguments().getParcelableCompat(RECIPIENT_ID, RecipientId::class.java)!!
+  private val recipientId: RecipientId by lazy { requireArguments().getParcelableCompat(RECIPIENT_ID, RecipientId::class.java)!! }
+  private val viewingFromGroupId: GroupId.V2? by lazy { requireArguments().getParcelableCompat(VIEWING_FROM_GROUP_ID, GroupId.V2::class.java) }
 
   private val viewModel by viewModel {
-    AboutSheetViewModel(recipientId)
+    AboutSheetViewModel(recipientId, viewingFromGroupId)
   }
 
   @Composable
@@ -93,6 +99,8 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
     val recipient by viewModel.recipient
     val groupsInCommonCount by viewModel.groupsInCommonCount
     val verified by viewModel.verified
+    val memberLabel by viewModel.memberLabel
+    val canEditMemberLabel by viewModel.canEditMemberLabel
 
     if (recipient.isPresent) {
       Content(
@@ -113,13 +121,16 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
           profileSharing = recipient.get().isProfileSharing,
           systemContact = recipient.get().isSystemContact,
           groupsInCommon = groupsInCommonCount,
-          note = recipient.get().note ?: ""
+          note = recipient.get().note ?: "",
+          memberLabel = memberLabel,
+          canEditMemberLabel = canEditMemberLabel
         ),
         onClickSignalConnections = this::openSignalConnectionsSheet,
         onAvatarClicked = this::openProfilePhotoViewer,
         onNoteClicked = this::openNoteSheet,
         onUnverifiedProfileClicked = this::openUnverifiedProfileSheet,
-        onGroupsInCommonClicked = this::openGroupsInCommon
+        onGroupsInCommonClicked = this::openGroupsInCommon,
+        onMemberLabelClicked = this::openMemberLabelScreen
       )
     }
   }
@@ -147,6 +158,14 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
     dismiss()
     startActivity(GroupsInCommonActivity.createIntent(requireContext(), recipientId))
   }
+
+  private fun openMemberLabelScreen() {
+    viewingFromGroupId?.let { groupId ->
+      val navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+      navController.navigate(ConversationSettingsFragmentDirections.actionConversationSettingsFragmentToMemberLabelFragment(groupId))
+      dismiss()
+    }
+  }
 }
 
 private data class AboutModel(
@@ -162,7 +181,9 @@ private data class AboutModel(
   val profileSharing: Boolean,
   val systemContact: Boolean,
   val groupsInCommon: Int,
-  val note: String
+  val note: String,
+  val memberLabel: MemberLabel? = null,
+  val canEditMemberLabel: Boolean = false
 )
 
 @Composable
@@ -172,7 +193,8 @@ private fun Content(
   onAvatarClicked: () -> Unit,
   onNoteClicked: () -> Unit,
   onUnverifiedProfileClicked: () -> Unit = {},
-  onGroupsInCommonClicked: () -> Unit = {}
+  onGroupsInCommonClicked: () -> Unit = {},
+  onMemberLabelClicked: () -> Unit = {}
 ) {
   Box(
     contentAlignment = Alignment.Center,
@@ -217,6 +239,15 @@ private fun Content(
       },
       modifier = Modifier.fillMaxWidth()
     )
+
+    if (model.isSelf && (model.memberLabel != null || model.canEditMemberLabel)) {
+      MemberLabelRow(
+        memberLabel = model.memberLabel,
+        canEdit = model.canEditMemberLabel,
+        onClick = onMemberLabelClicked,
+        modifier = Modifier.fillMaxWidth()
+      )
+    }
 
     if (model.about.isNotNullOrBlank()) {
       val textColor = LocalContentColor.current
@@ -331,6 +362,48 @@ private fun Content(
 
     Spacer(modifier = Modifier.size(26.dp))
   }
+}
+
+@Composable
+private fun MemberLabelRow(
+  memberLabel: MemberLabel?,
+  canEdit: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  AboutRow(
+    startIcon = ImageVector.vectorResource(R.drawable.symbol_tag_24),
+    text = {
+      if (memberLabel != null) {
+        if (!memberLabel.emoji.isNullOrEmpty()) {
+          Text(
+            text = memberLabel.emoji,
+            style = MaterialTheme.typography.bodyLarge
+          )
+          Spacer(modifier = Modifier.size(4.dp))
+        }
+
+        Text(
+          text = memberLabel.text,
+          style = MaterialTheme.typography.bodyLarge,
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
+          modifier = Modifier.weight(1f, false)
+        )
+      } else {
+        Text(
+          text = stringResource(id = R.string.AboutSheet__add_group_member_label),
+          style = MaterialTheme.typography.bodyLarge,
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
+          modifier = Modifier.weight(1f, false)
+        )
+      }
+    },
+    endIcon = if (canEdit) ImageVector.vectorResource(id = R.drawable.symbol_chevron_right_compact_bold_16) else null,
+    onClick = if (canEdit) onClick else null,
+    modifier = modifier
+  )
 }
 
 @Composable
@@ -485,6 +558,8 @@ private fun ContentPreviewForSelf() {
           profileSharing = true,
           systemContact = true,
           groupsInCommon = 0,
+          memberLabel = MemberLabel("🕷️", "Superhero"),
+          canEditMemberLabel = true,
           note = "Weird Things Happen To Me All The Time."
         ),
         onClickSignalConnections = {},
@@ -626,5 +701,29 @@ private fun AboutRowPreview() {
         endIcon = ImageVector.vectorResource(id = R.drawable.symbol_chevron_right_compact_bold_16)
       )
     }
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun MemberLabelRowPreviews() = Previews.Preview {
+  val headerModifier = Modifier
+    .fillMaxWidth()
+    .background(MaterialTheme.colorScheme.primaryContainer)
+    .padding(vertical = 4.dp)
+    .padding(horizontal = 8.dp)
+
+  Column {
+    Text("no label, can't edit:", style = MaterialTheme.typography.labelSmall, modifier = headerModifier)
+    MemberLabelRow(memberLabel = null, canEdit = false, onClick = {})
+
+    Text("no label, editable:", style = MaterialTheme.typography.labelSmall, modifier = headerModifier)
+    MemberLabelRow(memberLabel = null, canEdit = true, onClick = {})
+
+    Text("has label, can't edit:", style = MaterialTheme.typography.labelSmall, modifier = headerModifier)
+    MemberLabelRow(memberLabel = MemberLabel("🕷️", "Superhero"), canEdit = false, onClick = {})
+
+    Text("has label, editable:", style = MaterialTheme.typography.labelSmall, modifier = headerModifier)
+    MemberLabelRow(memberLabel = MemberLabel("🕷️", "Superhero"), canEdit = true, onClick = {})
   }
 }
