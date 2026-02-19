@@ -571,7 +571,8 @@ android {
   applicationVariants.configureEach {
     outputs.configureEach {
       if (this is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-        outputFileName = outputFileName.replace(".apk", "-$versionName.apk")
+        val fileVersionName = versionName.substringBefore(" |")
+        outputFileName = outputFileName.replace(".apk", "-$fileVersionName.apk")
       }
     }
   }
