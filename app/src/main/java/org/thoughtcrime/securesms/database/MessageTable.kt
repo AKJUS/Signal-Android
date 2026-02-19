@@ -3952,11 +3952,25 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
   fun deleteMessagesInThread(threadIds: Collection<Long>, extraWhere: String = ""): Int {
     var totalDeletedCount = 0
 
+    val threadsWithPossibleDeletes = threadIds.filter { threadId ->
+      readableDatabase
+        .select(ID)
+        .from(TABLE_NAME)
+        .where("$THREAD_ID = $threadId $extraWhere")
+        .limit(1)
+        .run()
+        .use { it.moveToFirst() }
+    }
+
+    if (threadsWithPossibleDeletes.isEmpty()) {
+      return 0
+    }
+
     writableDatabase.withinTransaction { db ->
       SignalDatabase.messageSearch.dropAfterMessageDeleteTrigger()
       SignalDatabase.messageLog.dropAfterMessageDeleteTrigger()
 
-      for (threadId in threadIds) {
+      for (threadId in threadsWithPossibleDeletes) {
         val subSelect = "SELECT ${TABLE_NAME}.$ID FROM $TABLE_NAME WHERE ${TABLE_NAME}.$THREAD_ID = $threadId $extraWhere LIMIT 1000"
         do {
           // Bulk deleting FK tables for large message delete efficiency
