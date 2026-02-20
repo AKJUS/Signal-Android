@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
+import org.thoughtcrime.securesms.components.emoji.Emojifier
 
 private val defaultModifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp)
 private val defaultTextStyle: @Composable () -> TextStyle = { MaterialTheme.typography.bodyLarge }
@@ -83,22 +85,28 @@ fun MemberLabelPill(
       .then(modifier),
     verticalAlignment = Alignment.CenterVertically
   ) {
-    if (!emoji.isNullOrEmpty()) {
-      Text(
-        text = emoji,
-        style = textStyle,
-        modifier = Modifier.padding(end = 5.dp)
-      )
-    }
+    ProvideTextStyle(textStyle) {
+      if (!emoji.isNullOrEmpty()) {
+        Emojifier(text = emoji) { annotatedText, inlineContent ->
+          Text(
+            text = annotatedText,
+            inlineContent = inlineContent,
+            modifier = Modifier.padding(end = 5.dp)
+          )
+        }
+      }
 
-    if (text.isNotEmpty()) {
-      Text(
-        text = text,
-        color = textColor,
-        style = textStyle,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis
-      )
+      if (text.isNotEmpty()) {
+        Emojifier(text = text) { annotatedText, inlineContent ->
+          Text(
+            text = annotatedText,
+            inlineContent = inlineContent,
+            color = textColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+          )
+        }
+      }
     }
   }
 }
