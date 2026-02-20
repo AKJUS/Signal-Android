@@ -158,6 +158,7 @@ import org.thoughtcrime.securesms.components.mention.MentionAnnotation
 import org.thoughtcrime.securesms.components.menu.ActionItem
 import org.thoughtcrime.securesms.components.menu.SignalBottomActionBar
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
+import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity.Companion.remoteBackups
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.CheckoutFlowActivity
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.DonateToSignalFragment
 import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsActivity
@@ -3482,14 +3483,12 @@ class ConversationFragment :
     }
 
     override fun onCallToAction(action: String) {
-      if ("gift_badge" == action) {
-        checkoutLauncher.launch(InAppPaymentType.ONE_TIME_GIFT)
-      } else if ("username_edit" == action) {
-        startActivity(EditProfileActivity.getIntentForUsernameEdit(requireContext()))
-      } else if ("calls_tab" == action) {
-        startActivity(MainActivity.clearTopAndOpenTab(requireContext(), MainNavigationListLocation.CALLS))
-      } else if ("chat_folder" == action) {
-        startActivity(AppSettingsActivity.chatFolders(requireContext()))
+      when (action) {
+        "gift_badge" -> checkoutLauncher.launch(InAppPaymentType.ONE_TIME_GIFT)
+        "username_edit" -> startActivity(EditProfileActivity.getIntentForUsernameEdit(requireContext()))
+        "calls_tab" -> startActivity(MainActivity.clearTopAndOpenTab(requireContext(), MainNavigationListLocation.CALLS))
+        "chat_folder" -> startActivity(AppSettingsActivity.chatFolders(requireContext()))
+        "remote_backups" -> startActivity(AppSettingsActivity.remoteBackups(requireContext()))
       }
     }
 
