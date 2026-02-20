@@ -8810,11 +8810,13 @@
     <!-- Screen subtitle for selecting which restore method to use during registration -->
     <string name="SelectRestoreMethodFragment__get_your_signal_account">Get your Signal account and message history onto this device.</string>
     <!-- Option title for restoring via signal secure backups -->
-    <string name="SelectRestoreMethodFragment__from_signal_backups">From Signal Secure Backups</string>
+    <string name="SelectRestoreMethodFragment__restore_signal_backup">Restore Signal backup</string>
     <!-- Option subtitle for restoring via signal secure backups -->
-    <string name="SelectRestoreMethodFragment__your_free_or_paid_signal_backup_plan">Your free or paid Signal Backup plan</string>
-    <!-- Option title for restoring via a local backup folder -->
-    <string name="SelectRestoreMethodFragment__from_a_backup_folder">From a backup folder</string>
+    <string name="SelectRestoreMethodFragment__restore_your_text_messages_and_media_from">Restore your text messages and media from your Signal backup plan.</string>
+    <!-- Option title for restoring via a local backup file or folder -->
+    <string name="SelectRestoreMethodFragment__restore_on_device_backup">Restore on-device backup</string>
+    <!-- Option subtitle fdor restoring via a local backup file or folder -->
+    <string name="SelectRestoreMethodFragment__restore_your_messages_from">Restore your messages from a backup you saved on your device.</string>
     <!-- Option title for restoring via a local backup file -->
     <string name="SelectRestoreMethodFragment__from_a_backup_file">From a backup file</string>
     <!-- Option subtitle for restoring via a local backup -->
@@ -8888,6 +8890,87 @@
     <!-- Email subject when contacting support on a permanent backup import failure -->
     <string name="EnterBackupKey_permanent_failure_support_email">Signal Android Backup restore permanent failure</string>
     <string name="EnterBackupKey_permanent_failure_support_email_filter" translatable="false">Android SignalBackups Import Permanent Failure</string>
+
+    <!-- EnterLocalBackupKeyScreen: Screen title for entering recovery key for local backup restore -->
+    <string name="EnterLocalBackupKeyScreen__enter_your_recovery_key">Enter your recovery key</string>
+    <!-- EnterLocalBackupKeyScreen: Screen subtitle explaining what the recovery key is -->
+    <string name="EnterLocalBackupKeyScreen__your_recovery_key_is_a_64_character_code">Your recovery key is a 64-character code required to recover your account and data.</string>
+    <!-- EnterLocalBackupKeyScreen: Button text when user does not have a backup key -->
+    <string name="EnterLocalBackupKeyScreen__no_backup_key">No backup key?</string>
+    <!-- EnterLocalBackupKeyScreen: Button to proceed to next step -->
+    <string name="EnterLocalBackupKeyScreen__next">Next</string>
+
+    <!-- RestoreLocalBackupDialog: Error message when the selected archive fails to load -->
+    <string name="RestoreLocalBackupDialog__failed_to_load_archive">Failed to load archive. Please select a different directory.</string>
+    <!-- RestoreLocalBackupDialog: Dismiss button for dialog -->
+    <string name="RestoreLocalBackupDialog__ok">OK</string>
+
+    <!-- RestoreLocalBackupActivity: Toast message when backup restore fails -->
+    <string name="RestoreLocalBackupActivity__backup_restore_failed">Backup restore failed</string>
+    <!-- RestoreLocalBackupActivity: Screen title shown during restore -->
+    <string name="RestoreLocalBackupActivity__restoring_backup">Restoring backup</string>
+    <!-- RestoreLocalBackupActivity: Screen subtitle explaining restore duration -->
+    <string name="RestoreLocalBackupActivity__depending_on_the_size">Depending on the size of your backup, this could take a few minutes.</string>
+    <!-- RestoreLocalBackupActivity: Status text while restoring messages -->
+    <string name="RestoreLocalBackupActivity__restoring_messages">Restoring messages…</string>
+    <!-- RestoreLocalBackupActivity: Status text while finalizing restore -->
+    <string name="RestoreLocalBackupActivity__finalizing">Finalizing…</string>
+    <!-- RestoreLocalBackupActivity: Status text when restore is complete -->
+    <string name="RestoreLocalBackupActivity__restore_complete">Restore complete</string>
+    <!-- RestoreLocalBackupActivity: Status text when restore fails -->
+    <string name="RestoreLocalBackupActivity__restore_failed">Restore failed</string>
+    <!-- RestoreLocalBackupActivity: Progress text showing bytes read of total with percentage, e.g. "1.2 MB of 5.0 MB (24%)" -->
+    <string name="RestoreLocalBackupActivity__s_of_s_d_percent">%1$s of %2$s (%3$d%%)</string>
+
+    <!-- SelectInstructionsSheet: Title for the select backup folder instruction sheet -->
+    <string name="SelectInstructionsSheet__select_your_backup_folder">Select your backup folder</string>
+    <!-- SelectInstructionsSheet: Instruction to tap the select this folder button -->
+    <string name="SelectInstructionsSheet__tap_select_this_folder">Tap \"Select this folder\"</string>
+    <!-- SelectInstructionsSheet: Instruction not to select individual files -->
+    <string name="SelectInstructionsSheet__do_not_select_individual_files">Do not select individual files</string>
+    <!-- SelectInstructionsSheet: Title for the select backup file instruction sheet -->
+    <string name="SelectInstructionsSheet__select_your_backup_file">Select your backup file</string>
+    <!-- SelectInstructionsSheet: Instruction to tap the backup file saved to device -->
+    <string name="SelectInstructionsSheet__tap_on_the_backup_file">Tap on the backup file you saved to your device</string>
+    <!-- SelectInstructionsSheet: Subtitle explaining how to access backup after tapping continue -->
+    <string name="SelectInstructionsSheet__after_tapping_continue">After tapping \"Continue,\" here\'s how to access your backup:</string>
+    <!-- SelectInstructionsSheet: Instruction to select the top-level backup folder -->
+    <string name="SelectInstructionsSheet__select_the_top_level_folder">Select the top-level folder where your backup is stored</string>
+    <!-- SelectInstructionsSheet: Continue button text -->
+    <string name="SelectInstructionsSheet__continue_button">Continue</string>
+
+    <!-- SelectLocalBackupScreen: Screen title for restoring on-device backup -->
+    <string name="SelectLocalBackupScreen__restore_on_device_backup">Restore on-device backup</string>
+    <!-- SelectLocalBackupScreen: Screen subtitle explaining the restore process -->
+    <string name="SelectLocalBackupScreen__restore_your_messages_from_the_backup_folder">Restore your messages from the backup folder you saved on your device. If you don\'t restore now, you won\'t be able to restore later.</string>
+    <!-- SelectLocalBackupScreen: Button to initiate backup restoration -->
+    <string name="SelectLocalBackupScreen__restore_backup">Restore backup</string>
+    <!-- SelectLocalBackupScreen: Button to choose an earlier backup when current is latest -->
+    <string name="SelectLocalBackupScreen__choose_an_earlier_backup">Choose an earlier backup</string>
+    <!-- SelectLocalBackupScreen: Button to choose a different backup -->
+    <string name="SelectLocalBackupScreen__choose_a_different_backup">Choose a different backup</string>
+    <!-- SelectLocalBackupScreen: Label for latest backup card -->
+    <string name="SelectLocalBackupScreen__your_latest_backup">Your latest backup:</string>
+    <!-- SelectLocalBackupScreen: Label for non-latest backup card -->
+    <string name="SelectLocalBackupScreen__your_backup">Your backup:</string>
+
+    <!-- SelectLocalBackupSheet: Title for backup selection bottom sheet -->
+    <string name="SelectLocalBackupSheet__choose_a_backup_to_restore">Choose a backup to restore</string>
+    <!-- SelectLocalBackupSheet: Subtitle warning about choosing an older backup -->
+    <string name="SelectLocalBackupSheet__choosing_an_older_backup">Choosing an older backup may result in lost messages or media.</string>
+    <!-- SelectLocalBackupSheet: Continue button text -->
+    <string name="SelectLocalBackupSheet__continue_button">Continue</string>
+
+    <!-- SelectLocalBackupTypeScreen: Screen title for selecting backup type -->
+    <string name="SelectLocalBackupTypeScreen__restore_on_device_backup">Restore on-device backup</string>
+    <!-- SelectLocalBackupTypeScreen: Screen subtitle explaining restore options -->
+    <string name="SelectLocalBackupTypeScreen__restore_your_messages_from_the_backup">Restore your messages from the backup you saved on your device. If you don\'t restore now, you won\'t be able to restore later.</string>
+    <!-- SelectLocalBackupTypeScreen: Button for users who saved backup as single file -->
+    <string name="SelectLocalBackupTypeScreen__i_saved_my_backup_as_a_single_file">I saved my backup as a single file</string>
+    <!-- SelectLocalBackupTypeScreen: Card title for choosing backup folder -->
+    <string name="SelectLocalBackupTypeScreen__choose_backup_folder">Choose backup folder</string>
+    <!-- SelectLocalBackupTypeScreen: Card description for choosing backup folder -->
+    <string name="SelectLocalBackupTypeScreen__select_the_folder_on_your_device">Select the folder on your device where your backup is stored</string>
 
     <!-- Email subject when contacting support on a create backup failure -->
     <string name="BackupAlertBottomSheet_network_failure_support_email">Signal Android Backup export network error</string>

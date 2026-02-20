@@ -596,7 +596,7 @@ public final class Megaphones {
   }
 
   private static boolean shouldShowUseNewOnDeviceBackupsMegaphone() {
-    return RemoteConfig.unifiedLocalBackups() && SignalStore.settings().isBackupEnabled();
+    return Environment.Backups.isNewFormatSupportedForLocalBackup() && SignalStore.settings().isBackupEnabled();
   }
 
   private static boolean shouldShowGrantFullScreenIntentPermission(@NonNull Context context) {
