@@ -1257,5 +1257,48 @@ object RemoteConfig {
     hotSwappable = true
   )
 
+  /**
+   * Whether or not to receive admin delete messages.
+   */
+  @JvmStatic
+  @get:JvmName("receiveAdminDelete")
+  val receiveAdminDelete: Boolean by remoteBoolean(
+    key = "android.receiveAdminDelete",
+    defaultValue = false,
+    hotSwappable = true
+  )
+
+  /**
+   * Whether or not to send admin delete messages.
+   */
+  @JvmStatic
+  @get:JvmName("sendAdminDelete")
+  val sendAdminDelete: Boolean by remoteBoolean(
+    key = "android.sendAdminDelete",
+    defaultValue = false,
+    hotSwappable = true
+  )
+
+  /**
+   * Maximum time that passes where a message can still be regularly deleted
+   */
+  @JvmStatic
+  @get:JvmName("regularDeleteThreshold")
+  val regularDeleteThreshold: Long by remoteLong(
+    key = "android.regularDeleteThreshold",
+    defaultValue = 1.days.inWholeMilliseconds,
+    hotSwappable = true
+  )
+
+  /**
+   * Maximum time that passes where a message can still be deleted by an admin
+   */
+  @JvmStatic
+  @get:JvmName("adminDeleteThreshold")
+  val adminDeleteThreshold: Long by remoteLong(
+    key = "android.adminDeleteThreshold",
+    defaultValue = 1.days.inWholeMilliseconds,
+    hotSwappable = true
+  )
   // endregion
 }

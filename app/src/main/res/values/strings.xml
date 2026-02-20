@@ -450,8 +450,12 @@
     <!-- Footer shown at the end of long body messages to download more of it -->
     <string name="ConversationItem_download_more">&#160; Download More</string>
     <string name="ConversationItem_pending">&#160; Pending</string>
-    <string name="ConversationItem_this_message_was_deleted">This message was deleted.</string>
-    <string name="ConversationItem_you_deleted_this_message">You deleted this message.</string>
+    <string name="ConversationItem_this_message_was_deleted">This message was deleted</string>
+    <string name="ConversationItem_you_deleted_this_message">You deleted this message</string>
+    <!-- First part of a conversation message when a message has been deleted by an admin. -->
+    <string name="ConversationItem_admin">Admin</string>
+    <!-- Second part of a conversation message when a message has been deleted by an admin. -->
+    <string name="ConversationItem_deleted_this_message">deleted this message</string>
     <!-- Dialog error message shown when user can\'t download a message from someone else due to a permanent failure (e.g., unable to decrypt), placeholder is other\'s name -->
     <string name="ConversationItem_cant_download_message_s_will_need_to_send_it_again">Can\'t download message. %1$s will need to send it again.</string>
     <!-- Dialog error message shown when user can\'t download an image message from someone else due to a permanent failure (e.g., unable to decrypt), placeholder is other\'s name -->
@@ -618,6 +622,20 @@
     <string name="ConversationFragment_deleting_messages">Deleting messages…</string>
     <string name="ConversationFragment_delete_for_me">Delete for me</string>
     <string name="ConversationFragment_delete_for_everyone">Delete for everyone</string>
+    <!-- Title of dialog confirming whether to delete the message -->
+    <plurals name="ConversationFragment_delete_selected_title">
+        <item quantity="one">Delete selected message?</item>
+        <item quantity="other">Delete selected messages?</item>
+    </plurals>
+    <!-- Body of dialog confirming whether to delete the message -->
+    <plurals name="ConversationFragment_delete_selected_body">
+        <item quantity="one">Who would you like to delete this message for?</item>
+        <item quantity="other">Who would you like to delete these messages for?</item>
+    </plurals>
+    <!-- Confirmation button to delete the message -->
+    <string name="ConversationFragment_delete_for_everyone_title">Delete for everyone?</string>
+    <!-- Body of dialog explaining what happens during deletion -->
+    <string name="ConversationFragment_delete_for_everyone_body">As an admin, group members will see that you deleted these messages.</string>
     <!-- Dialog button for deleting one or more note-to-self messages only on this device, leaving that same message intact on other devices. -->
     <string name="ConversationFragment_delete_on_this_device">Delete on this device</string>
     <!-- Dialog button for deleting one or more note-to-self messages that will be sync\'d to other devices -->
@@ -3036,8 +3054,12 @@
     <string name="ThreadRecord_view_once_photo">View-once photo</string>
     <string name="ThreadRecord_view_once_video">View-once video</string>
     <string name="ThreadRecord_view_once_media">View-once media</string>
-    <string name="ThreadRecord_this_message_was_deleted">This message was deleted.</string>
-    <string name="ThreadRecord_you_deleted_this_message">You deleted this message.</string>
+    <!-- Thread preview when someone has deleted their own message -->
+    <string name="ThreadRecord_this_message_was_deleted">This message was deleted</string>
+    <!-- Thread preview when you deleted a message -->
+    <string name="ThreadRecord_you_deleted_this_message">You deleted this message</string>
+    <!-- Thread preview when an admin has deleted a message -->
+    <string name="ThreadRecord_admin_deleted_this_message">Admin %1$s deleted this message</string>
     <!-- Displayed in the notification when the user sends a request to activate payments -->
     <string name="ThreadRecord_you_sent_request">You sent a request to activate Payments</string>
     <!-- Displayed in the notification when the recipient wants to activate payments -->

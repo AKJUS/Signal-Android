@@ -2828,7 +2828,10 @@ class ConversationFragment :
 
     disposables += DeleteDialog.show(
       context = requireContext(),
-      messageRecords = records
+      messageRecords = records,
+      title = requireContext().resources.getQuantityString(R.plurals.ConversationFragment_delete_selected_title, records.size, records.size),
+      message = requireContext().resources.getQuantityString(R.plurals.ConversationFragment_delete_selected_body, records.size, records.size),
+      isAdmin = conversationGroupViewModel.isAdmin()
     ).observeOn(AndroidSchedulers.mainThread())
       .subscribe { (deleted: Boolean, _: Boolean) ->
         if (!deleted) return@subscribe

@@ -283,6 +283,10 @@ object ImportSkips {
     return log(0, "Missing recipient for chat $chatId")
   }
 
+  fun missingAdminDeleteRecipient(sentTimestamp: Long, chatId: Long): String {
+    return log(sentTimestamp, "Missing admin delete recipient for chat $chatId")
+  }
+
   private fun log(sentTimestamp: Long, message: String): String {
     return "[SKIP][$sentTimestamp] $message"
   }

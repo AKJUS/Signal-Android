@@ -185,6 +185,7 @@ object DataMessageProcessor {
       message.pollVote != null -> messageId = handlePollVote(context, envelope, message, senderRecipient, earlyMessageCacheEntry)
       message.pinMessage != null -> insertResult = handlePinMessage(envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, earlyMessageCacheEntry)
       message.unpinMessage != null -> messageId = handleUnpinMessage(envelope, message, senderRecipient, threadRecipient, earlyMessageCacheEntry)
+      message.adminDelete != null -> messageId = handleAdminRemoteDelete(envelope, message, senderRecipient, threadRecipient, earlyMessageCacheEntry)
     }
 
     messageId = messageId ?: insertResult?.messageId?.let { MessageId(it) }
@@ -598,7 +599,7 @@ object DataMessageProcessor {
     val targetMessage: MessageRecord? = SignalDatabase.messages.getMessageFor(targetSentTimestamp, senderRecipientId)
 
     return if (targetMessage != null && MessageConstraintsUtil.isValidRemoteDeleteReceive(targetMessage, senderRecipientId, envelope.serverTimestamp!!)) {
-      SignalDatabase.messages.markAsRemoteDelete(targetMessage)
+      SignalDatabase.messages.markAsRemoteDelete(targetMessage, senderRecipientId)
       if (targetMessage.isStory()) {
         SignalDatabase.messages.deleteRemotelyDeletedStory(targetMessage.id)
       }
@@ -1404,6 +1405,48 @@ object DataMessageProcessor {
     SignalDatabase.messages.unpinMessage(targetMessageId, targetMessage.threadId)
 
     return MessageId(targetMessageId)
+  }
+
+  fun handleAdminRemoteDelete(envelope: Envelope, message: DataMessage, senderRecipient: Recipient, threadRecipient: Recipient, earlyMessageCacheEntry: EarlyMessageCacheEntry?): MessageId? {
+    if (!RemoteConfig.receiveAdminDelete) {
+      log(envelope.timestamp!!, "Admin delete is not allowed due to remote config.")
+      return null
+    }
+
+    val delete = message.adminDelete!!
+
+    log(envelope.timestamp!!, "Admin delete for message ${delete.targetSentTimestamp}")
+
+    val targetSentTimestamp: Long = delete.targetSentTimestamp!!
+    val targetAuthorServiceId: ServiceId = ACI.parseOrThrow(delete.targetAuthorAciBinary!!)
+    if (targetAuthorServiceId.isUnknown) {
+      warn(envelope.timestamp!!, "[handleAdminRemoteDelete] Invalid author.")
+      return null
+    }
+    val targetAuthor = Recipient.externalPush(targetAuthorServiceId)
+
+    val targetMessage: MessageRecord? = SignalDatabase.messages.getMessageFor(targetSentTimestamp, targetAuthor.id)
+
+    val groupRecord = SignalDatabase.groups.getGroup(threadRecipient.id).orNull()
+    if (groupRecord == null || !groupRecord.isV2Group) {
+      warn(envelope.timestamp!!, "[handleAdminRemoteDelete] Invalid group.")
+      return null
+    }
+
+    return if (targetMessage != null && MessageConstraintsUtil.isValidAdminDeleteReceive(targetMessage, senderRecipient, envelope.serverTimestamp!!, groupRecord)) {
+      SignalDatabase.messages.markAsRemoteDelete(targetMessage, senderRecipient.id)
+      MessageId(targetMessage.id)
+    } else if (targetMessage == null) {
+      warn(envelope.timestamp!!, "[handleAdminRemoteDelete] Could not find matching message! timestamp: $targetSentTimestamp")
+      if (earlyMessageCacheEntry != null) {
+        AppDependencies.earlyMessageCache.store(targetAuthor.id, targetSentTimestamp, earlyMessageCacheEntry)
+        PushProcessEarlyMessagesJob.enqueue()
+      }
+      null
+    } else {
+      warn(envelope.timestamp!!, "[handleAdminRemoteDelete] Invalid admin delete! deleteTime: ${envelope.serverTimestamp!!}, targetTime: ${targetMessage.serverTimestamp}, deleteAuthor: ${senderRecipient.id}, targetAuthor: ${targetMessage.fromRecipient.id}, isAdmin: ${groupRecord.isAdmin(senderRecipient)}")
+      null
+    }
   }
 
   fun notifyTypingStoppedFromIncomingMessage(context: Context, senderRecipient: Recipient, threadRecipientId: RecipientId, device: Int) {

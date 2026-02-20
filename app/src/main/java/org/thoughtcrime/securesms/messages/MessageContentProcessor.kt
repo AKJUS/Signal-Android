@@ -130,6 +130,8 @@ open class MessageContentProcessor(private val context: Context) {
         getGroupRecipient(content.dataMessage?.groupV2, sender)
       } else if (content.editMessage?.dataMessage.hasGroupContext) {
         getGroupRecipient(content.editMessage?.dataMessage?.groupV2, sender)
+      } else if (content.syncMessage?.sent?.message.hasGroupContext) {
+        getGroupRecipient(content.syncMessage?.sent?.message?.groupV2, sender)
       } else {
         sender
       }

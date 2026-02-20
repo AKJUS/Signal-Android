@@ -188,7 +188,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     const val UNIDENTIFIED = "unidentified"
     const val REACTIONS_UNREAD = "reactions_unread"
     const val REACTIONS_LAST_SEEN = "reactions_last_seen"
-    const val REMOTE_DELETED = "remote_deleted"
     const val SERVER_GUID = "server_guid"
     const val RECEIPT_TIMESTAMP = "receipt_timestamp"
     const val EXPORT_STATE = "export_state"
@@ -223,6 +222,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     const val PINNED_UNTIL = "pinned_until"
     const val PINNING_MESSAGE_ID = "pinning_message_id"
     const val PINNED_AT = "pinned_at"
+    const val DELETED_BY = "deleted_by"
 
     const val QUOTE_NOT_PRESENT_ID = 0L
     const val QUOTE_TARGET_MISSING_ID = -1L
@@ -273,7 +273,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $VIEW_ONCE INTEGER DEFAULT 0,
         $REACTIONS_UNREAD INTEGER DEFAULT 0,
         $REACTIONS_LAST_SEEN INTEGER DEFAULT -1,
-        $REMOTE_DELETED INTEGER DEFAULT 0,
         $MENTIONS_SELF INTEGER DEFAULT 0,
         $NOTIFIED_TIMESTAMP INTEGER DEFAULT 0,
         $SERVER_GUID TEXT DEFAULT NULL,
@@ -292,7 +291,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         $VOTES_LAST_SEEN INTEGER DEFAULT 0,
         $PINNED_UNTIL INTEGER DEFAULT 0,
         $PINNING_MESSAGE_ID INTEGER DEFAULT 0,
-        $PINNED_AT INTEGER DEFAULT 0
+        $PINNED_AT INTEGER DEFAULT 0,
+        $DELETED_BY INTEGER DEFAULT NULL REFERENCES ${RecipientTable.TABLE_NAME} (${RecipientTable.ID}) ON DELETE CASCADE
       )
     """
 
@@ -325,7 +325,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_UNREAD_COUNT ON $TABLE_NAME ($THREAD_ID) WHERE $STORY_TYPE = 0 AND $PARENT_STORY_ID <= 0 AND $SCHEDULED_DATE = -1 AND $ORIGINAL_MESSAGE_ID IS NULL AND $READ = 0",
       "CREATE INDEX IF NOT EXISTS message_votes_unread_index ON $TABLE_NAME ($VOTES_UNREAD)",
       "CREATE INDEX IF NOT EXISTS message_pinned_until_index ON $TABLE_NAME ($PINNED_UNTIL)",
-      "CREATE INDEX IF NOT EXISTS message_pinned_at_index ON $TABLE_NAME ($PINNED_AT)"
+      "CREATE INDEX IF NOT EXISTS message_pinned_at_index ON $TABLE_NAME ($PINNED_AT)",
+      "CREATE INDEX IF NOT EXISTS message_deleted_by_index ON $TABLE_NAME ($DELETED_BY)"
     )
 
     private val MMS_PROJECTION_BASE = arrayOf(
@@ -366,7 +367,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       VIEW_ONCE,
       REACTIONS_UNREAD,
       REACTIONS_LAST_SEEN,
-      REMOTE_DELETED,
       MENTIONS_SELF,
       NOTIFIED_TIMESTAMP,
       VIEWED_COLUMN,
@@ -381,7 +381,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       MESSAGE_EXTRAS,
       VOTES_UNREAD,
       VOTES_LAST_SEEN,
-      PINNED_UNTIL
+      PINNED_UNTIL,
+      DELETED_BY
     )
 
     private val MMS_PROJECTION: Array<String> = MMS_PROJECTION_BASE + "NULL AS ${AttachmentTable.ATTACHMENT_JSON_ALIAS}"
@@ -427,7 +428,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         ) AS ${AttachmentTable.ATTACHMENT_JSON_ALIAS}
       """.toSingleLine()
 
-    private const val IS_STORY_CLAUSE = "$STORY_TYPE > 0 AND $REMOTE_DELETED = 0"
+    private const val IS_STORY_CLAUSE = "$STORY_TYPE > 0 AND $DELETED_BY IS NULL"
     private const val RAW_ID_WHERE = "$TABLE_NAME.$ID = ?"
 
     private val SNIPPET_QUERY =
@@ -1600,7 +1601,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
           JOIN ${ThreadTable.TABLE_NAME} ON $TABLE_NAME.$THREAD_ID = ${ThreadTable.TABLE_NAME}.${ThreadTable.ID}
         WHERE
           $STORY_TYPE > 0 AND 
-          $REMOTE_DELETED = 0
+          $DELETED_BY IS NULL
           ${if (isOutgoingOnly) " AND is_outgoing != 0" else ""}
         ORDER BY
           is_unread DESC,
@@ -2218,12 +2219,12 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     AppDependencies.databaseObserver.notifyConversationListListeners()
   }
 
-  fun markAsRemoteDelete(targetMessage: MessageRecord) {
+  fun markAsRemoteDelete(targetMessage: MessageRecord, deletedBy: RecipientId) {
     writableDatabase.withinTransaction { db ->
       val hasRevision = (targetMessage as? MmsMessageRecord)?.latestRevisionId?.id != null
       if (hasRevision || targetMessage.isEditMessage) {
         val latestRevisionId = (targetMessage as? MmsMessageRecord)?.latestRevisionId?.id ?: targetMessage.id
-        markAsRemoteDeleteInternal(latestRevisionId)
+        markAsRemoteDeleteInternal(latestRevisionId, deletedBy)
         getPreviousEditIds(latestRevisionId).map { id ->
           db.update(TABLE_NAME)
             .values(
@@ -2235,22 +2236,22 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
           deleteMessage(id)
         }
       } else {
-        markAsRemoteDeleteInternal(targetMessage.id)
+        markAsRemoteDeleteInternal(targetMessage.id, deletedBy)
       }
     }
   }
 
-  fun markAsRemoteDelete(messageId: Long) {
+  fun markAsDeleteBySelf(messageId: Long) {
     val targetMessage: MessageRecord = getMessageRecord(messageId)
-    markAsRemoteDelete(targetMessage)
+    markAsRemoteDelete(targetMessage, Recipient.self().id)
   }
 
-  private fun markAsRemoteDeleteInternal(messageId: Long) {
+  private fun markAsRemoteDeleteInternal(messageId: Long, deletedBy: RecipientId) {
     var deletedAttachments = false
     writableDatabase.withinTransaction { db ->
       db.update(TABLE_NAME)
         .values(
-          REMOTE_DELETED to 1,
+          DELETED_BY to deletedBy.toLong(),
           BODY to null,
           QUOTE_BODY to null,
           QUOTE_AUTHOR to null,
@@ -4012,7 +4013,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
   }
 
   fun deleteRemotelyDeletedStory(messageId: Long) {
-    if (readableDatabase.exists(TABLE_NAME).where("$ID = ? AND $REMOTE_DELETED = ?", messageId, 1).run()) {
+    if (readableDatabase.exists(TABLE_NAME).where("$ID = ? AND $DELETED_BY > 0", messageId).run()) {
       deleteMessage(messageId)
     } else {
       Log.i(TAG, "Unable to delete remotely deleted story: $messageId")
@@ -4595,7 +4596,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     val targetMessageDateReceived: Long = readableDatabase
       .select(DATE_RECEIVED, LATEST_REVISION_ID)
       .from(TABLE_NAME)
-      .where("$DATE_SENT = $quoteId AND $FROM_RECIPIENT_ID = ? AND $REMOTE_DELETED = 0 AND $SCHEDULED_DATE = -1", authorId)
+      .where("$DATE_SENT = $quoteId AND $FROM_RECIPIENT_ID = ? AND $DELETED_BY IS NULL AND $SCHEDULED_DATE = -1", authorId)
       .run()
       .readToSingleObject { cursor ->
         val latestRevisionId = cursor.requireLongOrNull(LATEST_REVISION_ID)
@@ -4626,7 +4627,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
   fun getMessagePositionInConversation(threadId: Long, receivedTimestamp: Long, authorId: RecipientId): Int {
     val validMessageExists: Boolean = readableDatabase
       .exists(TABLE_NAME)
-      .where("$DATE_RECEIVED = $receivedTimestamp AND $FROM_RECIPIENT_ID = ? AND $REMOTE_DELETED = 0 AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL", authorId)
+      .where("$DATE_RECEIVED = $receivedTimestamp AND $FROM_RECIPIENT_ID = ? AND $DELETED_BY IS NULL AND $SCHEDULED_DATE = -1 AND $LATEST_REVISION_ID IS NULL", authorId)
       .run()
 
     if (!validMessageExists) {
@@ -5455,7 +5456,13 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       .where("$QUOTE_AUTHOR = ?", fromId)
       .run()
 
-    Log.d(TAG, "Remapped $fromId to $toId. fromRecipient: $fromCount, toRecipient: $toCount, quoteAuthor: $quoteAuthorCount")
+    val deletedByCount = writableDatabase
+      .update(TABLE_NAME)
+      .values(DELETED_BY to toId.serialize())
+      .where("$DELETED_BY = ?", fromId)
+      .run()
+
+    Log.d(TAG, "Remapped $fromId to $toId. fromRecipient: $fromCount, toRecipient: $toCount, quoteAuthor: $quoteAuthorCount, deletedBy: $deletedByCount")
   }
 
   override fun remapThread(fromId: Long, toId: Long) {
@@ -6255,7 +6262,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       val expireTimerVersion = cursor.requireInt(EXPIRE_TIMER_VERSION)
       val unidentified = cursor.requireBoolean(UNIDENTIFIED)
       val isViewOnce = cursor.requireBoolean(VIEW_ONCE)
-      val remoteDelete = cursor.requireBoolean(REMOTE_DELETED)
       val mentionsSelf = cursor.requireBoolean(MENTIONS_SELF)
       val notifiedTimestamp = cursor.requireLong(NOTIFIED_TIMESTAMP)
       var isViewed = cursor.requireBoolean(VIEWED_COLUMN)
@@ -6269,6 +6275,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       val editCount = cursor.requireInt(REVISION_NUMBER)
       val isRead = cursor.requireBoolean(READ)
       val pinnedUntil = cursor.requireLong(PINNED_UNTIL)
+      val deletedBy = cursor.requireLongOrNull(DELETED_BY)?.let { RecipientId.from(it) }
       val messageExtraBytes = cursor.requireBlob(MESSAGE_EXTRAS)
       val messageExtras = messageExtraBytes?.let { MessageExtras.ADAPTER.decode(it) }
 
@@ -6346,7 +6353,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         previews,
         unidentified,
         emptyList(),
-        remoteDelete,
         mentionsSelf,
         notifiedTimestamp,
         isViewed,
@@ -6364,6 +6370,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         editCount,
         isRead,
         pinnedUntil,
+        deletedBy,
         messageExtras
       )
     }
