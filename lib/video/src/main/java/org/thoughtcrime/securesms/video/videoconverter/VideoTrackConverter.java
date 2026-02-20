@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.video.interfaces.MediaInput;
 import org.thoughtcrime.securesms.video.interfaces.Muxer;
+import org.thoughtcrime.securesms.video.videoconverter.exceptions.CodecUnavailableException;
 import org.thoughtcrime.securesms.video.videoconverter.exceptions.HdrDecoderUnavailableException;
 import org.thoughtcrime.securesms.video.videoconverter.utils.Extensions;
 import org.thoughtcrime.securesms.video.videoconverter.utils.MediaCodecCompat;
@@ -21,7 +22,9 @@ import org.thoughtcrime.securesms.video.videoconverter.utils.Preconditions;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import kotlin.Pair;
 
 final class VideoTrackConverter {
@@ -51,9 +54,9 @@ final class VideoTrackConverter {
 
     private final MediaExtractor mVideoExtractor;
     private final MediaCodec mVideoDecoder;
-    private final MediaCodec mVideoEncoder;
+    private MediaCodec mVideoEncoder;
 
-    private final InputSurface mInputSurface;
+    private InputSurface mInputSurface;
     private final OutputSurface mOutputSurface;
 
     private final ByteBuffer[] mVideoDecoderInputBuffers;
@@ -83,7 +86,8 @@ final class VideoTrackConverter {
             final long timeTo,
             final int videoResolution,
             final int videoBitrate,
-            final @NonNull String videoCodec) throws IOException, TranscodingException {
+            final @NonNull String videoCodec,
+            final @NonNull Set<String> excludedDecoders) throws IOException, TranscodingException {
 
         final MediaExtractor videoExtractor = input.createExtractor();
         final int videoInputTrack = getAndSelectVideoTrackIndex(videoExtractor);
@@ -91,7 +95,7 @@ final class VideoTrackConverter {
             videoExtractor.release();
             return null;
         }
-        return new VideoTrackConverter(videoExtractor, videoInputTrack, timeFrom, timeTo, videoResolution, videoBitrate, videoCodec);
+        return new VideoTrackConverter(videoExtractor, videoInputTrack, timeFrom, timeTo, videoResolution, videoBitrate, videoCodec, excludedDecoders);
     }
 
 
@@ -102,7 +106,8 @@ final class VideoTrackConverter {
             final long timeTo,
             final int videoResolution,
             final int videoBitrate,
-            final @NonNull String videoCodec) throws IOException, TranscodingException {
+            final @NonNull String videoCodec,
+            final @NonNull Set<String> excludedDecoders) throws IOException, TranscodingException {
 
         mTimeFrom = timeFrom;
         mTimeTo = timeTo;
@@ -167,16 +172,19 @@ final class VideoTrackConverter {
                 inputVideoFormat.getInteger(MediaFormat.KEY_WIDTH), inputVideoFormat.getInteger(MediaFormat.KEY_HEIGHT),
                 outputWidth, outputHeight);
 
-        // Configure the encoder but do NOT start it yet. The encoder's start() is
-        // deferred until after the decoder is created, so that the decoder gets first
-        // access to hardware codec resources on memory-constrained devices.
+        // Create encoder, decoder, and surfaces. The encoder's start() is deferred
+        // until after the decoder is created, so that the decoder gets first access to
+        // hardware codec resources on memory-constrained devices. If start() fails
+        // (e.g. NO_MEMORY on a resource-constrained device), we try the next encoder
+        // candidate while keeping the same decoder and OutputSurface.
         mVideoEncoder = createVideoEncoder(videoCodecCandidates, outputVideoFormat);
         mInputSurface = new InputSurface(mVideoEncoder.createInputSurface());
         mInputSurface.makeCurrent();
         mOutputSurface = new OutputSurface();
         mOutputSurface.changeFragmentShader(fragmentShader);
-        mVideoDecoder = createVideoDecoder(inputVideoFormat, mOutputSurface.getSurface());
-        mVideoEncoder.start();
+        mVideoDecoder = createVideoDecoder(inputVideoFormat, mOutputSurface.getSurface(), excludedDecoders);
+        startEncoderWithFallback(videoCodecCandidates, outputVideoFormat);
+
         mVideoDecoderInputBuffers = mVideoDecoder.getInputBuffers();
         mVideoEncoderOutputBuffers = mVideoEncoder.getOutputBuffers();
         mVideoDecoderOutputBufferInfo = new MediaCodec.BufferInfo();
@@ -483,10 +491,17 @@ final class VideoTrackConverter {
     private @NonNull
     MediaCodec createVideoDecoder(
             final @NonNull MediaFormat inputFormat,
-            final @NonNull Surface surface) throws IOException {
+            final @NonNull Surface surface,
+            final @NonNull Set<String> excludedDecoders) throws IOException {
         final boolean               isHdr              = MediaCodecCompat.isHdrVideo(inputFormat);
         final boolean               requestToneMapping = Build.VERSION.SDK_INT >= 31 && isHdr;
-        final List<Pair<String, MediaFormat>> candidates = MediaCodecCompat.findDecoderCandidates(inputFormat);
+        final List<Pair<String, MediaFormat>> allCandidates = MediaCodecCompat.findDecoderCandidates(inputFormat);
+        final List<Pair<String, MediaFormat>> candidates    = new ArrayList<>();
+        for (Pair<String, MediaFormat> c : allCandidates) {
+            if (!excludedDecoders.contains(c.getFirst())) {
+                candidates.add(c);
+            }
+        }
 
         mIsHdrInput = isHdr;
         Exception lastException = null;
@@ -545,7 +560,7 @@ final class VideoTrackConverter {
         if (mIsHdrInput) {
             throw new HdrDecoderUnavailableException("All video decoder codecs failed for HDR video", lastException);
         }
-        throw new IOException("All video decoder codecs failed", lastException);
+        throw new CodecUnavailableException("All video decoder codecs failed", lastException);
     }
 
     /**
@@ -580,7 +595,59 @@ final class VideoTrackConverter {
             }
         }
 
-        throw new IOException("All video encoder codecs failed", lastException);
+        throw new CodecUnavailableException("All video encoder codecs failed", lastException);
+    }
+
+    /**
+     * Attempts to start the current encoder ({@link #mVideoEncoder}). If start() fails,
+     * iterates through the remaining encoder candidates from {@code codecCandidates},
+     * replacing the encoder and its {@link InputSurface} on each attempt. The decoder
+     * and {@link OutputSurface} are independent of the encoder and remain unchanged.
+     */
+    private void startEncoderWithFallback(
+            final @NonNull List<MediaCodecInfo> codecCandidates,
+            final @NonNull MediaFormat format) throws IOException {
+        Exception lastException = null;
+
+        for (int i = 0; i < codecCandidates.size(); i++) {
+            final MediaCodecInfo codecInfo = codecCandidates.get(i);
+
+            if (i > 0) {
+                // Replace the encoder with the next candidate.
+                mVideoEncoder.release();
+                mInputSurface.release();
+
+                try {
+                    mVideoEncoder = MediaCodec.createByCodecName(codecInfo.getName());
+                    mVideoEncoder.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+                    mInputSurface = new InputSurface(mVideoEncoder.createInputSurface());
+                    mInputSurface.makeCurrent();
+                    mEncoderName = codecInfo.getName();
+                } catch (IllegalArgumentException | IllegalStateException | TranscodingException e) {
+                    Log.w(TAG, "Video encoder: codec " + codecInfo.getName() + " failed to configure (attempt " + (i + 1) + " of " + codecCandidates.size() + ")", e);
+                    lastException = e;
+                    continue;
+                }
+            } else if (!codecInfo.getName().equals(mEncoderName)) {
+                // First iteration but createVideoEncoder selected a different codec
+                // (i.e. the first candidate failed to configure). Skip until we reach
+                // the one that was actually configured.
+                continue;
+            }
+
+            try {
+                mVideoEncoder.start();
+                if (i > 0) {
+                    Log.w(TAG, "Video encoder: succeeded with fallback codec " + codecInfo.getName() + " (attempt " + (i + 1) + " of " + codecCandidates.size() + ")");
+                }
+                return;
+            } catch (IllegalStateException e) {
+                Log.w(TAG, "Video encoder: codec " + codecInfo.getName() + " failed to start (attempt " + (i + 1) + " of " + codecCandidates.size() + ")", e);
+                lastException = e;
+            }
+        }
+
+        throw new CodecUnavailableException("All video encoder codecs failed to start", lastException);
     }
 
     private static int getAndSelectVideoTrackIndex(@NonNull MediaExtractor extractor) {

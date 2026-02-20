@@ -149,6 +149,56 @@ public final class MediaConverter {
      */
     @WorkerThread
     public long convert() throws EncodingException, IOException {
+        final Set<String> excludedDecoders = new HashSet<>();
+
+        while (true) {
+            mCancelled = false;
+            try {
+                return doConvert(excludedDecoders);
+            } catch (EncodingException e) {
+                if (e.decoderName != null
+                        && isRetryableMidStreamFailure(e)
+                        && excludedDecoders.add(e.decoderName)) {
+                    Log.w(TAG, "Mid-stream codec failure with decoder " + e.decoderName
+                            + ", retrying with it excluded (" + excludedDecoders.size()
+                            + " decoder(s) excluded)");
+                    continue;
+                }
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * Checks whether the given {@link EncodingException} represents a mid-stream codec failure
+     * that may succeed with a different decoder. This covers:
+     * <ul>
+     *     <li>{@link IllegalStateException} from {@link android.media.MediaCodec} native methods
+     *         (hardware codec crash during encoding/decoding)</li>
+     *     <li>Frame count mismatches from {@link VideoTrackConverter#verifyEndState()} (unusual
+     *         video formats like spatial video that some decoders handle differently)</li>
+     * </ul>
+     */
+    private static boolean isRetryableMidStreamFailure(final @NonNull EncodingException e) {
+        Throwable cause = e.getCause();
+        while (cause != null) {
+            if (cause instanceof IllegalStateException) {
+                for (StackTraceElement frame : cause.getStackTrace()) {
+                    if ("android.media.MediaCodec".equals(frame.getClassName())) {
+                        return true;
+                    }
+                }
+                String message = cause.getMessage();
+                if (message != null && message.contains("frame counts should match")) {
+                    return true;
+                }
+            }
+            cause = cause.getCause();
+        }
+        return false;
+    }
+
+    private long doConvert(final @NonNull Set<String> excludedDecoders) throws EncodingException, IOException {
         // Exception that may be thrown during release.
         Exception           exception           = null;
         Muxer               muxer               = null;
@@ -162,7 +212,7 @@ public final class MediaConverter {
         try {
             muxer = mOutput.createMuxer();
 
-            videoTrackConverter = VideoTrackConverter.create(mInput, mTimeFrom, mTimeTo, mVideoResolution, mVideoBitrate, mVideoCodec);
+            videoTrackConverter = VideoTrackConverter.create(mInput, mTimeFrom, mTimeTo, mVideoResolution, mVideoBitrate, mVideoCodec, excludedDecoders);
             audioTrackConverter = AudioTrackConverter.create(mInput, mTimeFrom, mTimeTo, mAudioBitrate, mAllowAudioRemux && muxer.supportsAudioRemux());
 
             if (videoTrackConverter == null && audioTrackConverter == null) {
