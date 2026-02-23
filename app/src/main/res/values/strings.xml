@@ -7377,8 +7377,8 @@
     <string name="BankTransferDetailsFragment__iban_country_code_is_not_supported">IBAN country code is not supported</string>
     <!-- Error label for IBAN field when number is invalid -->
     <string name="BankTransferDetailsFragment__invalid_iban">Invalid IBAN</string>
-    <!-- Error label for name field when name is not at least two characters long -->
-    <string name="BankTransferDetailsFragment__minimum_2_characters">Minimum 2 characters</string>
+    <!-- Error label for name field when name is not at least three characters long (Stripe API enforced minimum) -->
+    <string name="BankTransferDetailsFragment__minimum_3_characters">Minimum 3 characters</string>
     <!-- Error label for email field when email is not valid -->
     <string name="BankTransferDetailsFragment__invalid_email_address">Invalid email address</string>
 
