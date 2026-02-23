@@ -2800,7 +2800,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     retrieved: IncomingMessage,
     candidateThreadId: Long = -1,
     editedMessage: MmsMessageRecord? = null,
-    notifyObservers: Boolean = true
+    notifyObservers: Boolean = true,
+    skipThreadUpdate: Boolean = false
   ): Optional<InsertResult> {
     val type = retrieved.toMessageType()
 
@@ -2901,7 +2902,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       messageRanges = retrieved.messageRanges,
       contentValues = contentValues,
       insertListener = null,
-      updateThread = updateThread,
+      updateThread = updateThread && !skipThreadUpdate,
       unarchive = true,
       poll = retrieved.poll,
       pollTerminate = retrieved.messageExtras?.pollTerminate,
@@ -2971,7 +2972,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         threadId = threadId,
         threadWasNewlyCreated = threadIdResult.newlyCreated,
         insertedAttachments = insertedAttachments,
-        quoteAttachmentId = quoteAttachments.firstOrNull()?.let { insertedAttachments?.get(it) }
+        quoteAttachmentId = quoteAttachments.firstOrNull()?.let { insertedAttachments?.get(it) },
+        needsThreadUpdate = updateThread && skipThreadUpdate
       )
     )
   }
@@ -3576,8 +3578,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     val contentValuesThreadId = contentValues.getAsLong(THREAD_ID)
 
     if (updateThread) {
-      threads.setLastScrolled(contentValuesThreadId, 0)
-      threads.update(threadId, unarchive)
+      threads.updateForMessageInsert(threadId, unarchive)
     }
 
     if (pinnedMessage != null && pinnedMessage.pinDurationInSeconds != PIN_FOREVER) {
@@ -6093,7 +6094,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     val threadId: Long,
     val threadWasNewlyCreated: Boolean,
     val insertedAttachments: Map<Attachment, AttachmentId>? = null,
-    val quoteAttachmentId: AttachmentId? = null
+    val quoteAttachmentId: AttachmentId? = null,
+    val needsThreadUpdate: Boolean = false
   )
 
   data class MessageReceiptUpdate(

@@ -47,7 +47,19 @@ class GroupMessageProcessingBenchmarks {
           mode = Mode.Average
         ),
         TraceSectionMetric(
-          sectionName = "MessageContentProcessor#handleMessage",
+          sectionName = "IncomingMessageObserver#perMessageTransaction",
+          mode = Mode.Average
+        ),
+        TraceSectionMetric(
+          sectionName = "DataMessageProcessor#gv2PreProcessing",
+          mode = Mode.Average
+        ),
+        TraceSectionMetric(
+          sectionName = "DataMessageProcessor#messageInsert",
+          mode = Mode.Average
+        ),
+        TraceSectionMetric(
+          sectionName = "DataMessageProcessor#postProcess",
           mode = Mode.Average
         ),
         TraceSectionMetric(

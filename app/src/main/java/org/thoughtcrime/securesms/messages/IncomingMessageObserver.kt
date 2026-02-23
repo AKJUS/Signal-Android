@@ -276,7 +276,7 @@ class IncomingMessageObserver(
   }
 
   @VisibleForTesting
-  fun processEnvelope(bufferedProtocolStore: BufferedProtocolStore, envelope: Envelope, serverDeliveredTimestamp: Long): List<FollowUpOperation>? {
+  fun processEnvelope(bufferedProtocolStore: BufferedProtocolStore, envelope: Envelope, serverDeliveredTimestamp: Long, batchCache: BatchCache): List<FollowUpOperation>? {
     return when (envelope.type) {
       Envelope.Type.SERVER_DELIVERY_RECEIPT -> {
         SignalTrace.beginSection("IncomingMessageObserver#processReceipt")
@@ -290,7 +290,7 @@ class IncomingMessageObserver(
       Envelope.Type.UNIDENTIFIED_SENDER,
       Envelope.Type.PLAINTEXT_CONTENT -> {
         SignalTrace.beginSection("IncomingMessageObserver#processMessage")
-        val followUps = processMessage(bufferedProtocolStore, envelope, serverDeliveredTimestamp)
+        val followUps = processMessage(bufferedProtocolStore, envelope, serverDeliveredTimestamp, batchCache)
         SignalTrace.endSection()
         followUps
       }
@@ -302,7 +302,7 @@ class IncomingMessageObserver(
     }
   }
 
-  private fun processMessage(bufferedProtocolStore: BufferedProtocolStore, envelope: Envelope, serverDeliveredTimestamp: Long): List<FollowUpOperation> {
+  private fun processMessage(bufferedProtocolStore: BufferedProtocolStore, envelope: Envelope, serverDeliveredTimestamp: Long, batchCache: BatchCache): List<FollowUpOperation> {
     val localReceiveMetric = SignalLocalMetrics.MessageReceive.start()
     SignalTrace.beginSection("IncomingMessageObserver#decryptMessage")
     val result = MessageDecryptor.decrypt(context, bufferedProtocolStore, envelope, serverDeliveredTimestamp)
@@ -312,7 +312,7 @@ class IncomingMessageObserver(
     SignalLocalMetrics.MessageLatency.onMessageReceived(envelope.serverTimestamp!!, serverDeliveredTimestamp, envelope.urgent!!)
     when (result) {
       is MessageDecryptor.Result.Success -> {
-        val job = PushProcessMessageJob.processOrDefer(messageContentProcessor, result, localReceiveMetric)
+        val job = PushProcessMessageJob.processOrDefer(messageContentProcessor, result, localReceiveMetric, batchCache)
         if (job != null) {
           return result.followUpOperations + FollowUpOperation { job.asChain() }
         }
@@ -374,6 +374,7 @@ class IncomingMessageObserver(
 
     private var sleepTimer: SleepTimer
     private val canProcessMessages: Boolean
+    private val batchCache = ReusedBatchCache()
 
     init {
       Log.i(TAG, "Initializing! (${this.hashCode()})")
@@ -433,11 +434,13 @@ class IncomingMessageObserver(
                   GroupsV2ProcessingLock.acquireGroupProcessingLock().use {
                     ReentrantSessionLock.INSTANCE.acquire().use {
                       batch.forEach { response ->
+                        SignalTrace.beginSection("IncomingMessageObserver#perMessageTransaction")
                         val followUpOperations = SignalDatabase.runInTransaction { db ->
-                          val followUps: List<FollowUpOperation>? = processEnvelope(bufferedStore, response.envelope, response.serverDeliveredTimestamp)
+                          val followUps: List<FollowUpOperation>? = processEnvelope(bufferedStore, response.envelope, response.serverDeliveredTimestamp, batchCache)
                           bufferedStore.flushToDisk()
                           followUps
                         }
+                        SignalTrace.endSection()
 
                         if (followUpOperations?.isNotEmpty() == true) {
                           Log.d(TAG, "Running ${followUpOperations.size} follow-up operations...")
@@ -447,6 +450,8 @@ class IncomingMessageObserver(
 
                         authWebSocket.sendAck(response)
                       }
+
+                      batchCache.flushAndClear()
                     }
                   }
                   val duration = System.currentTimeMillis() - startTime

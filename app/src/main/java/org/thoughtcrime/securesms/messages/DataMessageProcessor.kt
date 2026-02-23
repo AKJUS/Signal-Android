@@ -9,12 +9,10 @@ import org.signal.core.models.ServiceId.ACI
 import org.signal.core.util.Base64
 import org.signal.core.util.Hex
 import org.signal.core.util.UuidUtil
-import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.isNotEmpty
 import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
 import org.signal.core.util.toOptional
-import org.signal.libsignal.zkgroup.groups.GroupSecretParams
 import org.signal.libsignal.zkgroup.receipts.ReceiptCredentialPresentation
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.attachments.LocalStickerAttachment
@@ -103,6 +101,7 @@ import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.MessageConstraintsUtil
 import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.SignalLocalMetrics
+import org.thoughtcrime.securesms.util.SignalTrace
 import org.thoughtcrime.securesms.util.TextSecurePreferences
 import org.thoughtcrime.securesms.util.hasGiftBadge
 import org.thoughtcrime.securesms.util.isStory
@@ -137,14 +136,15 @@ object DataMessageProcessor {
     metadata: EnvelopeMetadata,
     receivedTime: Long,
     earlyMessageCacheEntry: EarlyMessageCacheEntry?,
-    localMetrics: SignalLocalMetrics.MessageReceive?
+    localMetrics: SignalLocalMetrics.MessageReceive?,
+    batchCache: BatchCache
   ) {
     val message: DataMessage = content.dataMessage!!
-    val groupSecretParams = if (message.hasGroupContext) GroupSecretParams.deriveFromMasterKey(message.groupV2!!.groupMasterKey) else null
-    val groupId: GroupId.V2? = if (groupSecretParams != null) GroupId.v2(groupSecretParams.publicParams.groupIdentifier) else null
+    val (groupSecretParams, groupId) = batchCache.getGroupInfo(message)
 
     var groupProcessResult: MessageContentProcessor.Gv2PreProcessResult? = null
     if (groupId != null) {
+      SignalTrace.beginSection("DataMessageProcessor#gv2PreProcessing")
       groupProcessResult = MessageContentProcessor.handleGv2PreProcessing(
         context = context,
         timestamp = envelope.timestamp!!,
@@ -154,8 +154,10 @@ object DataMessageProcessor {
         groupV2 = message.groupV2!!,
         senderRecipient = senderRecipient,
         groupSecretParams = groupSecretParams,
-        serverGuid = UuidUtil.getStringUUID(envelope.serverGuid, envelope.serverGuidBinary)
+        serverGuid = UuidUtil.getStringUUID(envelope.serverGuid, envelope.serverGuidBinary),
+        batchCache = batchCache
       )
+      SignalTrace.endSection()
 
       if (groupProcessResult == MessageContentProcessor.Gv2PreProcessResult.IGNORE) {
         return
@@ -165,6 +167,7 @@ object DataMessageProcessor {
 
     var insertResult: InsertResult? = null
     var messageId: MessageId? = null
+    SignalTrace.beginSection("DataMessageProcessor#messageInsert")
     when {
       message.isInvalid -> handleInvalidMessage(context, senderRecipient.id, groupId, envelope.timestamp!!)
       message.isEndSession -> insertResult = handleEndSessionMessage(context, senderRecipient.id, envelope, metadata)
@@ -177,8 +180,8 @@ object DataMessageProcessor {
       message.payment != null -> insertResult = handlePayment(context, envelope, metadata, message, senderRecipient.id, receivedTime)
       message.storyContext != null -> insertResult = handleStoryReply(context, envelope, metadata, message, senderRecipient, groupId, receivedTime)
       message.giftBadge != null -> insertResult = handleGiftMessage(context, envelope, metadata, message, senderRecipient, threadRecipient.id, receivedTime)
-      message.isMediaMessage -> insertResult = handleMediaMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics)
-      message.body != null -> insertResult = handleTextMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics)
+      message.isMediaMessage -> insertResult = handleMediaMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics, batchCache)
+      message.body != null -> insertResult = handleTextMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics, batchCache)
       message.groupCallUpdate != null -> handleGroupCallUpdateMessage(envelope, message, senderRecipient.id, groupId)
       message.pollCreate != null -> insertResult = handlePollCreate(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime)
       message.pollTerminate != null -> insertResult = handlePollTerminate(context, envelope, metadata, message, senderRecipient, earlyMessageCacheEntry, threadRecipient, groupId, receivedTime)
@@ -187,7 +190,9 @@ object DataMessageProcessor {
       message.unpinMessage != null -> messageId = handleUnpinMessage(envelope, message, senderRecipient, threadRecipient, earlyMessageCacheEntry)
       message.adminDelete != null -> messageId = handleAdminRemoteDelete(envelope, message, senderRecipient, threadRecipient, earlyMessageCacheEntry)
     }
+    SignalTrace.endSection()
 
+    SignalTrace.beginSection("DataMessageProcessor#postProcess")
     messageId = messageId ?: insertResult?.messageId?.let { MessageId(it) }
     if (messageId != null) {
       log(envelope.timestamp!!, "Inserted as messageId $messageId")
@@ -212,7 +217,7 @@ object DataMessageProcessor {
     }
 
     if (metadata.sealedSender && messageId != null) {
-      SignalExecutors.BOUNDED.execute { AppDependencies.jobManager.add(SendDeliveryReceiptJob(senderRecipient.id, message.timestamp!!, messageId)) }
+      batchCache.addJob(SendDeliveryReceiptJob(senderRecipient.id, message.timestamp!!, messageId))
     } else if (!metadata.sealedSender) {
       if (RecipientUtil.shouldHaveProfileKey(threadRecipient)) {
         Log.w(MessageContentProcessor.TAG, "Received an unsealed sender message from " + senderRecipient.id + ", but they should already have our profile key. Correcting.")
@@ -251,6 +256,7 @@ object DataMessageProcessor {
 
     localMetrics?.onPostProcessComplete()
     localMetrics?.complete(groupId != null)
+    SignalTrace.endSection()
   }
 
   private fun handleProfileKey(
@@ -906,7 +912,8 @@ object DataMessageProcessor {
     threadRecipient: Recipient,
     groupId: GroupId.V2?,
     receivedTime: Long,
-    localMetrics: SignalLocalMetrics.MessageReceive?
+    localMetrics: SignalLocalMetrics.MessageReceive?,
+    batchCache: BatchCache
   ): InsertResult? {
     log(envelope.timestamp!!, "Media message.")
 
@@ -946,9 +953,12 @@ object DataMessageProcessor {
         messageRanges = messageRanges
       )
 
-      insertResult = SignalDatabase.messages.insertMessageInbox(mediaMessage, -1).orNull()
+      insertResult = SignalDatabase.messages.insertMessageInbox(retrieved = mediaMessage, candidateThreadId = -1, skipThreadUpdate = batchCache.batchThreadUpdates).orNull()
       if (insertResult != null) {
         SignalDatabase.messages.setTransactionSuccessful()
+        if (insertResult.needsThreadUpdate) {
+          batchCache.addIncomingMessageInsertThreadUpdate(insertResult.threadId)
+        }
       }
     } catch (e: MmsException) {
       throw StorageFailedException(e, metadata.sourceServiceId.toString(), metadata.sourceDeviceId)
@@ -998,7 +1008,8 @@ object DataMessageProcessor {
     threadRecipient: Recipient,
     groupId: GroupId.V2?,
     receivedTime: Long,
-    localMetrics: SignalLocalMetrics.MessageReceive?
+    localMetrics: SignalLocalMetrics.MessageReceive?,
+    batchCache: BatchCache
   ): InsertResult? {
     log(envelope.timestamp!!, "Text message.")
 
@@ -1021,10 +1032,13 @@ object DataMessageProcessor {
       serverGuid = UuidUtil.getStringUUID(envelope.serverGuid, envelope.serverGuidBinary)
     )
 
-    val insertResult: InsertResult? = SignalDatabase.messages.insertMessageInbox(textMessage).orNull()
+    val insertResult: InsertResult? = SignalDatabase.messages.insertMessageInbox(textMessage, skipThreadUpdate = batchCache.batchThreadUpdates).orNull()
     localMetrics?.onInsertedTextMessage()
 
     return if (insertResult != null) {
+      if (insertResult.needsThreadUpdate) {
+        batchCache.addIncomingMessageInsertThreadUpdate(insertResult.threadId)
+      }
       AppDependencies.messageNotifier.updateNotification(context, ConversationId.forConversation(insertResult.threadId))
       insertResult
     } else {

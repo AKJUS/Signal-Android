@@ -1686,6 +1686,11 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       .run()
   }
 
+  fun updateForMessageInsert(threadId: Long, unarchive: Boolean) {
+    setLastScrolled(threadId, 0)
+    update(threadId, unarchive)
+  }
+
   fun update(threadId: Long, unarchive: Boolean, syncThreadDelete: Boolean = true): Boolean {
     return update(
       threadId = threadId,
