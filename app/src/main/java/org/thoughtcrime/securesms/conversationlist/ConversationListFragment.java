@@ -492,7 +492,6 @@ public class ConversationListFragment extends MainFragment implements Conversati
 
     initializeSearchListener();
     initializeFilterListener();
-    itemAnimator.disable();
     SpoilerAnnotation.resetRevealedSpoilers();
 
     if (mainToolbarViewModel.getState().getValue().getMode() != MainToolbarMode.SEARCH && list.getAdapter() != defaultAdapter) {
@@ -550,7 +549,6 @@ public class ConversationListFragment extends MainFragment implements Conversati
   public void onStart() {
     super.onStart();
     AppForegroundObserver.addListener(appForegroundObserver);
-    itemAnimator.disable();
   }
 
   @Override
@@ -1575,6 +1573,34 @@ public class ConversationListFragment extends MainFragment implements Conversati
     if (chatFolderList.getLayoutManager() != null) {
       chatFolderList.getLayoutManager().startSmoothScroll(smoothScroller);
     }
+
+    // Manage change animations so we don't animate the list when switching folders
+    itemAnimator.disableChangeAnimations();
+    defaultAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+      @Override
+      public void onChanged() {
+        defaultAdapter.unregisterAdapterDataObserver(this);
+        itemAnimator.enableChangeAnimations();
+      }
+
+      @Override
+      public void onItemRangeInserted(int positionStart, int itemCount) {
+        defaultAdapter.unregisterAdapterDataObserver(this);
+        itemAnimator.enableChangeAnimations();
+      }
+
+      @Override
+      public void onItemRangeChanged(int positionStart, int itemCount) {
+        defaultAdapter.unregisterAdapterDataObserver(this);
+        itemAnimator.enableChangeAnimations();
+      }
+
+      @Override
+      public void onItemRangeRemoved(int positionStart, int itemCount) {
+        defaultAdapter.unregisterAdapterDataObserver(this);
+        itemAnimator.enableChangeAnimations();
+      }
+    });
 
     viewModel.select(chatFolder);
   }
