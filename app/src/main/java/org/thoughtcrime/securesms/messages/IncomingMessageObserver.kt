@@ -4,7 +4,6 @@ import android.app.Application
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.net.ProxyInfo
 import android.os.IBinder
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.NotificationCompat
@@ -31,6 +30,7 @@ import org.thoughtcrime.securesms.keyvalue.isDecisionPending
 import org.thoughtcrime.securesms.messages.MessageDecryptor.FollowUpOperation
 import org.thoughtcrime.securesms.messages.protocol.BufferedProtocolStore
 import org.thoughtcrime.securesms.notifications.NotificationChannels
+import org.thoughtcrime.securesms.push.SignalServiceNetworkAccess.Companion.toApplicableSystemHttpProxy
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.AlarmSleepTimer
 import org.thoughtcrime.securesms.util.AppForegroundObserver
@@ -42,6 +42,7 @@ import org.whispersystems.signalservice.api.util.UptimeSleepTimer
 import org.whispersystems.signalservice.api.websocket.SignalWebSocket
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState
 import org.whispersystems.signalservice.api.websocket.WebSocketUnavailableException
+import org.whispersystems.signalservice.internal.configuration.HttpProxy
 import org.whispersystems.signalservice.internal.push.Envelope
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.Semaphore
@@ -91,7 +92,7 @@ class IncomingMessageObserver(
 
   private val lock: ReentrantLock = ReentrantLock()
   private val connectionNecessarySemaphore = Semaphore(0)
-  private var previousProxyInfo: ProxyInfo? = null
+  private var previousSystemHttpProxy: HttpProxy? = null
   private val networkConnectionListener = NetworkConnectionListener(
     context = context,
     onNetworkLost = { isNetworkUnavailable ->
@@ -108,13 +109,14 @@ class IncomingMessageObserver(
       }
     },
     onProxySettingsChanged = { proxyInfo ->
-      if (proxyInfo != previousProxyInfo) {
-        val networkReset = AppDependencies.onSystemHttpProxyChange(proxyInfo?.host, proxyInfo?.port)
+      val systemHttpProxy = proxyInfo.toApplicableSystemHttpProxy()
+      if (systemHttpProxy?.host != previousSystemHttpProxy?.host || systemHttpProxy?.port != previousSystemHttpProxy?.port) {
+        val networkReset = AppDependencies.onSystemHttpProxyChange(systemHttpProxy)
         if (networkReset) {
           Log.i(TAG, "System proxy configuration changed, network reset.")
         }
       }
-      previousProxyInfo = proxyInfo
+      previousSystemHttpProxy = systemHttpProxy
     }
   )
 
