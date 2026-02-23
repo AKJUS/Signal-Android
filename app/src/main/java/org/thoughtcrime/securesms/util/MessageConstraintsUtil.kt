@@ -98,7 +98,7 @@ object MessageConstraintsUtil {
     return isValidEditMessageSend(targetMessage, targetMessage.dateSent)
   }
 
-  private fun isValidRemoteDeleteSend(message: MessageRecord, currentTime: Long): Boolean {
+  fun isValidRemoteDeleteSend(message: MessageRecord, currentTime: Long): Boolean {
     return !message.isUpdate &&
       message.isOutgoing &&
       message.isPush &&

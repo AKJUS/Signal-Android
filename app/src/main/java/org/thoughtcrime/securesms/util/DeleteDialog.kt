@@ -44,7 +44,7 @@ object DeleteDialog {
     val isNoteToSelfDelete = isNoteToSelfDelete(messageRecords)
 
     if (forceRemoteDelete) {
-      builder.setPositiveButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> deleteForEveryone(messageRecords = messageRecords, isAdminDelete = false, emitter = emitter) }
+      builder.setPositiveButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> deleteForEveryone(messageRecords = messageRecords, emitter = emitter) }
     } else {
       val positiveButton = if (isNoteToSelfDelete) {
         R.string.ConversationFragment_delete
@@ -59,8 +59,8 @@ object DeleteDialog {
       }
 
       if (MessageConstraintsUtil.isValidRemoteDeleteSend(messageRecords, System.currentTimeMillis()) && !isNoteToSelfDelete) {
-        builder.setNeutralButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleDeleteForEveryone(context = context, messageRecords = messageRecords, isAdminDelete = false, emitter = emitter) }
-      } else if (MessageConstraintsUtil.isValidAdminDeleteSend(messageRecords, System.currentTimeMillis(), isAdmin)) {
+        builder.setNeutralButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleDeleteForEveryone(context = context, messageRecords = messageRecords, emitter = emitter) }
+      } else if (MessageConstraintsUtil.isValidAdminDeleteSend(messageRecords, System.currentTimeMillis(), isAdmin) && !isNoteToSelfDelete) {
         builder.setNeutralButton(R.string.ConversationFragment_delete_for_everyone) { _, _ -> handleAdminDeleteForEveryone(context, messageRecords, emitter) }
       }
     }
@@ -79,22 +79,22 @@ object DeleteDialog {
       .setTitle("${context.getString(R.string.ConversationFragment_delete_for_everyone_title)} - INTERNAL ONLY")
       .setMessage(R.string.ConversationFragment_delete_for_everyone_body)
       .setPositiveButton(R.string.ConversationFragment_delete_for_everyone) { _, _ ->
-        handleDeleteForEveryone(context = context, messageRecords = messageRecords, isAdminDelete = true, emitter = emitter)
+        handleDeleteForEveryone(context = context, messageRecords = messageRecords, emitter = emitter)
       }
       .setNegativeButton(android.R.string.cancel) { _, _ -> emitter.onSuccess(Pair(false, false)) }
       .setOnCancelListener { emitter.onSuccess(Pair(false, false)) }
       .show()
   }
 
-  private fun handleDeleteForEveryone(context: Context, messageRecords: Set<MessageRecord>, isAdminDelete: Boolean, emitter: SingleEmitter<Pair<Boolean, Boolean>>) {
+  private fun handleDeleteForEveryone(context: Context, messageRecords: Set<MessageRecord>, emitter: SingleEmitter<Pair<Boolean, Boolean>>) {
     if (SignalStore.uiHints.hasConfirmedDeleteForEveryoneOnce()) {
-      deleteForEveryone(messageRecords, isAdminDelete, emitter)
+      deleteForEveryone(messageRecords, emitter)
     } else {
       MaterialAlertDialogBuilder(context)
         .setMessage(R.string.ConversationFragment_this_message_will_be_deleted_for_everyone_in_the_conversation)
         .setPositiveButton(R.string.ConversationFragment_delete_for_everyone) { _, _ ->
           SignalStore.uiHints.markHasConfirmedDeleteForEveryoneOnce()
-          deleteForEveryone(messageRecords, isAdminDelete, emitter)
+          deleteForEveryone(messageRecords, emitter)
         }
         .setNegativeButton(android.R.string.cancel) { _, _ -> emitter.onSuccess(Pair(false, false)) }
         .setOnCancelListener { emitter.onSuccess(Pair(false, false)) }
@@ -102,13 +102,13 @@ object DeleteDialog {
     }
   }
 
-  private fun deleteForEveryone(messageRecords: Set<MessageRecord>, isAdminDelete: Boolean, emitter: SingleEmitter<Pair<Boolean, Boolean>>) {
+  private fun deleteForEveryone(messageRecords: Set<MessageRecord>, emitter: SingleEmitter<Pair<Boolean, Boolean>>) {
     SignalExecutors.BOUNDED.execute {
       messageRecords.forEach { message ->
-        if (isAdminDelete) {
-          MessageSender.sendAdminDelete(message.id)
-        } else {
+        if (MessageConstraintsUtil.isValidRemoteDeleteSend(message, System.currentTimeMillis())) {
           MessageSender.sendRemoteDelete(message.id)
+        } else {
+          MessageSender.sendAdminDelete(message.id)
         }
       }
 
