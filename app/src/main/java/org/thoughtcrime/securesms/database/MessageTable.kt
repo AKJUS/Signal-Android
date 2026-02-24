@@ -1133,7 +1133,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
       writableDatabase.update(TABLE_NAME)
         .values(LATEST_REVISION_ID to messageId)
-        .where("$ID = ? OR $LATEST_REVISION_ID = ?", targetMessage.id, targetMessage.id)
+        .where("$ID != ? AND ($ID = ? OR $LATEST_REVISION_ID = ? OR $ORIGINAL_MESSAGE_ID = ?)", messageId, targetMessage.id, targetMessage.id, targetMessage.getOriginalOrOwnMessageId().id)
         .run()
 
       reactions.moveReactionsToNewMessage(newMessageId = messageId, previousId = targetMessage.id)
