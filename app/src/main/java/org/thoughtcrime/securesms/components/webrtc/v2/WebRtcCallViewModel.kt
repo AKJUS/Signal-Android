@@ -84,7 +84,7 @@ class WebRtcCallViewModel : ViewModel() {
 
   private val groupMemberStateUpdater = FlowCollector<List<GroupMemberEntry.FullMember>> { m -> participantsState.update { CallParticipantsState.update(it, m) } }
 
-  private val shouldShowSpeakerHint: Flow<Boolean> = participantsState.map(this::shouldShowSpeakerHint)
+  private val shouldShowSpeakerHint: Flow<Boolean> = participantsState.map(this::shouldShowSpeakerHint).distinctUntilChanged()
 
   private val elapsedTimeHandler = Handler(Looper.getMainLooper())
   private val elapsedTimeRunnable = Runnable { handleTick() }
