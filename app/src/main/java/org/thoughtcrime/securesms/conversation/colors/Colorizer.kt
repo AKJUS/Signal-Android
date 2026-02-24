@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import org.signal.core.models.ServiceId
+import org.signal.core.util.orNull
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
@@ -16,7 +17,7 @@ import org.signal.core.ui.R as CoreUiR
  * - Gives easy access to different bubble colors
  * - Watches and responds to RecyclerView scroll and layout changes to update a ColorizerView
  */
-class Colorizer {
+class Colorizer @JvmOverloads constructor(groupMemberIds: List<ServiceId> = emptyList()) {
 
   private var colorsHaveBeenSet = false
 
@@ -24,6 +25,10 @@ class Colorizer {
   private val groupSenderColors: MutableMap<RecipientId, NameColor> = mutableMapOf()
 
   private val groupMembers: LinkedHashSet<ServiceId> = linkedSetOf()
+
+  init {
+    onGroupMembershipChanged(groupMemberIds)
+  }
 
   @ColorInt
   fun getOutgoingBodyTextColor(context: Context): Int {
@@ -67,27 +72,29 @@ class Colorizer {
     }
   }
 
-  @Suppress("DEPRECATION")
   @ColorInt
   fun getIncomingGroupSenderColor(context: Context, recipient: Recipient): Int {
-    return if (groupMembers.isEmpty()) {
-      groupSenderColors[recipient.id]?.getColor(context) ?: getDefaultColor(context, recipient)
-    } else if (recipient.hasServiceId) {
-      val memberPosition = groupMembers.indexOf(recipient.requireServiceId())
-
-      if (memberPosition >= 0) {
-        val colorPosition = memberPosition % ChatColorsPalette.Names.all.size
-        ChatColorsPalette.Names.all[colorPosition].getColor(context)
-      } else {
-        getDefaultColor(context, recipient)
-      }
-    } else {
-      getDefaultColor(context, recipient)
-    }
+    return getNameColor(context, recipient).getColor(context)
   }
 
   fun onGroupMembershipChanged(serviceIds: List<ServiceId>) {
     groupMembers.addAll(serviceIds.sortedBy { it.toString() })
+  }
+
+  @Suppress("DEPRECATION")
+  fun getNameColor(context: Context, recipient: Recipient): NameColor {
+    if (groupMembers.isEmpty()) {
+      return groupSenderColors[recipient.id] ?: getDefaultColor(context, recipient)
+    }
+
+    val serviceId = recipient.serviceId.orNull()
+    if (serviceId != null) {
+      val position = groupMembers.indexOf(serviceId)
+      if (position >= 0) {
+        return ChatColorsPalette.Names.all[position % ChatColorsPalette.Names.all.size]
+      }
+    }
+    return getDefaultColor(context, recipient)
   }
 
   @Suppress("DEPRECATION")
@@ -99,14 +106,13 @@ class Colorizer {
   }
 
   @Suppress("DEPRECATION")
-  @ColorInt
-  private fun getDefaultColor(context: Context, recipient: Recipient): Int {
+  private fun getDefaultColor(context: Context, recipient: Recipient): NameColor {
     return if (colorsHaveBeenSet) {
-      val color = ChatColorsPalette.Names.all[groupSenderColors.size % ChatColorsPalette.Names.all.size]
-      groupSenderColors[recipient.id] = color
-      return color.getColor(context)
+      ChatColorsPalette.Names.all[groupSenderColors.size % ChatColorsPalette.Names.all.size]
+        .also { groupSenderColors[recipient.id] = it }
     } else {
-      getIncomingBodyTextColor(context, recipient.hasWallpaper)
+      val colorInt = getIncomingBodyTextColor(context, recipient.hasWallpaper)
+      NameColor(lightColor = colorInt, darkColor = colorInt)
     }
   }
 }

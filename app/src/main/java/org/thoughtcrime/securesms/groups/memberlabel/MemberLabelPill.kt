@@ -91,7 +91,7 @@ fun MemberLabelPill(
           Text(
             text = annotatedText,
             inlineContent = inlineContent,
-            modifier = Modifier.padding(end = 5.dp)
+            modifier = if (text.isNotEmpty()) Modifier.padding(end = 5.dp) else Modifier
           )
         }
       }

@@ -9352,6 +9352,8 @@
     <string name="GroupMemberLabel__label_text_placeholder">Add your label</string>
     <!-- Group member label preview section header. -->
     <string name="GroupMemberLabel__preview_section_header">Preview</string>
+    <!-- Sample message shown in the group member label message preview. -->
+    <string name="GroupMemberLabel__preview_sample_message">Hello!</string>
     <!-- Group member label save button label. -->
     <string name="GroupMemberLabel__save">Save</string>
     <!-- Accessibility label for the button to open the group member label emoji picker. -->

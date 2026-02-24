@@ -12,6 +12,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.signal.core.models.ServiceId
 import org.signal.core.util.orNull
+import org.thoughtcrime.securesms.conversation.colors.Colorizer
+import org.thoughtcrime.securesms.conversation.colors.NameColor
 import org.thoughtcrime.securesms.database.GroupTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
@@ -33,11 +35,15 @@ class MemberLabelRepository private constructor(
     val instance: MemberLabelRepository by lazy { MemberLabelRepository() }
   }
 
+  suspend fun getRecipient(recipientId: RecipientId): Recipient = withContext(Dispatchers.IO) {
+    Recipient.resolved(recipientId)
+  }
+
   /**
    * Gets the member label for a specific recipient in the group.
    */
-  suspend fun getLabel(groupId: GroupId.V2, recipientId: RecipientId): MemberLabel? = withContext(Dispatchers.IO) {
-    getLabel(groupId, Recipient.resolved(recipientId))
+  suspend fun getLabel(groupId: GroupId.V2, recipientId: RecipientId): MemberLabel? {
+    return getLabel(groupId, getRecipient(recipientId))
   }
 
   /**
@@ -87,6 +93,19 @@ class MemberLabelRepository private constructor(
     if (!RemoteConfig.sendMemberLabels) return@withContext false
     val groupRecord = groupsTable.getGroup(groupId).orNull() ?: return@withContext false
     groupRecord.attributesAccessControl.allows(groupRecord.memberLevel(recipient))
+  }
+
+  /**
+   * Computes the sender [NameColor] for a recipient as seen by other group members.
+   */
+  suspend fun getSenderNameColor(groupId: GroupId.V2, recipientId: RecipientId): NameColor = withContext(Dispatchers.IO) {
+    val recipient = getRecipient(recipientId)
+
+    val groupMemberIds = groupsTable
+      .getGroupMembers(groupId, GroupTable.MemberSet.FULL_MEMBERS_INCLUDING_SELF)
+      .mapNotNull { it.serviceId.orNull() }
+
+    Colorizer(groupMemberIds).getNameColor(context, recipient)
   }
 
   /**
