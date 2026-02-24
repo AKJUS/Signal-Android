@@ -22,14 +22,24 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.components.emoji.Emojifier
 
-private val defaultModifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp)
-private val defaultTextStyle: @Composable () -> TextStyle = { MaterialTheme.typography.bodyLarge }
+object MemberLabelPill {
+  @get:Composable
+  val textStyleCompact: TextStyle
+    get() = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Normal)
+
+  @get:Composable
+  val textStyleNormal: TextStyle
+    get() = MaterialTheme.typography.bodyLarge
+}
+
+private val defaultModifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp)
 
 /**
  * Displays member label text with an optional emoji.
@@ -40,7 +50,7 @@ fun MemberLabelPill(
   text: String,
   tintColor: Color,
   modifier: Modifier = defaultModifier,
-  textStyle: TextStyle = defaultTextStyle()
+  textStyle: TextStyle = MemberLabelPill.textStyleCompact
 ) {
   val isDark = isSystemInDarkTheme()
   val backgroundColor = tintColor.copy(alpha = if (isDark) 0.32f else 0.10f)
@@ -71,7 +81,7 @@ fun MemberLabelPill(
   textColor: Color,
   backgroundColor: Color,
   modifier: Modifier = defaultModifier,
-  textStyle: TextStyle = defaultTextStyle()
+  textStyle: TextStyle = MemberLabelPill.textStyleCompact
 ) {
   val shape = RoundedCornerShape(percent = 50)
 
@@ -91,7 +101,7 @@ fun MemberLabelPill(
           Text(
             text = annotatedText,
             inlineContent = inlineContent,
-            modifier = if (text.isNotEmpty()) Modifier.padding(end = 5.dp) else Modifier
+            modifier = if (text.isNotEmpty()) Modifier.padding(end = 4.dp) else Modifier
           )
         }
       }

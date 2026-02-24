@@ -26,7 +26,7 @@ import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.components.emoji.Emojifier
 
-private val defaultLabelModifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+private val defaultLabelModifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
 private val defaultLabelTextStyle: @Composable () -> TextStyle = { MaterialTheme.typography.bodySmall }
 
 /**
