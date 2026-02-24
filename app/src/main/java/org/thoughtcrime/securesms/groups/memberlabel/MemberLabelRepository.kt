@@ -12,7 +12,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.signal.core.models.ServiceId
 import org.signal.core.util.orNull
-import org.thoughtcrime.securesms.conversation.colors.Colorizer
+import org.thoughtcrime.securesms.conversation.colors.ColorizerV2
 import org.thoughtcrime.securesms.conversation.colors.NameColor
 import org.thoughtcrime.securesms.database.GroupTable
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -105,7 +105,7 @@ class MemberLabelRepository private constructor(
       .getGroupMembers(groupId, GroupTable.MemberSet.FULL_MEMBERS_INCLUDING_SELF)
       .mapNotNull { it.serviceId.orNull() }
 
-    Colorizer(groupMemberIds).getNameColor(context, recipient)
+    ColorizerV2(groupMemberIds).getNameColor(context, recipient)
   }
 
   /**

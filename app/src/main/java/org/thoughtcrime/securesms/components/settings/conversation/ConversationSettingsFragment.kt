@@ -69,7 +69,7 @@ import org.thoughtcrime.securesms.components.settings.conversation.preferences.R
 import org.thoughtcrime.securesms.components.settings.conversation.preferences.SharedMediaPreference
 import org.thoughtcrime.securesms.components.settings.conversation.preferences.Utils.formatMutedUntil
 import org.thoughtcrime.securesms.conversation.ConversationIntents
-import org.thoughtcrime.securesms.conversation.colors.Colorizer
+import org.thoughtcrime.securesms.conversation.colors.ColorizerV2
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.memberlabel.StyledMemberLabel
@@ -127,7 +127,7 @@ class ConversationSettingsFragment : DSLSettingsFragment(
   private val args: ConversationSettingsFragmentArgs by navArgs()
   private val alertTint by lazy { ContextCompat.getColor(requireContext(), R.color.signal_alert_primary) }
   private val alertDisabledTint by lazy { ContextCompat.getColor(requireContext(), R.color.signal_alert_primary_50) }
-  private val colorizer = Colorizer()
+  private val colorizer = ColorizerV2()
   private val blockIcon by lazy {
     ContextUtil.requireDrawable(requireContext(), R.drawable.symbol_block_24).apply {
       colorFilter = PorterDuffColorFilter(alertTint, PorterDuff.Mode.SRC_IN)
