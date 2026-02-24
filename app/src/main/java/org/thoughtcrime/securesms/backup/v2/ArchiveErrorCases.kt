@@ -214,6 +214,10 @@ object ExportOddities {
     return log(0, "Distribution list had self as a member. Removing it.")
   }
 
+  fun quoteAuthorNotFound(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Quote author was not found in the exported recipients. Removing the quote.")
+  }
+
   fun emptyQuote(sentTimestamp: Long): String {
     return log(sentTimestamp, "Quote had no text or attachments. Removing it.")
   }
