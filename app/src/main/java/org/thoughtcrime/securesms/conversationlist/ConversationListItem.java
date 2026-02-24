@@ -700,8 +700,10 @@ public final class ConversationListItem extends ConstraintLayout implements Bind
       } else if (extra != null && extra.getDeletedBy() != null) {
         RecipientId individualRecipientId = thread.getIndividualRecipientId();
         RecipientId deletedBy = thread.getDeletedByRecipientId();
-        if (individualRecipientId.equals(deletedBy)) {
-          return emphasisAdded(context, context.getString(thread.isOutgoing() ? R.string.ThreadRecord_you_deleted_this_message : R.string.ThreadRecord_this_message_was_deleted), defaultTint);
+        if (individualRecipientId.equals(deletedBy) && thread.isOutgoing()) {
+          return emphasisAdded(context, context.getString(R.string.ThreadRecord_you_deleted_this_message), defaultTint);
+        } else if (individualRecipientId.equals(deletedBy)) {
+          return emphasisAdded(recipientToStringAsync(deletedBy, r -> new SpannableString(context.getString(R.string.ThreadRecord_s_deleted_this_message, r.getDisplayName(context)))));
         } else {
           return emphasisAdded(recipientToStringAsync(deletedBy, r -> new SpannableString(context.getString(R.string.ThreadRecord_admin_deleted_this_message, r.getDisplayName(context)))));
         }

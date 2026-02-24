@@ -1156,7 +1156,7 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     if (!isAdminDelete && messageRecord.isOutgoing()) {
       body = formatDeletedText(context.getString(R.string.ConversationItem_you_deleted_this_message));
     } else if (!isAdminDelete) {
-      body = formatDeletedText(context.getString(R.string.ConversationItem_this_message_was_deleted));
+      body = formatDeletedText(context.getString(R.string.ConversationItem_s_deleted_this_message, message.getDeletedByRecipient().getDisplayName(context)));
     } else {
       SpannableString prefix = formatDeletedText(context.getString(R.string.ConversationItem_admin));
       SpannableString suffix = formatDeletedText(context.getString(R.string.ConversationItem_deleted_this_message));
