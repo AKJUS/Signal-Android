@@ -13,17 +13,21 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.signal.core.models.ServiceId
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.crypto.ReentrantSessionLock
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.groups.GroupsV2ProcessingLock
+import org.thoughtcrime.securesms.groups.v2.processing.GroupsV2StateProcessor
+import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.BackoffUtil
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.jobs.ForegroundServiceUtil
 import org.thoughtcrime.securesms.jobs.ForegroundServiceUtil.startWhenCapable
 import org.thoughtcrime.securesms.jobs.PushProcessMessageErrorJob
 import org.thoughtcrime.securesms.jobs.PushProcessMessageJob
+import org.thoughtcrime.securesms.jobs.RequestGroupV2InfoJob
 import org.thoughtcrime.securesms.jobs.UnableToStartException
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.keyvalue.isDecisionPending
@@ -321,11 +325,28 @@ class IncomingMessageObserver(
       }
       is MessageDecryptor.Result.Error -> {
         return result.followUpOperations + FollowUpOperation {
-          PushProcessMessageErrorJob(
+          val jobs = mutableListOf<Job>()
+
+          if (result.errorMetadata.groupMasterKey != null) {
+            val groupId = result.errorMetadata.groupId!!
+            if (!SignalDatabase.groups.getGroup(groupId).isPresent) {
+              Log.w(TAG, "Decryption error in group, but group not found. Creating placeholder for groupId: $groupId")
+              SignalDatabase.groups.create(
+                groupMasterKey = result.errorMetadata.groupMasterKey!!,
+                groupState = DecryptedGroup(revision = GroupsV2StateProcessor.RESTORE_PLACEHOLDER_REVISION),
+                groupSendEndorsements = null
+              )
+              jobs += RequestGroupV2InfoJob(groupId)
+            }
+          }
+
+          jobs += PushProcessMessageErrorJob(
             result.toMessageState(),
             result.errorMetadata.toExceptionMetadata(),
             result.envelope.timestamp!!
-          ).asChain()
+          )
+
+          AppDependencies.jobManager.startChain(jobs)
         }
       }
       is MessageDecryptor.Result.Ignore -> {

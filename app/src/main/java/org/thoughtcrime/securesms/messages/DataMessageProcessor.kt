@@ -182,7 +182,7 @@ object DataMessageProcessor {
       message.giftBadge != null -> insertResult = handleGiftMessage(context, envelope, metadata, message, senderRecipient, threadRecipient.id, receivedTime)
       message.isMediaMessage -> insertResult = handleMediaMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics, batchCache)
       message.body != null -> insertResult = handleTextMessage(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime, localMetrics, batchCache)
-      message.groupCallUpdate != null -> handleGroupCallUpdateMessage(envelope, message, senderRecipient.id, groupId)
+      message.groupCallUpdate != null -> handleGroupCallUpdateMessage(envelope, senderRecipient.id, groupId)
       message.pollCreate != null -> insertResult = handlePollCreate(context, envelope, metadata, message, senderRecipient, threadRecipient, groupId, receivedTime)
       message.pollTerminate != null -> insertResult = handlePollTerminate(context, envelope, metadata, message, senderRecipient, earlyMessageCacheEntry, threadRecipient, groupId, receivedTime)
       message.pollVote != null -> messageId = handlePollVote(context, envelope, message, senderRecipient, earlyMessageCacheEntry)
@@ -1048,16 +1048,18 @@ object DataMessageProcessor {
 
   fun handleGroupCallUpdateMessage(
     envelope: Envelope,
-    message: DataMessage,
     senderRecipientId: RecipientId,
     groupId: GroupId.V2?
   ) {
     log(envelope.timestamp!!, "Group call update message.")
 
-    val groupCallUpdate: DataMessage.GroupCallUpdate = message.groupCallUpdate!!
-
     if (groupId == null) {
       warn(envelope.timestamp!!, "Invalid group for group call update message")
+      return
+    }
+
+    if (!SignalDatabase.groups.groupExists(groupId)) {
+      warn(envelope.timestamp!!, "Received group call update message for unknown groupId: $groupId")
       return
     }
 
