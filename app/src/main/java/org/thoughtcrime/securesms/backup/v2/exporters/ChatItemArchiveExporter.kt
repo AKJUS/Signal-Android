@@ -1365,11 +1365,12 @@ private fun FailureReason?.toRemote(): PaymentNotification.TransactionDetails.Fa
 }
 
 private fun List<Mention>.toRemoteBodyRanges(exportState: ExportState): List<BackupBodyRange> {
-  return this.map {
+  return this.mapNotNull {
+    val aci = exportState.recipientIdToAci[it.recipientId.toLong()] ?: return@mapNotNull null
     BackupBodyRange(
       start = it.start,
       length = it.length,
-      mentionAci = exportState.recipientIdToAci[it.recipientId.toLong()]
+      mentionAci = aci
     )
   }
 }
