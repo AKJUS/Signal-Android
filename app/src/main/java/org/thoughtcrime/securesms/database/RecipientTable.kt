@@ -275,7 +275,8 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
 
     val CREATE_INDEXS = arrayOf(
       "CREATE INDEX IF NOT EXISTS recipient_type_index ON $TABLE_NAME ($TYPE);",
-      "CREATE INDEX IF NOT EXISTS recipient_aci_profile_key_index ON $TABLE_NAME ($ACI_COLUMN, $PROFILE_KEY) WHERE $ACI_COLUMN NOT NULL AND $PROFILE_KEY NOT NULL"
+      "CREATE INDEX IF NOT EXISTS recipient_aci_profile_key_index ON $TABLE_NAME ($ACI_COLUMN, $PROFILE_KEY) WHERE $ACI_COLUMN NOT NULL AND $PROFILE_KEY NOT NULL",
+      "CREATE UNIQUE INDEX recipient_username_unique_nocase ON recipient(username COLLATE NOCASE)"
     )
 
     private val RECIPIENT_PROJECTION: Array<String> = arrayOf(
@@ -446,7 +447,14 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
   }
 
   fun getByUsername(username: String): Optional<RecipientId> {
-    return getByColumn(USERNAME, username)
+    return readableDatabase
+      .select(ID)
+      .from(TABLE_NAME)
+      .where("$USERNAME = ? COLLATE NOCASE", username)
+      .run()
+      .readToSingleObject { cursor ->
+        Optional.of(RecipientId.from(cursor.requireLong(ID)))
+      } ?: Optional.empty()
   }
 
   fun getByCallLinkRoomId(callLinkRoomId: CallLinkRoomId): Optional<RecipientId> {
@@ -974,7 +982,7 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
       writableDatabase
         .update(TABLE_NAME)
         .values(USERNAME to null)
-        .where("$USERNAME = ? AND $ID != ?", username, recipientId.serialize())
+        .where("$USERNAME = ? COLLATE NOCASE AND $ID != ?", username, recipientId.serialize())
         .run()
     }
   }
