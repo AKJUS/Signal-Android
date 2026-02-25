@@ -3992,7 +3992,7 @@ class ConversationFragment :
     }
 
     override fun handleMuteNotifications() {
-      MuteDialog.show(requireContext(), viewModel::muteConversation)
+      MuteDialog.show(requireContext(), childFragmentManager, viewLifecycleOwner, viewModel::muteConversation)
     }
 
     override fun handleUnmuteNotifications() {

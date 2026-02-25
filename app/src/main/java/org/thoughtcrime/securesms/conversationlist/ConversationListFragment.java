@@ -1177,9 +1177,7 @@ public class ConversationListFragment extends MainFragment implements Conversati
   }
 
   private void handleMute(@NonNull Collection<Conversation> conversations) {
-    MuteDialog.show(requireContext(), until -> {
-      updateMute(conversations, until);
-    });
+    MuteDialog.show(requireContext(), getChildFragmentManager(), getViewLifecycleOwner(), until -> updateMute(conversations, until));
   }
 
   private void handleUnmute(@NonNull Collection<Conversation> conversations) {
@@ -1612,7 +1610,7 @@ public class ConversationListFragment extends MainFragment implements Conversati
 
   @Override
   public void onMuteAll(@NonNull ChatFolderRecord chatFolder) {
-    MuteDialog.show(requireContext(), until -> viewModel.onUpdateMute(chatFolder, until));
+    MuteDialog.show(requireContext(), getChildFragmentManager(), getViewLifecycleOwner(), until -> viewModel.onUpdateMute(chatFolder, until));
   }
 
   @Override
@@ -1945,6 +1943,7 @@ public class ConversationListFragment extends MainFragment implements Conversati
 
     void onMultiSelectFinished();
   }
+
 }
 
 

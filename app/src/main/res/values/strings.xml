@@ -3212,7 +3212,22 @@
     <string name="MessageDisplayHelper_message_encrypted_for_non_existing_session">Message encrypted for non-existing session</string>
 
     <!-- MuteDialog -->
+    <!-- Title for a dialog where a user chooses how long they'd like to mute notifications for -->
     <string name="MuteDialog_mute_notifications">Mute notifications</string>
+    <!-- Dialog option that, when pressed, will open a time picker to let the user choose how long they'd like to mute notifications for -->
+    <string name="MuteDialog__mute_until">Mute until…</string>
+
+    <!-- MuteUntilTimePickerBottomSheet -->
+    <!-- Title for a dialog where a user chooses how long they'd like to mute notifications for -->
+    <string name="MuteUntilTimePickerBottomSheet__dialog_title">Mute notifications until…</string>
+    <!-- Label for a data selector where the user chooses how long they'd like to mute notifications for -->
+    <string name="MuteUntilTimePickerBottomSheet__select_date_title">Select date</string>
+    <!-- Label for a time selector where the user chooses how long they'd like to mute notifications for -->
+    <string name="MuteUntilTimePickerBottomSheet__select_time_title">Select time</string>
+    <!-- Label for a button that, when pressed, will confirm the user's choice on how long to mute notifications for -->
+    <string name="MuteUntilTimePickerBottomSheet__mute_notifications">Mute notifications</string>
+    <!-- Subtitle in a dialog that describes the timezone the user is picking times in. The first placeholder is a UTC offset, and the second placeholder is a user-friendly name for the timezone, e.g. "All times in (GMT-05:00) Eastern Standard Time" -->
+    <string name="MuteUntilTimePickerBottomSheet__timezone_disclaimer">All times in (%1$s) %2$s</string>
 
     <!-- KeyCachingService -->
     <string name="KeyCachingService_signal_passphrase_cached">Touch to open.</string>

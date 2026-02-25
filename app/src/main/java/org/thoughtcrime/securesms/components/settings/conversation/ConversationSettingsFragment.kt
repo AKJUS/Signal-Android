@@ -38,7 +38,6 @@ import org.signal.core.util.orNull
 import org.signal.donations.InAppPaymentType
 import org.thoughtcrime.securesms.AvatarPreviewActivity
 import org.thoughtcrime.securesms.BlockUnblockDialog
-import org.thoughtcrime.securesms.MuteDialog
 import org.thoughtcrime.securesms.PushContactSelectionActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.badges.BadgeImageView
@@ -119,10 +118,11 @@ private const val REQUEST_CODE_ADD_CONTACT = 2
 private const val REQUEST_CODE_ADD_MEMBERS_TO_GROUP = 3
 private const val REQUEST_CODE_RETURN_FROM_MEDIA = 4
 
-class ConversationSettingsFragment : DSLSettingsFragment(
-  layoutId = R.layout.conversation_settings_fragment,
-  menuId = R.menu.conversation_settings
-) {
+class ConversationSettingsFragment :
+  DSLSettingsFragment(
+    layoutId = R.layout.conversation_settings_fragment,
+    menuId = R.menu.conversation_settings
+  ) {
 
   private val args: ConversationSettingsFragmentArgs by navArgs()
   private val alertTint by lazy { ContextCompat.getColor(requireContext(), R.color.signal_alert_primary) }
@@ -469,9 +469,11 @@ class ConversationSettingsFragment : DSLSettingsFragment(
               YouAreAlreadyInACallSnackbar.show(requireView())
             }
           },
-          onMuteClick = {
+          onMuteClick = { view ->
             if (!state.buttonStripState.isMuted) {
-              MuteDialog.show(requireContext(), viewModel::setMuteUntil)
+              MuteContextMenu.show(view, requireView() as ViewGroup, childFragmentManager, viewLifecycleOwner) { duration ->
+                viewModel.setMuteUntil(duration)
+              }
             } else {
               MaterialAlertDialogBuilder(requireContext())
                 .setMessage(state.recipient.muteUntil.formatMutedUntil(requireContext()))
