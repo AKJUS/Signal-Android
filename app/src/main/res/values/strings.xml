@@ -9385,5 +9385,14 @@
     <string name="GroupMemberLabel__accessibility_clear_label">Clear label</string>
     <string name="GroupMemberLabel__description">Add a member label to describe yourself or your role in this group. Labels are only visible within this group.</string>
 
+    <!-- Title for the member labels education sheet. -->
+    <string name="MemberLabelsEducation__title">Member labels</string>
+    <!-- Body for the member labels education sheet. -->
+    <string name="MemberLabelsEducation__body">Use a member label to describe yourself or your role in this group. Member labels are only visible within this group.</string>
+    <!-- Button to set a new member label. -->
+    <string name="MemberLabelsEducation__set_label">Set a member label</string>
+    <!-- Button to edit an existing member label. -->
+    <string name="MemberLabelsEducation__edit_label">Edit your label</string>
+
     <!-- EOF -->
 </resources>

@@ -38,8 +38,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.fragment.navArgs
 import org.signal.core.ui.compose.AllDevicePreviews
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.ClearableTextField
@@ -48,6 +48,7 @@ import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
 import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.util.isNotNullOrBlank
+import org.signal.core.util.requireParcelableCompat
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelUiState.SaveState
@@ -62,12 +63,22 @@ import org.thoughtcrime.securesms.util.viewModel
 class MemberLabelFragment : ComposeFragment(), ReactWithAnyEmojiBottomSheetDialogFragment.Callback {
   companion object {
     private const val EMOJI_PICKER_DIALOG_TAG = "emoji_picker_dialog"
+    private const val ARG_GROUP_ID = "group_id"
+
+    fun newInstance(groupId: GroupId.V2): MemberLabelFragment {
+      return MemberLabelFragment().apply {
+        arguments = bundleOf(ARG_GROUP_ID to groupId)
+      }
+    }
   }
 
-  private val args: MemberLabelFragmentArgs by navArgs()
+  private val groupId: GroupId.V2 by lazy {
+    requireArguments().requireParcelableCompat(ARG_GROUP_ID, GroupId.V2::class.java)
+  }
+
   private val viewModel: MemberLabelViewModel by viewModel {
     MemberLabelViewModel(
-      groupId = (args.groupId as GroupId).requireV2(),
+      groupId = groupId,
       recipientId = Recipient.self().id
     )
   }

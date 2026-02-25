@@ -36,6 +36,7 @@ import org.thoughtcrime.securesms.components.settings.conversation.preferences.B
 import org.thoughtcrime.securesms.conversation.v2.data.AvatarDownloadStateCache
 import org.thoughtcrime.securesms.fonts.SignalSymbols
 import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelEducationSheet
 import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelPillView
 import org.thoughtcrime.securesms.nicknames.NicknameActivity
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -334,7 +335,7 @@ class RecipientBottomSheetDialogFragment : FixedRoundedCornerBottomSheetDialogFr
     }
 
     viewModel.recipientDetails.observe(viewLifecycleOwner) { state ->
-      updateRecipientDetails(state, memberLabelView, aboutView)
+      updateRecipientDetails(state, memberLabelView, aboutView, groupId?.v2OrNull())
     }
 
     viewModel.canAddToAGroup.observe(getViewLifecycleOwner()) { canAdd: Boolean ->
@@ -450,13 +451,23 @@ class RecipientBottomSheetDialogFragment : FixedRoundedCornerBottomSheetDialogFr
   private fun updateRecipientDetails(
     state: RecipientDetailsState,
     memberLabelView: MemberLabelPillView,
-    aboutView: TextView
+    aboutView: TextView,
+    groupId: GroupId.V2?
   ) {
     when {
       state.memberLabel != null -> {
         memberLabelView.setLabel(state.memberLabel.label, state.memberLabel.tintColor)
         memberLabelView.visible = true
         aboutView.visible = false
+
+        if (groupId != null) {
+          memberLabelView.setOnClickListener {
+            dismiss()
+            MemberLabelEducationSheet.show(parentFragmentManager, groupId)
+          }
+        } else {
+          memberLabelView.setOnClickListener(null)
+        }
       }
 
       !state.aboutText.isNullOrBlank() -> {

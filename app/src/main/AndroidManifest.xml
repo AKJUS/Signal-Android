@@ -933,6 +933,11 @@
             android:exported="false"
             android:theme="@style/Signal.DayNight.NoActionBar" />
 
+        <activity
+            android:name=".groups.memberlabel.MemberLabelActivity"
+            android:exported="false"
+            android:theme="@style/Signal.DayNight.NoActionBar" />
+
         <!-- ======================================= -->
         <!-- Activity Aliases                        -->
         <!-- ======================================= -->

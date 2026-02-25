@@ -40,8 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.os.bundleOf
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.Navigation
 import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.ComposeBottomSheetDialogFragment
 import org.signal.core.ui.compose.DayNightPreviews
@@ -53,7 +53,6 @@ import org.thoughtcrime.securesms.AvatarPreviewActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.AvatarImage
 import org.thoughtcrime.securesms.components.emoji.EmojiTextView
-import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsFragmentDirections
 import org.thoughtcrime.securesms.conversation.v2.UnverifiedProfileNameBottomSheet
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.memberlabel.MemberLabel
@@ -72,6 +71,9 @@ import org.signal.core.ui.R as CoreUiR
 class AboutSheet : ComposeBottomSheetDialogFragment() {
 
   companion object {
+    const val RESULT_EDIT_MEMBER_LABEL = "edit_member_label"
+    const val RESULT_GROUP_ID = "group_id"
+
     private const val RECIPIENT_ID = "recipient_id"
     private const val VIEWING_FROM_GROUP_ID = "viewing_from_group_id"
 
@@ -157,8 +159,7 @@ class AboutSheet : ComposeBottomSheetDialogFragment() {
 
   private fun openMemberLabelScreen() {
     viewingFromGroupId?.let { groupId ->
-      val navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-      navController.navigate(ConversationSettingsFragmentDirections.actionConversationSettingsFragmentToMemberLabelFragment(groupId))
+      setFragmentResult(RESULT_EDIT_MEMBER_LABEL, bundleOf(RESULT_GROUP_ID to groupId))
       dismiss()
     }
   }
