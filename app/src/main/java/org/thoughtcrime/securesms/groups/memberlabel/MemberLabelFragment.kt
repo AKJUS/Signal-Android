@@ -78,7 +78,7 @@ class MemberLabelFragment : ComposeFragment(), ReactWithAnyEmojiBottomSheetDialo
     val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
     val callbacks = remember {
-      object : UiCallbacks {
+      object : MemberLabelUiCallbacks {
         override fun onClosePressed() {
           backPressedDispatcher?.onBackPressed()
         }
@@ -116,7 +116,7 @@ class MemberLabelFragment : ComposeFragment(), ReactWithAnyEmojiBottomSheetDialo
 @Composable
 private fun MemberLabelScreenUi(
   state: MemberLabelUiState,
-  callbacks: UiCallbacks
+  callbacks: MemberLabelUiCallbacks
 ) {
   Scaffolds.Settings(
     title = stringResource(R.string.GroupMemberLabel__title),
@@ -272,7 +272,7 @@ private fun SaveButton(
   }
 }
 
-private interface UiCallbacks {
+private interface MemberLabelUiCallbacks {
   fun onClosePressed()
   fun onLabelEmojiChanged(emoji: String)
   fun onLabelTextChanged(text: String)
@@ -280,7 +280,7 @@ private interface UiCallbacks {
   fun onClearLabelClicked()
   fun onSaveClicked()
 
-  object Empty : UiCallbacks {
+  object Empty : MemberLabelUiCallbacks {
     override fun onClosePressed() = Unit
     override fun onLabelEmojiChanged(emoji: String) = Unit
     override fun onLabelTextChanged(text: String) = Unit
@@ -302,7 +302,7 @@ private fun MemberLabelScreenPreview() {
         labelEmoji = "⛑️",
         labelText = "Vet Coordinator"
       ),
-      callbacks = UiCallbacks.Empty
+      callbacks = MemberLabelUiCallbacks.Empty
     )
   }
 }
