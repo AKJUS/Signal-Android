@@ -739,7 +739,7 @@ class ConversationSettingsFragment : DSLSettingsFragment(
             customPref(
               RecipientPreference.Model(
                 recipient = group,
-                onClick = {
+                onRowClick = {
                   CommunicationActions.startConversation(requireActivity(), group, null)
                   requireActivity().finish()
                 }
@@ -787,13 +787,26 @@ class ConversationSettingsFragment : DSLSettingsFragment(
         )
 
         for (member in groupState.members) {
+          val canSetMemberLabel = member.member.isSelf && groupState.canSetOwnMemberLabel
+          val memberLabel = member.getMemberLabel(groupState)
+
           customPref(
             RecipientPreference.Model(
               recipient = member.member,
               isAdmin = member.isAdmin,
-              memberLabel = member.getMemberLabel(groupState),
+              memberLabel = memberLabel,
+              canSetMemberLabel = canSetMemberLabel,
               lifecycleOwner = viewLifecycleOwner,
-              onClick = {
+              onRowClick = {
+                if (canSetMemberLabel && memberLabel == null) {
+                  val action = ConversationSettingsFragmentDirections
+                    .actionConversationSettingsFragmentToMemberLabelFragment(groupState.groupId)
+                  navController.safeNavigate(action)
+                } else {
+                  RecipientBottomSheetDialogFragment.show(parentFragmentManager, member.member.id, groupState.groupId)
+                }
+              },
+              onAvatarClick = {
                 RecipientBottomSheetDialogFragment.show(parentFragmentManager, member.member.id, groupState.groupId)
               }
             )

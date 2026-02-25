@@ -53,6 +53,12 @@ class MemberLabelRepository private constructor(
   fun getLabelJava(groupId: GroupId.V2, recipient: Recipient): MemberLabel? = runBlocking { getLabel(groupId, recipient) }
 
   /**
+   * Checks whether the [Recipient] has permission to set their member label in the given group (blocking version for Java compatibility).
+   */
+  @WorkerThread
+  fun canSetLabelJava(groupId: GroupId.V2, recipient: Recipient): Boolean = runBlocking { canSetLabel(groupId, recipient) }
+
+  /**
    * Gets the member label for a specific recipient in the group.
    */
   suspend fun getLabel(groupId: GroupId.V2, recipient: Recipient): MemberLabel? = withContext(Dispatchers.IO) {

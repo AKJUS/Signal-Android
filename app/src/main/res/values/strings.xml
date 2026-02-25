@@ -5167,6 +5167,8 @@
     <!-- Button text to approve a user that has requested to join a group -->
     <string name="GroupRecipientListItem_approve_description">Approve</string>
     <string name="GroupRecipientListItem_deny_description">Deny</string>
+    <!-- Placeholder shown in the group member list when the user has not yet set a member label. -->
+    <string name="GroupRecipientListItem__add_member_label">Add member label</string>
 
 
     <!-- GroupsLearnMoreBottomSheetDialogFragment -->
