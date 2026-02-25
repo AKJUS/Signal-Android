@@ -853,13 +853,17 @@ class ConversationSettingsFragment :
           )
 
           if (RemoteConfig.sendMemberLabels) {
+            val canSetMemberLabel = groupState.canSetOwnMemberLabel && !state.isDeprecatedOrUnregistered
             clickPref(
               title = DSLSettingsText.from(R.string.ConversationSettingsFragment__group_member_label),
               icon = DSLSettingsIcon.from(R.drawable.symbol_tag_24),
-              isEnabled = !state.isDeprecatedOrUnregistered,
+              isEnabled = canSetMemberLabel,
               onClick = {
                 val action = ConversationSettingsFragmentDirections.actionConversationSettingsFragmentToMemberLabelFragment(groupState.groupId)
                 navController.safeNavigate(action)
+              },
+              onDisabledClicked = {
+                Snackbar.make(requireView(), R.string.ConversationSettingsFragment__only_admins_can_add_member_labels, Snackbar.LENGTH_SHORT).show()
               }
             )
           }

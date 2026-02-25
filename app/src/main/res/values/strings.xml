@@ -5986,6 +5986,8 @@
     <string name="ConversationSettingsFragment__group_link">Group link</string>
     <!-- Label for button that opens the group member label permissions screen. -->
     <string name="ConversationSettingsFragment__group_member_label">Member Label</string>
+    <!-- Snackbar shown when non-admin taps the member label button -->
+    <string name="ConversationSettingsFragment__only_admins_can_add_member_labels">Only admins can add member labels in this group.</string>
     <!-- Option in conversation settings to add a user as a contact -->
     <string name="ConversationSettingsFragment__add_as_a_contact">Add as a contact</string>
     <string name="ConversationSettingsFragment__unmute">Unmute</string>
