@@ -14,6 +14,7 @@ import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.groupMasterKey
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.hasGroupContext
+import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.internal.push.DataMessage
 import java.util.Optional
 
@@ -65,8 +66,13 @@ abstract class BatchCache {
     SignalDatabase.threads.updateForMessageInsert(threadId, unarchive = true)
   }
 
+  protected fun flushMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    SignalDatabase.messageLog.deleteEntriesForRecipient(timestamps, recipientId, device)
+  }
+
   abstract fun addJob(job: Job)
   abstract fun addIncomingMessageInsertThreadUpdate(threadId: Long)
+  abstract fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>)
 }
 
 /**
@@ -82,6 +88,10 @@ class OneTimeBatchCache : BatchCache() {
 
   override fun addIncomingMessageInsertThreadUpdate(threadId: Long) {
     flushIncomingMessageInsertThreadUpdate(threadId)
+  }
+
+  override fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    flushMslDelete(recipientId, device, timestamps)
   }
 }
 
@@ -100,6 +110,7 @@ class ReusedBatchCache : BatchCache() {
 
   private val batchedJobs = ArrayList<Job>(BATCH_SIZE)
   private val threadUpdates = HashSet<Long>(BATCH_SIZE)
+  private val mslDeletes = HashMap<Pair<RecipientId, Int>, MutableList<Long>>(BATCH_SIZE)
 
   override fun addJob(job: Job) {
     batchedJobs += job
@@ -107,6 +118,10 @@ class ReusedBatchCache : BatchCache() {
 
   override fun addIncomingMessageInsertThreadUpdate(threadId: Long) {
     threadUpdates += threadId
+  }
+
+  override fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    mslDeletes.getOrPut(recipientId to device) { mutableListOf() } += timestamps
   }
 
   override fun flushAndClear() {
@@ -123,5 +138,12 @@ class ReusedBatchCache : BatchCache() {
       }
     }
     threadUpdates.clear()
+
+    if (mslDeletes.isNotEmpty()) {
+      SignalDatabase.runInTransaction {
+        mslDeletes.forEach { (key, timestamps) -> flushMslDelete(key.first, key.second, timestamps) }
+      }
+    }
+    mslDeletes.clear()
   }
 }
