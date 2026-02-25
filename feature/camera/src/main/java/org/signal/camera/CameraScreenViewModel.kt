@@ -344,27 +344,35 @@ class CameraScreenViewModel : ViewModel() {
       .setResolutionSelector(resolutionSelector)
       .build()
 
-    // Video capture (16:9 is default for video)
-    val recorder = Recorder.Builder()
-      .setAspectRatio(AspectRatio.RATIO_16_9)
-      .setQualitySelector(
-        androidx.camera.video.QualitySelector.from(
-          androidx.camera.video.Quality.HIGHEST,
-          androidx.camera.video.FallbackStrategy.higherQualityOrLowerThan(androidx.camera.video.Quality.HD)
-        )
-      )
-      .build()
-    val videoCaptureUseCase = VideoCapture.withOutput(recorder)
+    // Build the list of use cases based on device capabilities
+    val useCases = mutableListOf<androidx.camera.core.UseCase>(preview, imageCaptureUseCase)
 
-    // Image analysis for QR code detection
-    val imageAnalysisUseCase = ImageAnalysis.Builder()
-      .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-      .build()
-      .also {
-        it.setAnalyzer(imageAnalysisExecutor) { imageProxy ->
-          processImageForQrCode(imageProxy)
+    var videoCaptureUseCase: VideoCapture<Recorder>? = null
+    if (event.enableVideoCapture) {
+      val recorder = Recorder.Builder()
+        .setAspectRatio(AspectRatio.RATIO_16_9)
+        .setQualitySelector(
+          androidx.camera.video.QualitySelector.from(
+            androidx.camera.video.Quality.HIGHEST,
+            androidx.camera.video.FallbackStrategy.higherQualityOrLowerThan(androidx.camera.video.Quality.HD)
+          )
+        )
+        .build()
+      videoCaptureUseCase = VideoCapture.withOutput(recorder)
+      useCases += videoCaptureUseCase
+    }
+
+    if (event.enableQrScanning) {
+      val imageAnalysisUseCase = ImageAnalysis.Builder()
+        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+        .build()
+        .also {
+          it.setAnalyzer(imageAnalysisExecutor) { imageProxy ->
+            processImageForQrCode(imageProxy)
+          }
         }
-      }
+      useCases += imageAnalysisUseCase
+    }
 
     // Select camera based on lensFacing
     val cameraSelector = CameraSelector.Builder()
@@ -379,10 +387,7 @@ class CameraScreenViewModel : ViewModel() {
       camera = event.cameraProvider.bindToLifecycle(
         event.lifecycleOwner,
         cameraSelector,
-        preview,
-        imageCaptureUseCase,
-        videoCaptureUseCase,
-        imageAnalysisUseCase
+        *useCases.toTypedArray()
       )
 
       lifecycleOwner = event.lifecycleOwner

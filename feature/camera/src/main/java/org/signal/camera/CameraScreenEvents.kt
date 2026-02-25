@@ -8,12 +8,14 @@ import androidx.lifecycle.LifecycleOwner
 
 sealed interface CameraScreenEvents {
 
-  /** Binds a camera to a sruface provider. */
+  /** Binds a camera to a surface provider. */
   data class BindCamera(
     val lifecycleOwner: LifecycleOwner,
     val cameraProvider: ProcessCameraProvider,
     val surfaceProvider: Preview.SurfaceProvider,
-    val context: Context
+    val context: Context,
+    val enableVideoCapture: Boolean = true,
+    val enableQrScanning: Boolean = false
   ) : CameraScreenEvents
 
   /** Focuses the camera on a point. */
