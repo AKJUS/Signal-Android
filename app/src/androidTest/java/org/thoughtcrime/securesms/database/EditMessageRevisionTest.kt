@@ -160,7 +160,6 @@ class EditMessageRevisionTest {
     assertThat(getLatestRevisionId(edit2Id)).isNull()
   }
 
-
   private fun insertOriginalMessage(sentTimeMillis: Long): Long {
     val message = IncomingMessage(
       type = MessageType.NORMAL,
