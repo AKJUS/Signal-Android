@@ -1252,7 +1252,7 @@ object RemoteConfig {
   @JvmStatic
   @get:JvmName("sendMemberLabels")
   val sendMemberLabels: Boolean by remoteBoolean(
-    key = "android.sendMemberLabels",
+    key = "android.sendMemberLabels.2",
     defaultValue = false,
     hotSwappable = true
   )
