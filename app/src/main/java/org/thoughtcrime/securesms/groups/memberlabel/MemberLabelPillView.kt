@@ -53,7 +53,7 @@ class MemberLabelPillView : AbstractComposeView {
     memberLabel?.let { label ->
       MemberLabelPill(
         emoji = label.emoji,
-        text = label.text,
+        text = label.displayText,
         tintColor = tintColor,
         modifier = Modifier.padding(horizontal = style.horizontalPadding, vertical = style.verticalPadding),
         textStyle = style.textStyle()

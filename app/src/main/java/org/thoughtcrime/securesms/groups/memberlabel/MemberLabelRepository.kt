@@ -68,7 +68,7 @@ class MemberLabelRepository private constructor(
 
     val aci = recipient.serviceId.orNull() as? ServiceId.ACI ?: return@withContext null
     val groupRecord = groupsTable.getGroup(groupId).orNull() ?: return@withContext null
-    return@withContext groupRecord.requireV2GroupProperties().memberLabel(aci)
+    groupRecord.requireV2GroupProperties().memberLabel(aci)?.sanitized()
   }
 
   /**
@@ -87,7 +87,7 @@ class MemberLabelRepository private constructor(
     buildMap {
       recipients.forEach { recipient ->
         val aci = recipient.serviceId.orNull() as? ServiceId.ACI
-        labelsByAci[aci]?.let { label -> put(recipient.id, label) }
+        labelsByAci[aci]?.let { label -> put(recipient.id, label.sanitized()) }
       }
     }
   }
@@ -122,6 +122,12 @@ class MemberLabelRepository private constructor(
       throw IllegalStateException("Set member label not allowed due to remote config.")
     }
 
-    GroupManager.updateMemberLabel(context, groupId, label.text, label.emoji.orEmpty())
+    val sanitizedLabel = label.sanitized()
+    GroupManager.updateMemberLabel(context, groupId, sanitizedLabel.text, sanitizedLabel.emoji.orEmpty())
   }
 }
+
+private fun MemberLabel.sanitized(): MemberLabel = this.copy(
+  emoji = MemberLabel.sanitizeEmoji(this.emoji),
+  text = MemberLabel.sanitizeLabelText(this.text)
+)

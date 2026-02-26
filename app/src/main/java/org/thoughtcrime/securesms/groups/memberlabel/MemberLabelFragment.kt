@@ -185,7 +185,7 @@ private fun MemberLabelScreenUi(
             sender = state.recipient,
             senderNameColor = state.senderNameColor,
             labelEmoji = state.labelEmoji,
-            labelText = state.labelText,
+            labelText = state.sanitizedLabelText,
             messageText = stringResource(R.string.GroupMemberLabel__preview_sample_message)
           )
         }

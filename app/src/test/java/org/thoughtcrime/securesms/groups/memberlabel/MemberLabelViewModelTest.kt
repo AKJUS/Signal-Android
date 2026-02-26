@@ -11,6 +11,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -228,5 +229,89 @@ class MemberLabelViewModelTest {
     coVerify(exactly = 1) {
       memberLabelRepo.setLabel(groupId, MemberLabel(text = "", emoji = null))
     }
+  }
+
+  @Test
+  fun `onLabelTextChanged counts emoji as single grapheme`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    val emoji = "\uD83C\uDF89" // 🎉
+    viewModel.onLabelTextChanged(emoji.repeat(30))
+
+    assertEquals(emoji.repeat(24), viewModel.uiState.value.labelText)
+  }
+
+  @Test
+  fun `remainingCharacters counts emoji as single grapheme`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    val emoji = "\uD83C\uDF89" // 🎉
+    viewModel.onLabelTextChanged(emoji.repeat(10))
+
+    assertEquals(14, viewModel.uiState.value.remainingCharacters)
+  }
+
+  @Test
+  fun `remainingCharacters counts mixed ascii and emoji correctly`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("Hello \uD83C\uDF89") // "Hello 🎉" = 7 graphemes
+
+    assertEquals(17, viewModel.uiState.value.remainingCharacters)
+  }
+
+  @Test
+  fun `onLabelTextChanged does not truncate text within grapheme limit`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("Short label")
+
+    assertEquals("Short label", viewModel.uiState.value.labelText)
+  }
+
+  @Test
+  fun `onLabelTextChanged truncates at exactly 24 graphemes with emoji`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    val input = "A".repeat(23) + "\uD83C\uDF89\uD83C\uDF89" // 25 graphemes
+    viewModel.onLabelTextChanged(input)
+
+    val expected = "A".repeat(23) + "\uD83C\uDF89" // 24 graphemes
+    assertEquals(expected, viewModel.uiState.value.labelText)
+  }
+
+  @Test
+  fun `isSaveEnabled returns false when the only change is trailing whitespace`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("Original   ")
+
+    assertFalse(viewModel.uiState.value.isSaveEnabled)
+  }
+
+  @Test
+  fun `isSaveEnabled returns false when the only change is leading whitespace`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("   Original")
+
+    assertFalse(viewModel.uiState.value.isSaveEnabled)
+  }
+
+  @Test
+  fun `isSaveEnabled returns true when text differs beyond whitespace`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("  Modified  ")
+
+    assertTrue(viewModel.uiState.value.isSaveEnabled)
   }
 }

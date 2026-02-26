@@ -12,15 +12,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.signal.core.util.StringUtil
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.thoughtcrime.securesms.conversation.colors.NameColor
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelUiState.SaveState
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
-
-private const val MIN_LABEL_TEXT_LENGTH = 1
-private const val MAX_LABEL_TEXT_LENGTH = 24
 
 class MemberLabelViewModel(
   private val memberLabelRepo: MemberLabelRepository = MemberLabelRepository.instance,
@@ -65,11 +63,11 @@ class MemberLabelViewModel(
   }
 
   fun onLabelTextChanged(text: String) {
-    val sanitizedText = text.take(MAX_LABEL_TEXT_LENGTH)
+    val truncatedText = MemberLabel.truncateLabelText(text)
     internalUiState.update {
       it.copy(
-        labelText = sanitizedText,
-        hasChanges = hasChanges(labelEmoji = it.labelEmoji, labelText = sanitizedText)
+        labelText = truncatedText,
+        hasChanges = hasChanges(labelEmoji = it.labelEmoji, labelText = truncatedText)
       )
     }
   }
@@ -85,7 +83,7 @@ class MemberLabelViewModel(
   }
 
   private fun hasChanges(labelEmoji: String, labelText: String): Boolean {
-    return labelEmoji != originalLabelEmoji || labelText != originalLabelText
+    return labelEmoji != originalLabelEmoji || MemberLabel.sanitizeLabelText(labelText) != originalLabelText
   }
 
   fun save() {
@@ -128,13 +126,16 @@ data class MemberLabelUiState(
   val hasChanges: Boolean = false,
   val saveState: SaveState? = null
 ) {
+  val sanitizedLabelText: String get() = MemberLabel.sanitizeLabelText(labelText)
+
   val remainingCharacters: Int
-    get() = MAX_LABEL_TEXT_LENGTH - labelText.length
+    get() = MemberLabel.MAX_LABEL_GRAPHEMES - StringUtil.getGraphemeCount(sanitizedLabelText)
 
   val isSaveEnabled: Boolean
     get() {
-      val isCleared = labelText.isEmpty() && labelEmoji.isEmpty()
-      val hasValidLabel = labelText.length in MIN_LABEL_TEXT_LENGTH..MAX_LABEL_TEXT_LENGTH
+      val isCleared = sanitizedLabelText.isEmpty() && labelEmoji.isEmpty()
+      val graphemeCount = StringUtil.getGraphemeCount(sanitizedLabelText)
+      val hasValidLabel = graphemeCount in MemberLabel.MIN_LABEL_GRAPHEMES..MemberLabel.MAX_LABEL_GRAPHEMES
       return hasChanges && (hasValidLabel || isCleared) && saveState != SaveState.InProgress
     }
 
