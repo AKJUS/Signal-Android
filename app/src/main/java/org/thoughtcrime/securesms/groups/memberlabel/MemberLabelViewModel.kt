@@ -16,9 +16,11 @@ import org.signal.core.util.StringUtil
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.thoughtcrime.securesms.conversation.colors.NameColor
 import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.groups.GroupInsufficientRightsException
 import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelUiState.SaveState
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
+import org.whispersystems.signalservice.api.NetworkResult
 
 class MemberLabelViewModel(
   private val memberLabelRepo: MemberLabelRepository = MemberLabelRepository.instance,
@@ -97,7 +99,7 @@ class MemberLabelViewModel(
       }
 
       val currentState = internalUiState.value
-      memberLabelRepo.setLabel(
+      val result = memberLabelRepo.setLabel(
         groupId = groupId,
         label = MemberLabel(
           emoji = currentState.labelEmoji.ifEmpty { null },
@@ -105,8 +107,24 @@ class MemberLabelViewModel(
         )
       )
 
+      val newSaveState: SaveState = when (result) {
+        is NetworkResult.Success -> SaveState.Success
+
+        is NetworkResult.NetworkError<*> -> SaveState.NetworkError
+
+        is NetworkResult.ApplicationError<*> -> {
+          if (result.throwable is GroupInsufficientRightsException) {
+            SaveState.InsufficientRights
+          } else {
+            throw result.throwable
+          }
+        }
+
+        is NetworkResult.StatusCodeError<*> -> throw result.exception
+      }
+
       internalUiState.update {
-        it.copy(saveState = SaveState.Success)
+        it.copy(saveState = newSaveState)
       }
     }
   }
@@ -142,5 +160,7 @@ data class MemberLabelUiState(
   sealed interface SaveState {
     data object InProgress : SaveState
     data object Success : SaveState
+    data object NetworkError : SaveState
+    data object InsufficientRights : SaveState
   }
 }

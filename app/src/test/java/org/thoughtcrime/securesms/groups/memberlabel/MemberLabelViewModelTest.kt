@@ -19,8 +19,12 @@ import org.junit.Rule
 import org.junit.Test
 import org.thoughtcrime.securesms.conversation.colors.NameColor
 import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.groups.GroupInsufficientRightsException
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelUiState.SaveState
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.testing.CoroutineDispatcherRule
+import org.whispersystems.signalservice.api.NetworkResult
+import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MemberLabelViewModelTest {
@@ -180,6 +184,7 @@ class MemberLabelViewModelTest {
   @Test
   fun `save calls setLabel with truncated label when label exceeds max length`() = runTest(testDispatcher) {
     coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns null
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.Success(Unit)
 
     val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
     viewModel.onLabelTextChanged("A".repeat(30))
@@ -207,6 +212,7 @@ class MemberLabelViewModelTest {
   @Test
   fun `save calls setLabel when label change is valid`() = runTest(testDispatcher) {
     coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.Success(Unit)
 
     val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
     viewModel.onLabelTextChanged("New Label")
@@ -221,6 +227,7 @@ class MemberLabelViewModelTest {
   @Test
   fun `save calls setLabel with cleared values when clearLabel is called`() = runTest(testDispatcher) {
     coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = "🎉", text = "Original")
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.Success(Unit)
 
     val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
     viewModel.clearLabel()
@@ -313,5 +320,41 @@ class MemberLabelViewModelTest {
     viewModel.onLabelTextChanged("  Modified  ")
 
     assertTrue(viewModel.uiState.value.isSaveEnabled)
+  }
+
+  @Test
+  fun `save sets saveState to Success when setLabel returns NetworkResult Success`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.Success(Unit)
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("New Label")
+    viewModel.save()
+
+    assertEquals(SaveState.Success, viewModel.uiState.value.saveState)
+  }
+
+  @Test
+  fun `save sets saveState to NetworkError when setLabel returns NetworkResult NetworkError`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.NetworkError(IOException("Network failure"))
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("New Label")
+    viewModel.save()
+
+    assertEquals(SaveState.NetworkError, viewModel.uiState.value.saveState)
+  }
+
+  @Test
+  fun `save sets saveState to InsufficientRights when setLabel returns ApplicationError with GroupInsufficientRightsException`() = runTest(testDispatcher) {
+    coEvery { memberLabelRepo.getLabel(groupId, any<RecipientId>()) } returns MemberLabel(emoji = null, text = "Original")
+    coEvery { memberLabelRepo.setLabel(any(), any()) } returns NetworkResult.ApplicationError(GroupInsufficientRightsException(RuntimeException("Insufficient rights (test)")))
+
+    val viewModel = MemberLabelViewModel(memberLabelRepo, groupId, recipientId)
+    viewModel.onLabelTextChanged("New Label")
+    viewModel.save()
+
+    assertEquals(SaveState.InsufficientRights, viewModel.uiState.value.saveState)
   }
 }
