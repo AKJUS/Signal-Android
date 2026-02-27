@@ -54,6 +54,12 @@ class MemberLabelRepository private constructor(
   fun getLabelJava(groupId: GroupId.V2, recipient: Recipient): MemberLabel? = runBlocking { getLabel(groupId, recipient) }
 
   /**
+   * Gets member labels for a list of recipients in a group (blocking version for Java compatibility).
+   */
+  @WorkerThread
+  fun getLabelsJava(groupId: GroupId.V2, recipients: List<Recipient>): Map<RecipientId, MemberLabel> = runBlocking { getLabels(groupId, recipients) }
+
+  /**
    * Gets the member label for a specific recipient in the group.
    */
   suspend fun getLabel(groupId: GroupId.V2, recipient: Recipient): MemberLabel? = withContext(Dispatchers.IO) {
