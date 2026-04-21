@@ -101,4 +101,30 @@ class FiatMoneyTest {
     // THEN
     assertEquals("10000", result)
   }
+
+  @Test
+  fun given899HUF_whenIGetMinimumUnitPrecisionString_thenIExpect89900() {
+    // GIVEN
+    val fiatMoney = FiatMoney(BigDecimal.valueOf(899), Currency.getInstance("HUF"))
+
+    // WHEN
+    val result = fiatMoney.minimumUnitPrecisionString
+
+    // THEN
+    assertEquals("89900", result)
+  }
+
+  @Test
+  fun given89900NetworkHUF_whenIConvertFromSignalNetworkAmount_thenIExpect899() {
+    // GIVEN
+    val amount = BigDecimal.valueOf(89900)
+    val currency = Currency.getInstance("HUF")
+
+    // WHEN
+    val result = FiatMoney.fromSignalNetworkAmount(amount, currency)
+
+    // THEN
+    assertEquals(BigDecimal.valueOf(899).setScale(2), result.amount.setScale(2))
+    assertEquals(currency, result.currency)
+  }
 }

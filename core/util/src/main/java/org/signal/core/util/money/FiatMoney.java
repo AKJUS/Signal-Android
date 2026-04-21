@@ -15,6 +15,7 @@ public class FiatMoney {
   private static final Set<String> SPECIAL_CASE_MULTIPLICANDS = new HashSet<>() {{
     add("UGX");
     add("ISK");
+    add("HUF");
   }};
 
   private final BigDecimal amount;
