@@ -3246,8 +3246,6 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
     if (message.isSecure) {
       type = type or (MessageTypes.SECURE_MESSAGE_BIT or MessageTypes.PUSH_MESSAGE_BIT)
-    } else if (message.isEndSession) {
-      type = type or MessageTypes.END_SESSION_BIT
     }
 
     if (message.isIdentityVerified) {

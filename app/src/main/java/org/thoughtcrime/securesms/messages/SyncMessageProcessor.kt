@@ -25,7 +25,6 @@ import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.attachments.TombstoneAttachment
 import org.thoughtcrime.securesms.components.emoji.EmojiUtil
 import org.thoughtcrime.securesms.contactshare.Contact
-import org.thoughtcrime.securesms.crypto.SecurityEvent
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.database.CallLinkTable
 import org.thoughtcrime.securesms.database.CallTable
@@ -83,7 +82,6 @@ import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.groupMasterKey
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.hasGroupContext
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.hasRemoteDelete
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isEmptyGroupV2Message
-import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isEndSession
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isExpirationUpdate
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isGroupV2Update
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.isMediaMessage
@@ -234,7 +232,6 @@ object SyncMessageProcessor {
 
       var threadId: Long = -1
       when {
-        dataMessage.isEndSession -> threadId = handleSynchronizeSentEndSessionMessage(context, sent, envelope.clientTimestamp!!)
         dataMessage.isGroupV2Update -> {
           handleSynchronizeSentGv2Update(context, envelope, sent)
           threadId = SignalDatabase.threads.getOrCreateThreadIdFor(getSyncMessageDestination(sent))
@@ -667,30 +664,6 @@ object SyncMessageProcessor {
     val unidentifiedStatus = members.map { Pair(it, messageRecipientIds[it] ?: false) }
 
     SignalDatabase.groupReceipts.setUnidentified(unidentifiedStatus, messageId)
-  }
-
-  @Throws(MmsException::class)
-  private fun handleSynchronizeSentEndSessionMessage(context: Context, sent: Sent, envelopeTimestamp: Long): Long {
-    log(envelopeTimestamp, "Synchronize end session message.")
-
-    val recipient: Recipient = getSyncMessageDestination(sent)
-    val outgoingEndSessionMessage: OutgoingMessage = OutgoingMessage.endSessionMessage(recipient, sent.timestamp!!)
-    val threadId: Long = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
-
-    if (!recipient.isGroup) {
-      AppDependencies.protocolStore.aci().deleteAllSessions(recipient.requireServiceId().toString())
-      SecurityEvent.broadcastSecurityUpdateEvent(context)
-      val messageId = SignalDatabase.messages.insertMessageOutbox(
-        outgoingEndSessionMessage,
-        threadId,
-        false,
-        null
-      ).messageId
-
-      SignalDatabase.messages.markAsSent(messageId, true)
-    }
-
-    return threadId
   }
 
   @Throws(IOException::class, GroupChangeBusyException::class)
