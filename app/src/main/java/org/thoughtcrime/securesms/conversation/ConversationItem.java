@@ -70,11 +70,13 @@ import com.google.common.collect.Sets;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.signal.core.ui.util.ThemeUtil;
+import org.signal.core.ui.view.Stub;
 import org.signal.core.util.BidiUtil;
 import org.signal.core.util.DimensionUnit;
 import org.signal.core.util.StringUtil;
+import org.signal.core.util.Util;
 import org.signal.core.util.logging.Log;
-import org.signal.core.ui.view.Stub;
 import org.signal.ringrtc.CallLinkRootKey;
 import org.thoughtcrime.securesms.BindableConversationItem;
 import org.thoughtcrime.securesms.R;
@@ -147,14 +149,12 @@ import org.thoughtcrime.securesms.util.LongClickMovementMethod;
 import org.thoughtcrime.securesms.util.MediaUtil;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
 import org.thoughtcrime.securesms.util.PlaceholderURLSpan;
-import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.Projection;
 import org.thoughtcrime.securesms.util.ProjectionList;
 import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.thoughtcrime.securesms.util.SearchUtil;
-import org.signal.core.ui.util.ThemeUtil;
+import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.UrlClickHandler;
-import org.signal.core.util.Util;
 import org.thoughtcrime.securesms.util.VibrateUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.views.NullableStub;
@@ -290,6 +290,8 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   private       float              lastYDownRelativeToThis;
   private final ProjectionList     colorizerProjections = new ProjectionList(3);
   private       boolean            isBound              = false;
+
+  private RelativeLayout.LayoutParams normalBubbleParams = null;
 
   private final Runnable shrinkBubble = new Runnable() {
     @Override
@@ -1862,7 +1864,11 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
   }
 
   private void setGutterSizes(@NonNull MessageRecord current, boolean isGroupThread) {
-    if (isGroupThread && current.isOutgoing()) {
+    if (isReleaseNotes) {
+      int gutter = readDimen(R.dimen.conversation_individual_right_gutter);
+      ViewUtil.setPaddingStart(this, gutter);
+      ViewUtil.setPaddingEnd(this, gutter);
+    } else if (isGroupThread && current.isOutgoing()) {
       ViewUtil.setPaddingStart(this, readDimen(R.dimen.conversation_group_left_gutter));
       ViewUtil.setPaddingEnd(this, readDimen(R.dimen.conversation_individual_right_gutter));
     } else if (current.isOutgoing()) {
@@ -1871,6 +1877,18 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     } else {
       ViewUtil.setPaddingStart(this, readDimen(R.dimen.conversation_individual_received_left_gutter));
       ViewUtil.setPaddingEnd(this, readDimen(R.dimen.conversation_individual_right_gutter));
+    }
+
+    if (isReleaseNotes && normalBubbleParams == null) {
+      RelativeLayout.LayoutParams bubbleParams = (RelativeLayout.LayoutParams) bodyBubble.getLayoutParams();
+
+      normalBubbleParams = new RelativeLayout.LayoutParams(bubbleParams);
+      bubbleParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+      bubbleParams.setMarginStart(0);
+      bodyBubble.setLayoutParams(bubbleParams);
+    } else if (normalBubbleParams != null && !isReleaseNotes) {
+      bodyBubble.setLayoutParams(normalBubbleParams);
+      normalBubbleParams = null;
     }
   }
 
