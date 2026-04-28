@@ -353,7 +353,7 @@ class RegistrationRepository(val context: Context, val networkController: Networ
     val newMasterKey = keyMaterial.accountEntropyPool.deriveMasterKey()
     val newRecoveryPassword = newMasterKey.deriveRegistrationRecoveryPassword()
 
-    SensitiveLog.d(TAG, "[registerAccount] Using master key [${org.signal.libsignal.protocol.util.Hex.toStringCondensed(newMasterKey.serialize())}] and RRP [$newRecoveryPassword]")
+    SensitiveLog.d(TAG, "[registerAccount] Using master key [${org.signal.core.util.Hex.toStringCondensed(newMasterKey.serialize())}] and RRP [$newRecoveryPassword]")
 
     val accountAttributes = AccountAttributes(
       signalingKey = null,

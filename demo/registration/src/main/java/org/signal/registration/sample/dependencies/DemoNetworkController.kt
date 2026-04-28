@@ -23,13 +23,13 @@ import org.signal.core.models.MasterKey
 import org.signal.core.models.ServiceId
 import org.signal.core.models.backup.MessageBackupKey
 import org.signal.core.util.Base64
+import org.signal.core.util.Hex
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.net.Network
 import org.signal.libsignal.net.RequestResult
 import org.signal.libsignal.protocol.IdentityKey
 import org.signal.libsignal.protocol.IdentityKeyPair
 import org.signal.libsignal.protocol.ecc.ECPrivateKey
-import org.signal.libsignal.protocol.util.Hex
 import org.signal.libsignal.zkgroup.GenericServerPublicParams
 import org.signal.libsignal.zkgroup.backups.BackupAuthCredentialRequestContext
 import org.signal.libsignal.zkgroup.backups.BackupAuthCredentialResponse

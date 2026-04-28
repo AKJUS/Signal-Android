@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import org.signal.core.models.MasterKey
+import org.signal.core.util.Hex
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.net.RequestResult
-import org.signal.libsignal.protocol.util.Hex
 import org.signal.registration.NetworkController
 import org.signal.registration.RegistrationFlowEvent
 import org.signal.registration.RegistrationFlowState
