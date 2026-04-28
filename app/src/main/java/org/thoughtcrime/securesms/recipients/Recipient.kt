@@ -17,6 +17,7 @@ import org.signal.core.util.UuidUtil
 import org.signal.core.util.isNotNullOrBlank
 import org.signal.core.util.logging.Log
 import org.signal.core.util.nullIfBlank
+import org.signal.core.util.requireDrawable
 import org.signal.libsignal.zkgroup.profiles.ExpiringProfileKeyCredential
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatar
@@ -50,7 +51,6 @@ import org.thoughtcrime.securesms.phonenumbers.NumberUtil
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient.Companion.external
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId
-import org.thoughtcrime.securesms.util.ContextUtil
 import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.SignalE164Util
 import org.thoughtcrime.securesms.util.SpanUtil
@@ -679,7 +679,7 @@ class Recipient(
       append(name)
 
       if (showVerified) {
-        val verifiedBadge = ContextUtil.requireDrawable(context, R.drawable.ic_official_28)
+        val verifiedBadge = context.requireDrawable(R.drawable.ic_official_28)
         SpanUtil.appendSpacer(this, 8)
         SpanUtil.appendCenteredImageSpanWithoutSpace(this, verifiedBadge, 28, 28)
       } else if (isSystemContact) {

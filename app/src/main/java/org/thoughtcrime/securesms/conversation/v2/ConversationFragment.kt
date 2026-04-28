@@ -129,6 +129,7 @@ import org.signal.core.util.concurrent.addTo
 import org.signal.core.util.dp
 import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
+import org.signal.core.util.requireDrawable
 import org.signal.core.util.requireParcelableCompat
 import org.signal.core.util.setActionItemTint
 import org.signal.donations.InAppPaymentType
@@ -349,7 +350,6 @@ import org.thoughtcrime.securesms.stories.StoryViewerArgs
 import org.thoughtcrime.securesms.stories.viewer.StoryViewerActivity
 import org.thoughtcrime.securesms.util.BubbleUtil
 import org.thoughtcrime.securesms.util.CommunicationActions
-import org.thoughtcrime.securesms.util.ContextUtil
 import org.thoughtcrime.securesms.util.ConversationUtil
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.Debouncer
@@ -1820,7 +1820,7 @@ class ConversationFragment :
 
   private fun presentNavigationIconForBubble() {
     binding.toolbar.navigationIcon = DrawableUtil.tint(
-      ContextUtil.requireDrawable(requireContext(), R.drawable.ic_notification),
+      requireContext().requireDrawable(R.drawable.ic_notification),
       ContextCompat.getColor(requireContext(), R.color.signal_accent_primary)
     )
 

@@ -1,3 +1,5 @@
+@file:JvmName("ContextUtil")
+
 /*
  * Copyright 2023 Signal Messenger, LLC
  * SPDX-License-Identifier: AGPL-3.0-only
@@ -9,6 +11,10 @@ import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.drawable.Drawable
+import android.provider.Settings
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.FragmentActivity
 
 fun Context.getDownloadManager(): DownloadManager {
@@ -40,4 +46,17 @@ fun Context.resolveFragmentActivity(): FragmentActivity? {
     is ContextWrapper -> context.baseContext.takeUnless { it === this }?.resolveFragmentActivity()
     else -> null
   }
+}
+
+fun Context.requireDrawable(@DrawableRes drawableResId: Int): Drawable {
+  return AppCompatResources.getDrawable(this, drawableResId)!!
+}
+
+/**
+ * Gets the system animator duration scale from Settings.Global, defaulting to 1.0 when unavailable.
+ *
+ * Implementation "borrowed" from com.airbnb.lottie.utils.DebugLogViewer#getAnimationScale(android.content.Context).
+ */
+fun Context.getAnimationScale(): Float {
+  return Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f)
 }

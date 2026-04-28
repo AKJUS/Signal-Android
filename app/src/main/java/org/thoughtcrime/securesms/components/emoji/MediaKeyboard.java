@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.signal.core.util.ContextExtensionsKt;
+import org.signal.core.util.ContextUtil;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.InputAwareLayout.InputView;
@@ -175,7 +175,7 @@ public class MediaKeyboard extends FrameLayout implements InputView {
       LayoutInflater.from(getContext()).inflate(R.layout.media_keyboard, this, true);
 
       if (fragmentManager == null) {
-        FragmentActivity activity = ContextExtensionsKt.requireFragmentActivity(getContext());
+        FragmentActivity activity = ContextUtil.requireFragmentActivity(getContext());
         fragmentManager = activity.getSupportFragmentManager();
       }
 

@@ -14,6 +14,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import org.signal.core.util.BreakIteratorCompat
+import org.signal.core.util.requireDrawable
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatar
 import org.thoughtcrime.securesms.avatar.view.AvatarView
@@ -29,7 +30,6 @@ import org.thoughtcrime.securesms.database.model.DistributionListPrivacyMode
 import org.thoughtcrime.securesms.database.model.StoryViewState
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.util.ContextUtil
 import org.thoughtcrime.securesms.util.SpanUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.LayoutFactory
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
@@ -543,7 +543,7 @@ open class ContactSearchAdapter(
       val recipient = getRecipient(model)
       val suffix: CharSequence? = if (recipient.isSystemContact && !recipient.showVerified) {
         SpannableStringBuilder().apply {
-          val drawable = ContextUtil.requireDrawable(context, R.drawable.symbol_person_circle_24).apply {
+          val drawable = context.requireDrawable(R.drawable.symbol_person_circle_24).apply {
             setTint(ContextCompat.getColor(context, CoreUiR.color.signal_colorOnSurface))
           }
           SpanUtil.appendCenteredImageSpan(this, drawable, 16, 16)
