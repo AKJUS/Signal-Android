@@ -186,6 +186,17 @@ class NameCollisionTablesTest {
     assertThat(collisions).hasSize(0)
   }
 
+  @Test
+  fun givenTwoUsersInTheSameNameCollision_whenIRemapOneToTheOther_thenIExpectNoConstraintViolation() {
+    setProfileNameAndCheckCollision(alice, ProfileName.fromParts("Bob", "Android"))
+    setProfileNameAndCheckCollision(bob, ProfileName.fromParts("Bob", "Android"))
+
+    SignalDatabase.nameCollisions.remapRecipient(alice, bob)
+
+    assertThat(SignalDatabase.nameCollisions.getCollisionsForThreadRecipientId(alice)).hasSize(0)
+    assertThat(SignalDatabase.nameCollisions.getCollisionsForThreadRecipientId(bob)).hasSize(0)
+  }
+
   private fun setProfileNameAndCheckCollision(recipientId: RecipientId, name: ProfileName) {
     recipients.setProfileName(recipientId, name)
     SignalDatabase.nameCollisions.handleIndividualNameCollision(recipientId)
