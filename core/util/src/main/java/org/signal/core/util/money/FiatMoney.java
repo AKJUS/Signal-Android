@@ -47,13 +47,6 @@ public class FiatMoney {
   /**
    * @return amount, rounded to the default fractional amount.
    */
-  public @NonNull String getDefaultPrecisionString() {
-    return getDefaultPrecisionString(Locale.getDefault());
-  }
-
-  /**
-   * @return amount, rounded to the default fractional amount.
-   */
   public @NonNull String getDefaultPrecisionString(@NonNull Locale locale) {
     NumberFormat formatter = NumberFormat.getInstance(locale);
     formatter.setMinimumFractionDigits(currency.getDefaultFractionDigits());

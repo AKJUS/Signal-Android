@@ -4,6 +4,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.math.BigDecimal
 import java.util.Currency
+import java.util.Locale
 
 class FiatMoneyTest {
   @Test
@@ -12,7 +13,7 @@ class FiatMoneyTest {
     val fiatMoney = FiatMoney(BigDecimal.valueOf(100), Currency.getInstance("USD"))
 
     // WHEN
-    val result = fiatMoney.defaultPrecisionString
+    val result = fiatMoney.getDefaultPrecisionString(Locale.US)
 
     // THEN
     assertEquals("100.00", result)
@@ -36,7 +37,7 @@ class FiatMoneyTest {
     val fiatMoney = FiatMoney(BigDecimal.valueOf(100), Currency.getInstance("JPY"))
 
     // WHEN
-    val result = fiatMoney.defaultPrecisionString
+    val result = fiatMoney.getDefaultPrecisionString(Locale.US)
 
     // THEN
     assertEquals("100", result)
@@ -60,7 +61,7 @@ class FiatMoneyTest {
     val fiatMoney = FiatMoney(BigDecimal.valueOf(100), Currency.getInstance("UGX"))
 
     // WHEN
-    val result = fiatMoney.defaultPrecisionString
+    val result = fiatMoney.getDefaultPrecisionString(Locale.US)
 
     // THEN
     assertEquals("100", result)
@@ -84,7 +85,7 @@ class FiatMoneyTest {
     val fiatMoney = FiatMoney(BigDecimal.valueOf(100), Currency.getInstance("ISK"))
 
     // WHEN
-    val result = fiatMoney.defaultPrecisionString
+    val result = fiatMoney.getDefaultPrecisionString(Locale.US)
 
     // THEN
     assertEquals("100", result)
