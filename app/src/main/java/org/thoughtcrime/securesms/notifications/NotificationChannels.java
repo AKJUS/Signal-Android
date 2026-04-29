@@ -360,7 +360,7 @@ public class NotificationChannels {
     String  newChannelId = generateChannelIdFor(recipient);
     boolean success      = updateExistingChannel(ServiceUtil.getNotificationManager(context),
                                                  recipient.getNotificationChannel(),
-                                                 generateChannelIdFor(recipient),
+                                                 newChannelId,
                                                  channel -> channel.setSound(uri == null ? Settings.System.DEFAULT_NOTIFICATION_URI : uri, getRingtoneAudioAttributes()));
 
     SignalDatabase.recipients().setNotificationChannel(recipient.getId(), success ? newChannelId : null);
@@ -562,11 +562,13 @@ public class NotificationChannels {
     NotificationManager                            notificationManager = ServiceUtil.getNotificationManager(context);
     RecipientTable                                 db                  = SignalDatabase.recipients();
     List<RecipientTable.RecipientNotificationData> customRecipients;
+    Set<RecipientId>                               customRecipientIds  = new HashSet<>();
     Set<String>                                    customChannelIds    = new HashSet<>();
 
     customRecipients = db.getRecipientsWithNotificationChannels();
     customRecipients.stream()
                     .forEach((info) -> {
+                      customRecipientIds.add(info.getId());
                       customChannelIds.add(info.getChannel());
                     });
 
@@ -582,9 +584,12 @@ public class NotificationChannels {
         }
 
         RecipientId id = ConversationUtil.getRecipientId(existingChannel.getConversationId());
-        if (id != null) {
+        if (id != null && !customRecipientIds.contains(id)) {
           Log.i(TAG, "Consistency: Conversation channel created outside of app, update " + id + " to use '" + existingChannel.getId() + "'");
           db.setNotificationChannel(id, existingChannel.getId());
+        } else if (id != null) {
+          Log.i(TAG, "Consistency: Conversation channel created outside of app for " + id + ", but recipient already has a custom channel. Deleting external channel '" + existingChannel.getId() + "'");
+          notificationManager.deleteNotificationChannel(existingChannel.getId());
         } else {
           Log.i(TAG, "Consistency: Conversation channel created outside of app with no matching recipient, deleting channel '" + existingChannel.getId() + "'");
           notificationManager.deleteNotificationChannel(existingChannel.getId());
