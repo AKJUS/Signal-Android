@@ -343,6 +343,7 @@ class UploadAttachmentToArchiveJob private constructor(
                 ArchiveDatabaseExecutor.runBlocking {
                   SignalDatabase.attachments.updateAttachmentLength(attachmentId, actualLength)
                 }
+                uploadSpec = null
               } else {
                 Log.i(TAG, "[$attachmentId]$mediaIdLog Length was correct. No action needed. Will retry.")
               }
