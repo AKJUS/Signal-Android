@@ -731,9 +731,13 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
     return RecipientReader(cursor)
   }
 
-  fun getRecipientsWithNotificationChannels(): RecipientReader {
-    val cursor = readableDatabase.query(TABLE_NAME, ID_PROJECTION, "$NOTIFICATION_CHANNEL NOT NULL", null, null, null, null)
-    return RecipientReader(cursor)
+  fun getRecipientsWithNotificationChannels(): List<RecipientNotificationData> {
+    return readableDatabase
+      .select(ID, NOTIFICATION_CHANNEL)
+      .from(TABLE_NAME)
+      .where("$NOTIFICATION_CHANNEL NOT NULL")
+      .run()
+      .readToList { RecipientNotificationData(RecipientId.from(it.requireLong(ID)), it.requireNonNullString(NOTIFICATION_CHANNEL)) }
   }
 
   fun getExistingRecords(ids: Collection<RecipientId>): Map<RecipientId, RecipientRecord> {
@@ -5027,4 +5031,6 @@ open class RecipientTable(context: Context, databaseHelper: SignalDatabase) : Da
     val expiringProfileKeyCredential: Pair<ProfileKey, ExpiringProfileKeyCredential>? = null,
     val clearUsername: Boolean = false
   )
+
+  data class RecipientNotificationData(val id: RecipientId, val channel: String)
 }
