@@ -11,6 +11,7 @@ import org.signal.core.util.mebiBytes
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.attachments.Cdn
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
+import org.thoughtcrime.securesms.database.MediaTable
 import org.thoughtcrime.securesms.database.NoSuchMessageException
 import org.thoughtcrime.securesms.database.SignalDatabase.Companion.attachments
 import org.thoughtcrime.securesms.database.SignalDatabase.Companion.messages
@@ -103,6 +104,49 @@ object AttachmentUtil {
     attachments.deleteAttachment(attachmentId)
     enqueueAttachmentDelete(messages.getMessageRecordOrNull(mmsId), attachment)
     return null
+  }
+
+  /**
+   * Version of [deleteAttachment] optimized for bulk-delete. Suppresses observer notifications and bulk notifies at the end.
+   *
+   * @param onProgress invoked with the running count (1-based) after each item.
+   * @return the set of [MessageRecord]s that were fully deleted (i.e. items where the attachment
+   *         was the last one on its message)
+   */
+  @JvmStatic
+  @WorkerThread
+  fun deleteAttachments(records: Collection<MediaTable.MediaRecord>, onProgress: (Int) -> Unit): Set<MessageRecord> {
+    val deletedMessageRecords = mutableSetOf<MessageRecord>()
+    val touchedThreadIds = mutableSetOf<Long>()
+
+    records.forEachIndexed { index, record ->
+      val attachment = record.attachment
+      if (attachment != null) {
+        val mmsId = attachment.mmsId
+        val attachmentCount = attachments.getAttachmentsForMessage(mmsId).size
+
+        // If it's the only attachment, just delete the message
+        if (attachmentCount <= 1) {
+          val deletedMessageRecord = messages.getMessageRecordOrNull(mmsId)
+          if (deletedMessageRecord != null) {
+            messages.deleteMessage(mmsId, deletedMessageRecord.threadId, notify = false, updateThread = false)
+            touchedThreadIds += deletedMessageRecord.threadId
+            deletedMessageRecords += deletedMessageRecord
+          }
+        } else {
+          attachments.deleteAttachment(attachment.attachmentId)
+          enqueueAttachmentDelete(messages.getMessageRecordOrNull(mmsId), attachment)
+        }
+      } else {
+        Log.w(TAG, "No attachment found for message ${record.messageId}")
+      }
+
+      onProgress(index + 1)
+    }
+
+    messages.flushBulkDeleteNotifications(touchedThreadIds)
+
+    return deletedMessageRecords
   }
 
   private fun allowedForType(allowedTypes: Set<String>, typeKey: String?, label: String): Boolean {

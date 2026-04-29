@@ -4379,18 +4379,24 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
         }
     }
 
-    threads
-      .forEach { threadId ->
-        SignalDatabase.threads.update(threadId, unarchive = false)
-        notifyConversationListeners(threadId)
-      }
+    flushBulkDeleteNotifications(threads)
+
+    return unhandled
+  }
+
+  /**
+   * Helper to notify various database observers after doing deletions via [deleteMessage] with notifying disabled.
+   */
+  fun flushBulkDeleteNotifications(touchedThreadIds: Set<Long>) {
+    touchedThreadIds.forEach { threadId ->
+      SignalDatabase.threads.update(threadId, unarchive = false)
+      notifyConversationListeners(threadId)
+    }
 
     notifyConversationListListeners()
     notifyStickerListeners()
     notifyStickerPackListeners()
     OptimizeMessageSearchIndexJob.enqueue()
-
-    return unhandled
   }
 
   private fun getMessagesInThreadAfterInclusive(threadId: Long, timestamp: Long, limit: Long): List<MessageRecord> {

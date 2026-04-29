@@ -1825,6 +1825,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Deleting</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Deleting messages…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Sort by</string>
     <string name="MediaOverviewActivity_Newest">Newest</string>
     <string name="MediaOverviewActivity_Oldest">Oldest</string>
