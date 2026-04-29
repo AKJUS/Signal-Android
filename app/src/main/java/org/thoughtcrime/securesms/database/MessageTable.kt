@@ -314,6 +314,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     private const val INDEX_DATE_SENT_FROM_TO_THREAD = "message_date_sent_from_to_thread_index"
     private const val INDEX_THREAD_COUNT = "message_thread_count_index"
     private const val INDEX_THREAD_UNREAD_COUNT = "message_thread_unread_count_index"
+    private const val INDEX_STORY_TYPE = "message_story_type_index"
 
     @JvmField
     val CREATE_INDEXS = arrayOf(
@@ -322,7 +323,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       "CREATE INDEX IF NOT EXISTS $INDEX_DATE_SENT_FROM_TO_THREAD ON $TABLE_NAME ($DATE_SENT, $FROM_RECIPIENT_ID, $TO_RECIPIENT_ID, $THREAD_ID)",
       "CREATE INDEX IF NOT EXISTS message_date_server_index ON $TABLE_NAME ($DATE_SERVER)",
       "CREATE INDEX IF NOT EXISTS message_reactions_unread_index ON $TABLE_NAME ($REACTIONS_UNREAD);",
-      "CREATE INDEX IF NOT EXISTS message_story_type_index ON $TABLE_NAME ($STORY_TYPE);",
+      "CREATE INDEX IF NOT EXISTS $INDEX_STORY_TYPE ON $TABLE_NAME ($STORY_TYPE);",
       "CREATE INDEX IF NOT EXISTS message_parent_story_id_index ON $TABLE_NAME ($PARENT_STORY_ID);",
       "CREATE INDEX IF NOT EXISTS $INDEX_THREAD_STORY_SCHEDULED_DATE_LATEST_REVISION_ID ON $TABLE_NAME ($THREAD_ID, $DATE_RECEIVED, $STORY_TYPE, $PARENT_STORY_ID, $SCHEDULED_DATE, $LATEST_REVISION_ID);",
       "CREATE INDEX IF NOT EXISTS message_quote_id_quote_author_scheduled_date_latest_revision_id_index ON $TABLE_NAME ($QUOTE_ID, $QUOTE_AUTHOR, $SCHEDULED_DATE, $LATEST_REVISION_ID);",
@@ -1596,7 +1597,10 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
 
   fun hasFailedOutgoingStory(): Boolean {
     val where = "$IS_STORY_CLAUSE AND ($outgoingTypeClause) AND $NOTIFIED = 0 AND ($TYPE & ${MessageTypes.BASE_TYPE_MASK}) = ${MessageTypes.BASE_SENT_FAILED_TYPE}"
-    return readableDatabase.exists(TABLE_NAME).where(where).run()
+    return readableDatabase
+      .exists("$TABLE_NAME INDEXED BY $INDEX_STORY_TYPE")
+      .where(where)
+      .run()
   }
 
   fun getOrderedStoryRecipientsAndIds(isOutgoingOnly: Boolean): List<StoryResult> {
