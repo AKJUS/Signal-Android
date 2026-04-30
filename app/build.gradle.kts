@@ -619,11 +619,7 @@ dependencies {
   implementation(project(":lib:apng"))
 
   implementation(libs.androidx.fragment.ktx)
-  implementation(libs.androidx.appcompat) {
-    version {
-      strictly("1.6.1")
-    }
-  }
+  implementation(libs.androidx.appcompat)
   implementation(libs.androidx.window.window)
   implementation(libs.androidx.window.java)
   implementation(libs.androidx.recyclerview)
@@ -743,6 +739,7 @@ dependencies {
   }
   testImplementation(testLibs.conscrypt.openjdk.uber)
   testImplementation(testLibs.mockk)
+  testImplementation(testFixtures(project(":core:ui")))
   testImplementation(testFixtures(project(":lib:libsignal-service")))
   testImplementation(testLibs.espresso.core)
   testImplementation(testLibs.kotlinx.coroutines.test)

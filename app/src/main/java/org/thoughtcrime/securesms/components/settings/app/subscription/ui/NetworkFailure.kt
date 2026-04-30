@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.components.settings.app.subscription.models
+package org.thoughtcrime.securesms.components.settings.app.subscription.ui
 
 import android.view.View
 import com.google.android.material.button.MaterialButton
