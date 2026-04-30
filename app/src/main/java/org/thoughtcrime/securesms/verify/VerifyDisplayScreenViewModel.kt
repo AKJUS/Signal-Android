@@ -6,14 +6,20 @@
 package org.thoughtcrime.securesms.verify
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Intent
+import android.text.TextUtils
+import androidx.annotation.UiContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.rx3.asFlow
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
@@ -32,25 +38,45 @@ import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.IdentityUtil
+import java.nio.charset.StandardCharsets
 
-class VerifySafetyNumberViewModel(
+class VerifyDisplayScreenViewModel(
+  private val isSafetyNumberVerified: Boolean,
   private val recipientId: RecipientId,
   private val localIdentity: IdentityKey,
   private val remoteIdentity: IdentityKey
 ) : ViewModel() {
 
   companion object {
-    val TAG = Log.tag(VerifySafetyNumberViewModel::class.java)
+    val TAG = Log.tag(VerifyDisplayScreenViewModel::class.java)
   }
 
-  val recipient: LiveRecipient = Recipient.live(recipientId)
+  private val recipient: LiveRecipient = Recipient.live(recipientId)
 
-  private val fingerprintLiveData = MutableLiveData<SafetyNumberFingerprint?>()
-  private val automaticVerificationLiveData = MutableLiveData(AutomaticVerificationStatus.NONE)
+  private val internalState = MutableStateFlow(
+    VerifyDisplayScreenState(
+      isSafetyNumberVerified = isSafetyNumberVerified
+    )
+  )
+  val state: StateFlow<VerifyDisplayScreenState> = internalState
+
+  val fingerprintSnapshot: Fingerprint?
+    get() {
+      return when (val holder = state.value.fingerprintHolder) {
+        is FingerprintHolder.Initialised -> holder.fingerprint.fingerprint
+        else -> null
+      }
+    }
 
   init {
     initializeFingerprints()
     checkAutomaticVerificationEligibility()
+
+    viewModelScope.launch {
+      recipient.observable().asFlow().collectLatest { r ->
+        internalState.update { it.copy(recipient = r) }
+      }
+    }
   }
 
   private fun checkAutomaticVerificationEligibility() {
@@ -59,31 +85,85 @@ class VerifySafetyNumberViewModel(
       ProfileKeyUtil.profileKeyOrNull(recipient.get().profileKey) == null ||
       SignalStore.misc.hasKeyTransparencyFailure
     ) {
-      automaticVerificationLiveData.postValue(AutomaticVerificationStatus.UNAVAILABLE_PERMANENT)
+      internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.UNAVAILABLE_PERMANENT) }
+    }
+  }
+
+  fun setSeenEducationSheet() {
+    SignalStore.uiHints.setSeenVerifyAutomaticallySheet()
+    internalState.update { it.copy(shouldDisplayVerifyAutomaticallyEducationSheet = false) }
+  }
+
+  fun setScannedFingerprint(scanned: String) {
+    fingerprintSnapshot?.let { fingerprint ->
+      try {
+        if (fingerprint.scannableFingerprint.compareTo(scanned.toByteArray(StandardCharsets.ISO_8859_1))) {
+          internalState.update { it.copy(scanComparisonResult = VerifyDisplayScreenState.ScanComparisonResult.Success()) }
+        } else {
+          internalState.update { it.copy(scanComparisonResult = VerifyDisplayScreenState.ScanComparisonResult.Failure()) }
+        }
+      } catch (e: Exception) {
+        Log.w(TAG, e)
+        internalState.update { it.copy(scanComparisonResult = VerifyDisplayScreenState.ScanComparisonResult.IncorrectFormat()) }
+        return
+      }
+    }
+  }
+
+  @UiContext
+  fun createShareIntent(context: Context): Intent {
+    return VerifyDisplayRepository.createShareIntent(context, fingerprintSnapshot!!)
+  }
+
+  fun copyFingerprintToClipboard() {
+    VerifyDisplayRepository.writeToClipboard(fingerprintSnapshot!!)
+  }
+
+  fun compareClipboardToFingerprint() {
+    val clipboardData = VerifyDisplayRepository.readFromClipboard()
+    val fingerprint = (state.value.fingerprintHolder as? FingerprintHolder.Initialised)?.fingerprint
+
+    if (clipboardData == null) {
+      internalState.update { it.copy(clipComparisonResult = VerifyDisplayScreenState.ClipComparisonResult.NoDataInClipboard()) }
+      return
+    }
+
+    val numericClipboardData = clipboardData.replace("\\D".toRegex(), "")
+    if (TextUtils.isEmpty(numericClipboardData) || numericClipboardData.length != 60) {
+      internalState.update { it.copy(clipComparisonResult = VerifyDisplayScreenState.ClipComparisonResult.NoSafetyNumberInClipboard()) }
+      return
+    }
+
+    if (fingerprint?.fingerprint?.displayableFingerprint?.displayText == numericClipboardData) {
+      internalState.update { it.copy(clipComparisonResult = VerifyDisplayScreenState.ClipComparisonResult.Success()) }
+    } else {
+      internalState.update { it.copy(clipComparisonResult = VerifyDisplayScreenState.ClipComparisonResult.Failure()) }
     }
   }
 
   fun verifyAutomatically(canRetry: Boolean = true) {
     viewModelScope.launch(SignalDispatchers.IO) {
-      if (automaticVerificationLiveData.value == AutomaticVerificationStatus.UNAVAILABLE_PERMANENT || !isActive) {
+      if (internalState.value.automaticVerificationStatus == AutomaticVerificationStatus.UNAVAILABLE_PERMANENT || !isActive) {
         return@launch
       }
 
-      automaticVerificationLiveData.postValue(AutomaticVerificationStatus.VERIFYING)
+      internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.VERIFYING) }
 
       when (val result = VerifySafetyNumberRepository.verifyAutomatically(recipient.get())) {
         VerifySafetyNumberRepository.VerifyResult.Success -> {
-          automaticVerificationLiveData.postValue(AutomaticVerificationStatus.VERIFIED)
+          internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.VERIFIED) }
         }
+
         is VerifySafetyNumberRepository.VerifyResult.RetryableFailure -> {
           if (canRetry) {
             delay(result.duration.toMillis())
             verifyAutomatically(canRetry = false)
           } else {
             Log.i(TAG, "Got a retryable exception, but we already retried once. Ignoring.")
-            automaticVerificationLiveData.postValue(AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY)
+            internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY) }
           }
         }
+
         VerifySafetyNumberRepository.VerifyResult.CorruptedFailure -> {
           Log.w(TAG, "KT store was corrupted. Clearing everything and starting again.")
           SignalStore.account.distinguishedHead = null
@@ -92,11 +172,12 @@ class VerifySafetyNumberViewModel(
             verifyAutomatically(canRetry = false)
           } else {
             Log.i(TAG, "Store was corrupted and we can retry, but we already retried once. Ignoring.")
-            automaticVerificationLiveData.postValue(AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY)
+            internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY) }
           }
         }
+
         VerifySafetyNumberRepository.VerifyResult.UnretryableFailure -> {
-          automaticVerificationLiveData.postValue(AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY)
+          internalState.update { it.copy(automaticVerificationStatus = AutomaticVerificationStatus.UNAVAILABLE_TEMPORARY) }
         }
       }
     }
@@ -117,19 +198,13 @@ class VerifySafetyNumberViewModel(
         aciFingerprint = SafetyNumberFingerprint(version, localIdentifier, localIdentity, remoteIdentifier, remoteIdentity, generator.createFor(version, localIdentifier, localIdentity, remoteIdentifier, remoteIdentity))
       }
 
-      fingerprintLiveData.postValue(aciFingerprint)
+      internalState.update { state -> state.copy(fingerprintHolder = aciFingerprint?.let { FingerprintHolder.Initialised(it) } ?: FingerprintHolder.NoFingerprintAvailable) }
     }
   }
 
-  fun getFingerprint(): LiveData<SafetyNumberFingerprint?> {
-    return fingerprintLiveData
-  }
-
-  fun getAutomaticVerification(): LiveData<AutomaticVerificationStatus> {
-    return automaticVerificationLiveData
-  }
-
   fun updateSafetyNumberVerification(verified: Boolean) {
+    internalState.update { it.copy(isSafetyNumberVerified = verified) }
+
     val recipientId: RecipientId = recipientId
     val context: Context = AppDependencies.application
 
@@ -171,12 +246,13 @@ class VerifySafetyNumberViewModel(
   }
 
   class Factory(
+    private val isSafetyNumberVerified: Boolean,
     private val recipientId: RecipientId,
     private val localIdentity: IdentityKey,
     private val remoteIdentity: IdentityKey
   ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-      return modelClass.cast(VerifySafetyNumberViewModel(recipientId, localIdentity, remoteIdentity))!!
+      return modelClass.cast(VerifyDisplayScreenViewModel(isSafetyNumberVerified, recipientId, localIdentity, remoteIdentity))!!
     }
   }
 }
@@ -224,6 +300,12 @@ data class SafetyNumberFingerprint(
     result = 31 * result + fingerprint.hashCode()
     return result
   }
+}
+
+sealed interface FingerprintHolder {
+  data object Uninitialised : FingerprintHolder
+  data object NoFingerprintAvailable : FingerprintHolder
+  data class Initialised(val fingerprint: SafetyNumberFingerprint) : FingerprintHolder
 }
 
 enum class AutomaticVerificationStatus {
