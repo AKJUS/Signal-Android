@@ -13,9 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import org.signal.core.ui.navigation.ResultEventBus
 import org.signal.core.util.logging.Log
@@ -34,6 +38,9 @@ class RegistrationViewModel(private val repository: RegistrationRepository, save
 
   private var _state: MutableStateFlow<RegistrationFlowState> = savedStateHandle.getMutableStateFlow("registration_state", initialValue = RegistrationFlowState())
   val state: StateFlow<RegistrationFlowState> = _state.asStateFlow()
+
+  private val finishChannel = Channel<Unit>(capacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+  val finishRequests: Flow<Unit> = finishChannel.receiveAsFlow()
 
   val resultBus = ResultEventBus()
 
@@ -66,7 +73,14 @@ class RegistrationViewModel(private val repository: RegistrationRepository, save
       is RegistrationFlowEvent.Registered -> state.copy(accountEntropyPool = event.accountEntropyPool)
       is RegistrationFlowEvent.MasterKeyRestoredFromSvr -> state.copy(temporaryMasterKey = event.masterKey)
       is RegistrationFlowEvent.NavigateToScreen -> applyNavigationToScreenEvent(state, event)
-      is RegistrationFlowEvent.NavigateBack -> state.copy(backStack = state.backStack.dropLast(1))
+      is RegistrationFlowEvent.NavigateBack -> {
+        if (state.backStack.size > 1) {
+          state.copy(backStack = state.backStack.dropLast(1))
+        } else {
+          finishChannel.trySend(Unit)
+          state
+        }
+      }
       is RegistrationFlowEvent.RecoveryPasswordInvalid -> state.copy(doNotAttemptRecoveryPassword = true)
       is RegistrationFlowEvent.PendingRestoreOptionSelected -> state.copy(pendingRestoreOption = event.option)
       is RegistrationFlowEvent.UserSuppliedAepSubmitted -> state.copy(unverifiedRestoredAep = event.aep)

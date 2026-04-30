@@ -8,6 +8,7 @@
 package org.signal.registration
 
 import android.os.Parcelable
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -229,6 +230,13 @@ fun RegistrationNavHost(
       CircularProgressIndicator()
     }
     return
+  }
+
+  val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+  LaunchedEffect(viewModel, backDispatcher) {
+    viewModel.finishRequests.collect {
+      backDispatcher?.onBackPressed()
+    }
   }
 
   val entryProvider = entryProvider {
