@@ -1283,7 +1283,7 @@ object RemoteConfig {
   @JvmStatic
   @get:JvmName("dredDuration")
   val dredDuration: Int by remoteInt(
-    key = "global.calling.dredDuration",
+    key = "android.calling.dredDuration",
     defaultValue = 0,
     hotSwappable = true
   )
