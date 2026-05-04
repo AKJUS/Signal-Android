@@ -632,8 +632,13 @@ class StorageSyncJob private constructor(parameters: Parameters, private var loc
 
   class Factory : Job.Factory<StorageSyncJob?> {
     override fun create(parameters: Parameters, serializedData: ByteArray?): StorageSyncJob {
-      val data = serializedData?.let { StorageSyncJobData.ADAPTER.decode(it) } ?: StorageSyncJobData()
-      return StorageSyncJob(parameters, data.localManifestOutOfDate)
+      return try {
+        val data = serializedData?.let { StorageSyncJobData.ADAPTER.decode(it) } ?: StorageSyncJobData()
+        StorageSyncJob(parameters, localManifestOutOfDate = data.localManifestOutOfDate)
+      } catch (e: IOException) {
+        Log.w(TAG, "Error deserializing StorageSyncJob", e)
+        StorageSyncJob(parameters, localManifestOutOfDate = false)
+      }
     }
   }
 }
