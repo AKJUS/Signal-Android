@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.rx3.asObservable
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.calls.log.CallLogRow
 import org.thoughtcrime.securesms.components.settings.app.notifications.profiles.NotificationProfilesRepository
@@ -56,6 +57,7 @@ class MainNavigationViewModel(
   companion object {
     private val TAG = Log.tag(MainNavigationViewModel::class)
     private const val LOCK_PANE_TO_SECONDARY = "lock_pane_to_secondary"
+    private const val NAV_PREFETCH_TIMEOUT_MS = 250L
   }
 
   class Factory(
@@ -253,13 +255,27 @@ class MainNavigationViewModel(
   }
 
   private fun goToConversation(args: ConversationArgs) = viewModelScope.launch {
-    val updatedArgs = withContext(Dispatchers.IO) {
-      val wallpaper = Recipient.resolved(args.recipientId).wallpaper
-      if (wallpaper?.prefetch(AppDependencies.application, 250) == false) {
-        Log.w(TAG, "goToConversation: Failed to prefetch wallpaper.")
+    val liveRecipient = Recipient.live(args.recipientId)
+    val recipientSnapshot = liveRecipient.get()
+    val wallpaper = recipientSnapshot.wallpaper
+
+    val updatedArgs = if (recipientSnapshot.isResolving || (wallpaper?.isPhoto == true && !wallpaper.isPrefetched)) {
+      withTimeoutOrNull(NAV_PREFETCH_TIMEOUT_MS) {
+        withContext(Dispatchers.Default) {
+          val freshWallpaper = liveRecipient.resolve().wallpaper
+          if (freshWallpaper?.prefetch(AppDependencies.application, NAV_PREFETCH_TIMEOUT_MS) == false) {
+            Log.w(TAG, "[goToConversation] Failed to prefetch wallpaper.")
+          }
+          args.copy(hasWallpaper = freshWallpaper != null)
+        }
+      } ?: run {
+        Log.w(TAG, "[goToConversation] Timed out resolving recipient/wallpaper. Navigating without prefetch.")
+        args
       }
+    } else {
       args.copy(hasWallpaper = wallpaper != null)
     }
+
     internalDetailLocation.emit(MainNavigationDetailLocation.Chats.Conversation(updatedArgs))
   }
 
