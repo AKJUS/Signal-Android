@@ -16,16 +16,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +34,7 @@ import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.linkdevice.LinkDeviceRepository.LinkDeviceResult
+import org.thoughtcrime.securesms.qr.QrCrosshair
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 
 /**
@@ -115,8 +109,6 @@ fun LinkDeviceQrScanScreen(
         .background(Color.Black)
     ) {
       if (hasPermission) {
-        val crosshairPath = remember { Path() }
-
         CameraScreen(
           state = cameraState,
           emitter = cameraEmitter,
@@ -126,14 +118,7 @@ fun LinkDeviceQrScanScreen(
           fillViewport = true,
           modifier = Modifier.fillMaxSize()
         ) {
-          Box(
-            modifier = Modifier
-              .fillMaxSize()
-              .drawWithContent {
-                drawContent()
-                drawQrCrosshair(crosshairPath)
-              }
-          )
+          QrCrosshair(modifier = Modifier.fillMaxSize())
 
           Text(
             text = stringResource(R.string.AddLinkDeviceFragment__scan_the_qr_code),
@@ -171,43 +156,6 @@ fun LinkDeviceQrScanScreen(
       }
     }
   }
-}
-
-private fun DrawScope.drawQrCrosshair(path: Path) {
-  val crosshairWidth: Float = size.minDimension * 0.6f
-  val crosshairLineLength = crosshairWidth * 0.125f
-
-  val topLeft = center - Offset(crosshairWidth / 2, crosshairWidth / 2)
-  val topRight = center + Offset(crosshairWidth / 2, -crosshairWidth / 2)
-  val bottomRight = center + Offset(crosshairWidth / 2, crosshairWidth / 2)
-  val bottomLeft = center + Offset(-crosshairWidth / 2, crosshairWidth / 2)
-
-  path.reset()
-
-  drawPath(
-    path = path.apply {
-      moveTo(topLeft.x, topLeft.y + crosshairLineLength)
-      lineTo(topLeft.x, topLeft.y)
-      lineTo(topLeft.x + crosshairLineLength, topLeft.y)
-
-      moveTo(topRight.x - crosshairLineLength, topRight.y)
-      lineTo(topRight.x, topRight.y)
-      lineTo(topRight.x, topRight.y + crosshairLineLength)
-
-      moveTo(bottomRight.x, bottomRight.y - crosshairLineLength)
-      lineTo(bottomRight.x, bottomRight.y)
-      lineTo(bottomRight.x - crosshairLineLength, bottomRight.y)
-
-      moveTo(bottomLeft.x + crosshairLineLength, bottomLeft.y)
-      lineTo(bottomLeft.x, bottomLeft.y)
-      lineTo(bottomLeft.x, bottomLeft.y - crosshairLineLength)
-    },
-    color = Color.White,
-    style = Stroke(
-      width = 3.dp.toPx(),
-      pathEffect = PathEffect.cornerPathEffect(10.dp.toPx())
-    )
-  )
 }
 
 private fun makeToast(context: Context, messageId: Int, onLinkDeviceFailure: () -> Unit) {
