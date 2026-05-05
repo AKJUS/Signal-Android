@@ -21,6 +21,8 @@ import org.thoughtcrime.securesms.serialization.JsonSerializableNavType
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId
 import kotlin.reflect.typeOf
 
+private val callLinkRoomIdType = typeOf<CallLinkRoomId>()
+
 fun NavGraphBuilder.callNavGraphBuilder(navHostController: NavHostController) {
   composable<MainNavigationDetailLocation.Empty> {
     EmptyDetailScreen()
@@ -28,7 +30,7 @@ fun NavGraphBuilder.callNavGraphBuilder(navHostController: NavHostController) {
 
   composable<MainNavigationDetailLocation.Calls.CallLinks.CallLinkDetails>(
     typeMap = mapOf(
-      typeOf<CallLinkRoomId>() to JsonSerializableNavType(CallLinkRoomId.serializer())
+      callLinkRoomIdType to JsonSerializableNavType(CallLinkRoomId.serializer())
     )
   ) {
     informNavigatorWeAreReady()
@@ -40,7 +42,7 @@ fun NavGraphBuilder.callNavGraphBuilder(navHostController: NavHostController) {
 
   composable<MainNavigationDetailLocation.Calls.CallLinks.EditCallLinkName>(
     typeMap = mapOf(
-      typeOf<CallLinkRoomId>() to JsonSerializableNavType(CallLinkRoomId.serializer())
+      callLinkRoomIdType to JsonSerializableNavType(CallLinkRoomId.serializer())
     )
   ) {
     informNavigatorWeAreReady()

@@ -62,6 +62,10 @@ import org.thoughtcrime.securesms.window.AppScaffoldAnimationState
 import kotlin.reflect.typeOf
 import kotlin.time.Duration.Companion.milliseconds
 
+private val conversationArgsType = typeOf<ConversationArgs>()
+private val recipientIdType = typeOf<RecipientId>()
+private val messageIdType = typeOf<MessageId>()
+
 fun NavGraphBuilder.chatNavGraphBuilder(
   chatNavGraphState: ChatNavGraphState
 ) {
@@ -71,7 +75,7 @@ fun NavGraphBuilder.chatNavGraphBuilder(
 
   composable<MainNavigationDetailLocation.Chats.Conversation>(
     typeMap = mapOf(
-      typeOf<ConversationArgs>() to JsonSerializableNavType(ConversationArgs.serializer())
+      conversationArgsType to JsonSerializableNavType(ConversationArgs.serializer())
     )
   ) { navBackStackEntry ->
     val route = navBackStackEntry.toRoute<MainNavigationDetailLocation.Chats.Conversation>()
@@ -147,8 +151,8 @@ fun NavGraphBuilder.chatNavGraphBuilder(
 
   composable<MainNavigationDetailLocation.Chats.MessageDetails>(
     typeMap = mapOf(
-      typeOf<RecipientId>() to JsonSerializableNavType(RecipientId.serializer()),
-      typeOf<MessageId>() to MessageId.NavType()
+      recipientIdType to JsonSerializableNavType(RecipientId.serializer()),
+      messageIdType to MessageId.NavType()
     )
   ) { navBackStackEntry ->
     val context = LocalContext.current
@@ -173,7 +177,7 @@ fun NavGraphBuilder.chatNavGraphBuilder(
 
   composable<MainNavigationDetailLocation.Chats.ConversationSettings>(
     typeMap = mapOf(
-      typeOf<RecipientId>() to JsonSerializableNavType(RecipientId.serializer())
+      recipientIdType to JsonSerializableNavType(RecipientId.serializer())
     )
   ) { navBackStackEntry ->
 
