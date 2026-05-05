@@ -204,9 +204,9 @@
     <color name="release_notes_bubble_text">#FFFFFFFF</color>
     <color name="release_notes_cta_background">#FF636583</color>
     <color name="release_notes_background_pattern">#FF272C3C</color>
-    <color name="release_notes_header_border">#FF3A3F4E</color>
+    <color name="release_notes_header_border">#FF2E3342</color>
     <color name="release_notes_background">#FF353A49</color>
-    <color name="release_notes_header_background">#FF2F3240</color>
+    <color name="release_notes_header_background">#FF3A3F4E</color>
     <color name="release_notes_toolbar_scrolled">#FF424757</color>
     <color name="release_notes_toolbar_transparent">#00424757</color>
 </resources>
