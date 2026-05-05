@@ -24,7 +24,8 @@ plugins {
   id("licenses")
 }
 
-apply(from = "static-ips.gradle.kts")
+val staticIps = Properties().apply { file("static-ips.properties").reader().use { load(it) } }
+staticIps.stringPropertyNames().forEach { rootProject.extra[it] = staticIps.getProperty(it) }
 
 val canonicalVersionCode = 1684
 val canonicalVersionName = "8.9.1"
