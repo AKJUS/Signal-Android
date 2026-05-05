@@ -423,6 +423,9 @@ public final class ConversationItem extends RelativeLayout implements BindableCo
     this.displayMode           = displayMode;
     this.previousMessage       = previousMessageRecord;
 
+    lastFooterDecisionLineWidth = -1;
+    lastFooterWasCollapsed      = false;
+
     setGutterSizes(messageRecord, groupThread);
     setMessageShape(messageRecord, previousMessageRecord, nextMessageRecord, groupThread);
     setMediaAttributes(messageRecord, previousMessageRecord, nextMessageRecord, groupThread, hasWallpaper, isMessageRequestAccepted, allowedToPlayInline);
