@@ -285,8 +285,6 @@ object SyncMessageProcessor {
         log(envelope.clientTimestamp!!, "Got a sent transcript while in reCAPTCHA mode. Assuming we're good to message again.")
         RateLimitUtil.retryAllRateLimitedMessages(context)
       }
-
-      AppDependencies.messageNotifier.setLastDesktopActivityTimestamp(sent.timestamp!!)
     } catch (e: MmsException) {
       throw StorageFailedException(e, metadata.sourceServiceId.toString(), metadata.sourceDeviceId)
     }
@@ -1013,7 +1011,6 @@ object SyncMessageProcessor {
     AppDependencies
       .messageNotifier
       .apply {
-        setLastDesktopActivityTimestamp(envelopeTimestamp)
         cancelDelayedNotifications()
         updateNotification(context)
       }
@@ -1047,7 +1044,6 @@ object SyncMessageProcessor {
     SignalDatabase.messages.setOutgoingGiftsRevealed(toMarkViewed)
 
     AppDependencies.messageNotifier.apply {
-      setLastDesktopActivityTimestamp(envelopeTimestamp)
       cancelDelayedNotifications()
       updateNotification(context)
     }
@@ -1076,7 +1072,6 @@ object SyncMessageProcessor {
     }
 
     AppDependencies.messageNotifier.apply {
-      setLastDesktopActivityTimestamp(envelopeTimestamp)
       cancelDelayedNotifications()
       updateNotification(context)
     }
