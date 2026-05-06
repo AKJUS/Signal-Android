@@ -172,7 +172,6 @@ import org.thoughtcrime.securesms.components.menu.SignalBottomActionBar
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.CheckoutFlowActivity
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.DonateToSignalFragment
-import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsActivity
 import org.thoughtcrime.securesms.components.snackbars.makeSnackbar
 import org.thoughtcrime.securesms.components.spoiler.SpoilerAnnotation
 import org.thoughtcrime.securesms.components.voice.VoiceNoteDraft
@@ -302,7 +301,6 @@ import org.thoughtcrime.securesms.mediaoverview.MediaOverviewActivity
 import org.thoughtcrime.securesms.mediapreview.MediaIntentFactory
 import org.thoughtcrime.securesms.mediapreview.MediaPreviewV2Activity
 import org.thoughtcrime.securesms.mediasend.MediaSendActivityResult
-import org.thoughtcrime.securesms.messagedetails.MessageDetailsFragment
 import org.thoughtcrime.securesms.messagerequests.MessageRequestRepository
 import org.thoughtcrime.securesms.mms.AttachmentManager
 import org.thoughtcrime.securesms.mms.AudioSlide
@@ -582,7 +580,7 @@ class ConversationFragment :
   private lateinit var conversationItemDecorations: ConversationItemDecorations
   private lateinit var optionsMenuCallback: ConversationOptionsMenuCallback
 
-  private var chatRouter: MainNavigationChatDetailRouter? = null
+  private lateinit var chatRouter: MainNavigationChatDetailRouter
 
   private var animationsAllowed = false
   private var pinnedShortcutReceiver: BroadcastReceiver? = null
@@ -661,7 +659,7 @@ class ConversationFragment :
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
-    chatRouter = context as? MainNavigationChatDetailRouter
+    chatRouter = context as MainNavigationChatDetailRouter
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -3092,7 +3090,7 @@ class ConversationFragment :
 
   private fun handleDisplayDetails(conversationMessage: ConversationMessage) {
     val recipientSnapshot = viewModel.recipientSnapshot ?: return
-    navigateTo(MainNavigationDetailLocation.Chats.MessageDetails(recipientSnapshot.id, MessageId(conversationMessage.messageRecord.id)))
+    chatRouter.goToChatDetail(MainNavigationDetailLocation.Chats.MessageDetails(recipientSnapshot.id, MessageId(conversationMessage.messageRecord.id)))
   }
 
   private fun handleDeleteMessages(messageParts: Set<MultiselectPart>) {
@@ -3632,7 +3630,7 @@ class ConversationFragment :
       } else if (messageRecord.hasFailedWithNetworkFailures()) {
         ConversationDialogs.displayMessageCouldNotBeSentDialog(requireContext(), messageRecord)
       } else {
-        navigateTo(MainNavigationDetailLocation.Chats.MessageDetails(recipientId, MessageId(messageRecord.id)))
+        chatRouter.goToChatDetail(MainNavigationDetailLocation.Chats.MessageDetails(recipientId, MessageId(messageRecord.id)))
       }
     }
 
@@ -4306,7 +4304,7 @@ class ConversationFragment :
 
     override fun handleManageGroup() {
       viewModel.recipientSnapshot?.let { recipient ->
-        navigateTo(MainNavigationDetailLocation.Chats.ConversationSettings(recipient.id))
+        chatRouter.goToChatDetail(MainNavigationDetailLocation.Chats.ConversationSettings(recipient.id))
       }
     }
 
@@ -4343,7 +4341,7 @@ class ConversationFragment :
     override fun handleConversationSettings() {
       viewModel.recipientSnapshot?.let { recipient ->
         if (!viewModel.hasMessageRequestState || recipient.isBlocked) {
-          navigateTo(MainNavigationDetailLocation.Chats.ConversationSettings(recipient.id))
+          chatRouter.goToChatDetail(MainNavigationDetailLocation.Chats.ConversationSettings(recipient.id))
         }
       }
     }
@@ -4408,49 +4406,6 @@ class ConversationFragment :
         .setNegativeButton(android.R.string.cancel, null)
         .show()
     }
-  }
-
-  /**
-   * Routes to the appropriate destination based on the current window configuration.
-   *
-   * In split-pane mode, delegates to the [MainNavigationChatDetailRouter] to display content in the detail pane. Otherwise, opens the destination as a standalone screen.
-   */
-  private fun navigateTo(location: MainNavigationDetailLocation.Chats) {
-    val router = chatRouter
-    if (router != null && resources.isSplitPane()) {
-      router.goToChatDetail(location)
-    } else {
-      when (location) {
-        is MainNavigationDetailLocation.Chats.MessageDetails -> navigateToMessageDetailsStandalone(location)
-        is MainNavigationDetailLocation.Chats.ConversationSettings -> navigateToConversationSettingsStandalone(viewModel.recipientSnapshot!!)
-      }
-    }
-  }
-
-  /**
-   * Opens message details as a standalone (single-pane) screen. Use [navigateTo] as the entry point.
-   */
-  private fun navigateToMessageDetailsStandalone(location: MainNavigationDetailLocation.Chats.MessageDetails) {
-    MessageDetailsFragment.create(location.messageId, location.recipientId)
-      .show(requireActivity().supportFragmentManager, MESSAGE_DETAILS_TAG)
-  }
-
-  /**
-   * Opens conversation settings as a standalone (single-pane) screen.
-   */
-  private fun navigateToConversationSettingsStandalone(recipient: Recipient) {
-    val intent = if (recipient.isPushGroup) {
-      ConversationSettingsActivity.forGroup(requireContext(), recipient.requireGroupId())
-    } else {
-      ConversationSettingsActivity.forRecipient(requireContext(), recipient.id)
-    }
-
-    val bundle = ConversationSettingsActivity.createTransitionBundle(
-      requireActivity(),
-      binding.conversationTitleView.root.findViewById(R.id.contact_photo_image),
-      binding.toolbar
-    )
-    requireActivity().startActivity(intent, bundle)
   }
 
   private inner class OnReactionsSelectedListener : ConversationReactionOverlay.OnReactionSelectedListener {

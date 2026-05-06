@@ -846,7 +846,7 @@ class MainActivity :
 
     val detailLocation = extras.getParcelableCompat(KEY_DETAIL_LOCATION, MainNavigationDetailLocation::class.java)
     if (detailLocation != null) {
-      mainNavigationViewModel.goTo(detailLocation)
+      goTo(detailLocation)
       return
     }
 

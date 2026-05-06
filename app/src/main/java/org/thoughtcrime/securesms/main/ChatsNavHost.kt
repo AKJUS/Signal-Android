@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.layer.GraphicsLayer
 import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.unit.dp
 import androidx.fragment.compose.AndroidFragment
 import androidx.fragment.compose.rememberFragmentState
@@ -46,6 +47,7 @@ import androidx.navigation.toRoute
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.signal.core.ui.rememberIsSplitPane
 import org.thoughtcrime.securesms.MainNavigator
 import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsNavHostFragment
 import org.thoughtcrime.securesms.compose.FragmentBackHandler
@@ -70,7 +72,9 @@ fun NavGraphBuilder.chatNavGraphBuilder(
   chatNavGraphState: ChatNavGraphState
 ) {
   composable<MainNavigationDetailLocation.Empty> {
-    EmptyDetailScreen()
+    if (LocalResources.current.rememberIsSplitPane()) {
+      EmptyDetailScreen()
+    }
   }
 
   composable<MainNavigationDetailLocation.Conversation>(
@@ -182,8 +186,8 @@ fun NavGraphBuilder.chatNavGraphBuilder(
   ) { navBackStackEntry ->
 
     val navigatorProvider = LocalContext.current as? MainNavigator.NavigatorProvider
-    val fragmentState = key(route) { rememberFragmentState() }
     val route = navBackStackEntry.toRoute<MainNavigationDetailLocation.Chats.ConversationSettings>()
+    val fragmentState = key(route) { rememberFragmentState() }
     val arguments: Bundle? by produceState(null, route.recipientId) {
       value = ConversationSettingsNavHostFragment.createArgs(route.recipientId)
     }
