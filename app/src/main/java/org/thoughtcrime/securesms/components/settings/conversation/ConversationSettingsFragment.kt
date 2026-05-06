@@ -166,11 +166,9 @@ class ConversationSettingsFragment :
 
   private val viewModel by viewModels<ConversationSettingsViewModel>(
     factoryProducer = {
-      val groupId = args.groupId as? GroupId
-
       ConversationSettingsViewModel.Factory(
         recipientId = args.recipientId,
-        groupId = groupId,
+        groupId = args.groupId,
         callMessageIds = args.callMessageIds ?: longArrayOf(),
         repository = ConversationSettingsRepository(requireContext()),
         messageRequestRepository = MessageRequestRepository(requireContext())
@@ -253,9 +251,7 @@ class ConversationSettingsFragment :
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return if (item.itemId == R.id.action_edit) {
       val args = ConversationSettingsFragmentArgs.fromBundle(requireArguments())
-      val groupId = args.groupId as GroupId
-
-      startActivity(CreateProfileActivity.getIntentForGroupProfile(requireActivity(), requireNotNull(groupId)))
+      startActivity(CreateProfileActivity.getIntentForGroupProfile(requireActivity(), requireNotNull(args.groupId)))
       true
     } else {
       super.onOptionsItemSelected(item)
@@ -914,7 +910,7 @@ class ConversationSettingsFragment :
             icon = DSLSettingsIcon.from(R.drawable.ic_link_16),
             isEnabled = state.recipient.isActiveGroup && !state.isDeprecatedOrUnregistered,
             onClick = {
-              navController.safeNavigate(ConversationSettingsFragmentDirections.actionConversationSettingsFragmentToShareableGroupLinkFragment(groupState.groupId.requireV2().toString()))
+              navController.safeNavigate(ConversationSettingsFragmentDirections.actionConversationSettingsFragmentToShareableGroupLinkFragment(groupState.groupId))
             }
           )
 
