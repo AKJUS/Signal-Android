@@ -92,8 +92,8 @@ import org.thoughtcrime.securesms.groups.ui.managegroup.dialogs.GroupDescription
 import org.thoughtcrime.securesms.groups.ui.managegroup.dialogs.GroupInviteSentDialog
 import org.thoughtcrime.securesms.groups.ui.managegroup.dialogs.GroupsLearnMoreBottomSheetDialogFragment
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.main.MainNavigationChatDetailRouter
 import org.thoughtcrime.securesms.main.MainNavigationDetailLocation
-import org.thoughtcrime.securesms.main.MainNavigationRouter
 import org.thoughtcrime.securesms.mediaoverview.MediaOverviewActivity
 import org.thoughtcrime.securesms.mediapreview.MediaIntentFactory
 import org.thoughtcrime.securesms.mediasend.camerax.CameraXRemoteConfig
@@ -179,7 +179,7 @@ class ConversationSettingsFragment :
   )
 
   private var transitionCallback: TransitionCallback? = null
-  private var mainNavRouter: MainNavigationRouter? = null
+  private var chatRouter: MainNavigationChatDetailRouter? = null
 
   private lateinit var toolbar: Toolbar
   private lateinit var toolbarAvatarContainer: FrameLayout
@@ -196,7 +196,7 @@ class ConversationSettingsFragment :
   override fun onAttach(context: Context) {
     super.onAttach(context)
     transitionCallback = context as? TransitionCallback
-    mainNavRouter = context as? MainNavigationRouter
+    chatRouter = context as? MainNavigationChatDetailRouter
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -263,8 +263,8 @@ class ConversationSettingsFragment :
   }
 
   private fun goToConversationList() {
-    if (mainNavRouter != null) {
-      mainNavRouter?.goTo(MainNavigationDetailLocation.Empty)
+    if (chatRouter != null) {
+      chatRouter?.exitDetailLocation()
     } else {
       startActivity(MainActivity.clearTopAndOpenDetail(requireContext(), MainNavigationDetailLocation.Empty))
     }

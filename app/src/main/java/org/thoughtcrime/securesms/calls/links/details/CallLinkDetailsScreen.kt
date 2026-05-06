@@ -46,8 +46,8 @@ import org.thoughtcrime.securesms.calls.YouAreAlreadyInACallSnackbar.YouAreAlrea
 import org.thoughtcrime.securesms.calls.links.CallLinks
 import org.thoughtcrime.securesms.calls.links.SignalCallRow
 import org.thoughtcrime.securesms.database.CallLinkTable
+import org.thoughtcrime.securesms.main.MainNavigationCallDetailRouter
 import org.thoughtcrime.securesms.main.MainNavigationDetailLocation
-import org.thoughtcrime.securesms.main.MainNavigationRouter
 import org.thoughtcrime.securesms.main.MainNavigationViewModel
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkCredentials
@@ -63,7 +63,7 @@ fun CallLinkDetailsScreen(
   viewModel: CallLinkDetailsViewModel = viewModel {
     CallLinkDetailsViewModel(roomId)
   },
-  router: MainNavigationRouter = viewModel<MainNavigationViewModel>(viewModelStoreOwner = LocalActivity.current as ComponentActivity) {
+  router: MainNavigationCallDetailRouter = viewModel<MainNavigationViewModel>(viewModelStoreOwner = LocalActivity.current as ComponentActivity) {
     error("Should already be created.")
   }
 ) {
@@ -90,7 +90,7 @@ fun CallLinkDetailsScreen(
 class DefaultCallLinkDetailsCallback(
   private val activity: FragmentActivity,
   private val viewModel: CallLinkDetailsViewModel,
-  private val router: MainNavigationRouter
+  private val router: MainNavigationCallDetailRouter
 ) : CallLinkDetailsCallback {
 
   private val lifecycleDisposable = LifecycleDisposable()
@@ -113,7 +113,7 @@ class DefaultCallLinkDetailsCallback(
   }
 
   override fun onEditNameClicked() {
-    router.goTo(MainNavigationDetailLocation.Calls.CallLinks.EditCallLinkName(callLinkRoomId = viewModel.recipientSnapshot!!.requireCallLinkRoomId()))
+    router.goToCallDetail(MainNavigationDetailLocation.Calls.CallLinks.EditCallLinkName(callLinkRoomId = viewModel.recipientSnapshot!!.requireCallLinkRoomId()))
   }
 
   override fun onShareClicked() {
@@ -152,7 +152,7 @@ class DefaultCallLinkDetailsCallback(
     viewModel.setDisplayRevocationDialog(false)
     activity.lifecycleScope.launch {
       if (viewModel.delete()) {
-        router.goTo(MainNavigationDetailLocation.Empty)
+        router.exitDetailLocation()
       }
     }
   }

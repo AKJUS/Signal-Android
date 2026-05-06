@@ -85,7 +85,6 @@ import kotlinx.coroutines.withContext
 import org.signal.core.ui.BottomSheetUtil
 import org.signal.core.ui.compose.Snackbars
 import org.signal.core.ui.compose.theme.SignalTheme
-import org.signal.core.ui.isSplitPane
 import org.signal.core.ui.permissions.Permissions
 import org.signal.core.ui.rememberIsSplitPane
 import org.signal.core.util.Util
@@ -521,15 +520,14 @@ class MainActivity :
                 }.navigateToDetailLocation(location)
               }
 
-              is MainNavigationDetailLocation.Chats -> {
-                if (location is MainNavigationDetailLocation.Chats.Conversation) {
-                  chatNavGraphState.writeGraphicsLayerToBitmap()
-                }
+              is MainNavigationDetailLocation.Conversation -> {
+                chatNavGraphState.writeGraphicsLayerToBitmap()
                 chatsNavHostController.navigateToDetailLocation(location)
               }
 
+              is MainNavigationDetailLocation.Chats -> chatsNavHostController.navigateToDetailLocation(location)
+              is MainNavigationDetailLocation.CallLinkDetails -> callsNavHostController.navigateToDetailLocation(location)
               is MainNavigationDetailLocation.Calls -> callsNavHostController.navigateToDetailLocation(location)
-
               is MainNavigationDetailLocation.Stories -> storiesNavHostController.navigateToDetailLocation(location)
             }
           }
@@ -1034,7 +1032,7 @@ class MainActivity :
   private fun handleConversationIntent(intent: Intent) {
     if (ConversationIntents.isConversationIntent(intent)) {
       mainNavigationViewModel.goTo(MainNavigationListLocation.CHATS)
-      mainNavigationViewModel.goTo(MainNavigationDetailLocation.Chats.Conversation(ConversationIntents.readArgsFromBundle(intent.extras!!)))
+      mainNavigationViewModel.goTo(MainNavigationDetailLocation.Conversation(ConversationIntents.readArgsFromBundle(intent.extras!!)))
       intent.action = null
       setIntent(intent)
     }

@@ -73,12 +73,12 @@ fun NavGraphBuilder.chatNavGraphBuilder(
     EmptyDetailScreen()
   }
 
-  composable<MainNavigationDetailLocation.Chats.Conversation>(
+  composable<MainNavigationDetailLocation.Conversation>(
     typeMap = mapOf(
       conversationArgsType to JsonSerializableNavType(ConversationArgs.serializer())
     )
   ) { navBackStackEntry ->
-    val route = navBackStackEntry.toRoute<MainNavigationDetailLocation.Chats.Conversation>()
+    val route = navBackStackEntry.toRoute<MainNavigationDetailLocation.Conversation>()
     val fragmentState = key(route) { rememberFragmentState() }
     val context = LocalContext.current
 

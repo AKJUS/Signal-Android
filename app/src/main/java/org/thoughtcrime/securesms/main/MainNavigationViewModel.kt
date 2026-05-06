@@ -36,7 +36,6 @@ import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.calls.log.CallLogRow
 import org.thoughtcrime.securesms.components.settings.app.notifications.profiles.NotificationProfilesRepository
 import org.thoughtcrime.securesms.components.snackbars.SnackbarStateConsumerRegistry
-import org.thoughtcrime.securesms.conversation.ConversationArgs
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.megaphone.Megaphone
@@ -146,8 +145,12 @@ class MainNavigationViewModel(
     viewModelScope.launch {
       internalDetailLocation.collect { location ->
         when (location) {
-          is MainNavigationDetailLocation.Chats.Conversation -> {
-            internalActiveChatThreadId.update { location.conversationArgs.threadId }
+          is MainNavigationDetailLocation.Conversation -> {
+            internalActiveChatThreadId.update { location.controllerKey }
+          }
+
+          is MainNavigationDetailLocation.CallLinkDetails -> {
+            internalActiveCallId.update { location.controllerKey }
           }
 
           is MainNavigationDetailLocation.Calls -> {
@@ -224,37 +227,19 @@ class MainNavigationViewModel(
    * render) *before* swapping panes. This helps to prevent flashing / duplicate loads.
    */
   override fun goTo(location: MainNavigationDetailLocation) {
-    lockPaneToSecondary = false
-
-    if (navigator == null) {
-      earlyNavigationDetailLocationRequested = location
-      return
-    }
-
     when (location) {
-      is MainNavigationDetailLocation.Chats.Conversation -> goToConversation(location.conversationArgs)
-      else -> {
-        viewModelScope.launch {
-          internalDetailLocation.emit(location)
-        }
-      }
+      is MainNavigationDetailLocation.Empty,
+      is MainNavigationDetailLocation.Chats.ConversationSettings,
+      is MainNavigationDetailLocation.Chats.MessageDetails,
+      is MainNavigationDetailLocation.CallLinkDetails,
+      is MainNavigationDetailLocation.Calls.CallLinks.EditCallLinkName -> setDetailLocation(location)
+
+      is MainNavigationDetailLocation.Conversation -> goToConversation(location)
     }
   }
 
-  override fun goTo(location: MainNavigationListLocation) {
-    lockPaneToSecondary = true
-
-    if (navigator == null) {
-      earlyNavigationListLocationRequested = location
-      return
-    }
-
-    internalMainNavigationState.update {
-      it.copy(currentListLocation = location)
-    }
-  }
-
-  private fun goToConversation(args: ConversationArgs) = viewModelScope.launch {
+  private fun goToConversation(location: MainNavigationDetailLocation.Conversation) = viewModelScope.launch {
+    val args = location.conversationArgs
     val liveRecipient = Recipient.live(args.recipientId)
     val recipientSnapshot = liveRecipient.get()
     val wallpaper = recipientSnapshot.wallpaper
@@ -276,7 +261,33 @@ class MainNavigationViewModel(
       args.copy(hasWallpaper = wallpaper != null)
     }
 
-    internalDetailLocation.emit(MainNavigationDetailLocation.Chats.Conversation(updatedArgs))
+    setDetailLocation(MainNavigationDetailLocation.Conversation(updatedArgs))
+  }
+
+  private fun setDetailLocation(location: MainNavigationDetailLocation) {
+    lockPaneToSecondary = false
+
+    if (navigator == null) {
+      earlyNavigationDetailLocationRequested = location
+      return
+    }
+
+    viewModelScope.launch {
+      internalDetailLocation.emit(location)
+    }
+  }
+
+  override fun goTo(location: MainNavigationListLocation) {
+    lockPaneToSecondary = true
+
+    if (navigator == null) {
+      earlyNavigationListLocationRequested = location
+      return
+    }
+
+    internalMainNavigationState.update {
+      it.copy(currentListLocation = location)
+    }
   }
 
   fun goToCameraFirstStoryCapture() {

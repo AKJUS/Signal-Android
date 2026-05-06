@@ -28,14 +28,14 @@ fun NavGraphBuilder.callNavGraphBuilder(navHostController: NavHostController) {
     EmptyDetailScreen()
   }
 
-  composable<MainNavigationDetailLocation.Calls.CallLinks.CallLinkDetails>(
+  composable<MainNavigationDetailLocation.CallLinkDetails>(
     typeMap = mapOf(
       callLinkRoomIdType to JsonSerializableNavType(CallLinkRoomId.serializer())
     )
   ) {
     informNavigatorWeAreReady()
 
-    val route = it.toRoute<MainNavigationDetailLocation.Calls.CallLinks.CallLinkDetails>()
+    val route = it.toRoute<MainNavigationDetailLocation.CallLinkDetails>()
 
     CallLinkDetailsScreen(roomId = route.callLinkRoomId)
   }

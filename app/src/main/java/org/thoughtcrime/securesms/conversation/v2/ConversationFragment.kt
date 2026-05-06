@@ -293,9 +293,9 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.linkpreview.LinkPreview
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewViewModelV2
 import org.thoughtcrime.securesms.longmessage.LongMessageFragment
+import org.thoughtcrime.securesms.main.MainNavigationChatDetailRouter
 import org.thoughtcrime.securesms.main.MainNavigationDetailLocation
 import org.thoughtcrime.securesms.main.MainNavigationListLocation
-import org.thoughtcrime.securesms.main.MainNavigationRouter
 import org.thoughtcrime.securesms.main.MainNavigationViewModel
 import org.thoughtcrime.securesms.main.MainSnackbarHostKey
 import org.thoughtcrime.securesms.mediaoverview.MediaOverviewActivity
@@ -582,7 +582,7 @@ class ConversationFragment :
   private lateinit var conversationItemDecorations: ConversationItemDecorations
   private lateinit var optionsMenuCallback: ConversationOptionsMenuCallback
 
-  private var mainNavRouter: MainNavigationRouter? = null
+  private var chatRouter: MainNavigationChatDetailRouter? = null
 
   private var animationsAllowed = false
   private var pinnedShortcutReceiver: BroadcastReceiver? = null
@@ -661,7 +661,7 @@ class ConversationFragment :
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
-    mainNavRouter = context as? MainNavigationRouter
+    chatRouter = context as? MainNavigationChatDetailRouter
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -4413,17 +4413,16 @@ class ConversationFragment :
   /**
    * Routes to the appropriate destination based on the current window configuration.
    *
-   * In split-pane mode, delegates to the [MainNavigationRouter] to display content in the detail pane. Otherwise, opens the destination as a standalone screen.
+   * In split-pane mode, delegates to the [MainNavigationChatDetailRouter] to display content in the detail pane. Otherwise, opens the destination as a standalone screen.
    */
   private fun navigateTo(location: MainNavigationDetailLocation.Chats) {
-    val router = mainNavRouter
+    val router = chatRouter
     if (router != null && resources.isSplitPane()) {
-      router.goTo(location)
+      router.goToChatDetail(location)
     } else {
       when (location) {
         is MainNavigationDetailLocation.Chats.MessageDetails -> navigateToMessageDetailsStandalone(location)
         is MainNavigationDetailLocation.Chats.ConversationSettings -> navigateToConversationSettingsStandalone(viewModel.recipientSnapshot!!)
-        is MainNavigationDetailLocation.Chats.Conversation -> error("ConversationFragment shouldn't navigate to another conversation - use the main navigation infrastructure instead.")
       }
     }
   }

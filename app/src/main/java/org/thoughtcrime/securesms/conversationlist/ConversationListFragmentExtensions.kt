@@ -37,7 +37,7 @@ fun Fragment.listenToEventBusWhileResumed(
       .collectLatest {
         if (!resources.isSplitPane()) {
           when (it) {
-            is MainNavigationDetailLocation.Chats.Conversation -> unsubscribe()
+            is MainNavigationDetailLocation.Conversation -> unsubscribe()
             MainNavigationDetailLocation.Empty -> subscribe()
             else -> Unit
           }
