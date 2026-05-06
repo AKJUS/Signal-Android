@@ -49,11 +49,11 @@
     <!-- Dialog button to edit the number entered -->
     <string name="RegistrationActivity_edit_number">नंबर एडिट करें</string>
     <!-- Accessibility label for opening the screen specific dropdown menu. -->
-    <string name="RegistrationActivity_open_menu">Open menu</string>
+    <string name="RegistrationActivity_open_menu">मेन्यू खोलें</string>
     <!-- Menu option to use a proxy -->
-    <string name="RegistrationActivity_use_proxy">Use proxy</string>
+    <string name="RegistrationActivity_use_proxy">प्रॉक्सी इस्तेमाल करें</string>
     <!-- Menu option to link this as a device -->
-    <string name="RegistrationActivity_link_device">Link device</string>
+    <string name="RegistrationActivity_link_device">डिवाइस लिंक करें</string>
 
     <!-- CountryCodePickerScreen -->
     <!-- Title of the country code selection screen -->
@@ -198,7 +198,7 @@
     <!-- Error text when key is invalid -->
     <string name="EnterAepScreen__invalid_recovery_key">\'रिकवरी की\' अमान्य है</string>
     <!-- Error text when key is correct format but does not match account -->
-    <string name="EnterAepScreen__incorrect_recovery_key">Incorrect recovery key</string>
+    <string name="EnterAepScreen__incorrect_recovery_key">\'रिकवरी की\' सही नहीं है</string>
     <!-- Text shown while preparing the restore -->
     <string name="LocalBackupRestoreScreen__preparing_restore">रीस्टोर करने की तैयारी हो रही है…</string>
     <!-- Title shown while restore is in progress -->
@@ -224,53 +224,53 @@
 
     <!-- RemoteRestoreScreen -->
     <!-- Title for the remote backup restore screen -->
-    <string name="RemoteRestoreScreen__restore_from_backup">Restore from backup</string>
+    <string name="RemoteRestoreScreen__restore_from_backup">बैकअप से रीस्टोर करें</string>
     <!-- Shown while fetching backup details from server -->
-    <string name="RemoteRestoreScreen__fetching_backup_details">Fetching backup details…</string>
+    <string name="RemoteRestoreScreen__fetching_backup_details">बैकअप की जानकारी लोड हो रही है…</string>
     <!-- Button to start restoring the backup -->
-    <string name="RemoteRestoreScreen__restore_backup">Restore backup</string>
+    <string name="RemoteRestoreScreen__restore_backup">बैकअप रीस्टोर करें</string>
     <!-- Subtitle showing when the last backup was made, with date and time placeholders -->
-    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">Your last backup was made on %1$s at %2$s.</string>
+    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">आपका पिछला बैकअप %1$s को %2$s बजे बनाया गया था।</string>
     <!-- Description telling the user their media will restore in the background -->
-    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">Your media will restore in the background. If you choose not to restore now, you won\'t be able to restore later.</string>
+    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">आपके मीडिया को बैकग्राउंड में रीस्टोर किया जाएगा। अगर आपने अभी रीस्टोर नहीं करने का फैसला किया है, तो आपके पास बाद में इसे रीस्टोर करने का विकल्प नहीं रहेगा।</string>
     <!-- Title for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__backup_not_found">Backup not found</string>
+    <string name="RemoteRestoreScreen__backup_not_found">बैकअप नहीं मिला</string>
     <!-- Body for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__no_backup_was_found">No backup was found for this account.</string>
+    <string name="RemoteRestoreScreen__no_backup_was_found">इस अकाउंट से जुड़ा कोई बैकअप नहीं मिला।</string>
     <!-- Title for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_backup">बैकअप रीस्टोर नहीं किया जा सकता</string>
     <!-- Body for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Your backup can\'t be restored right now. Please try again.</string>
+    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">आपका बैकअप अभी रीस्टोर नहीं किया जा सकता। दोबारा कोशिश करें।</string>
     <!-- Button to try again -->
-    <string name="RemoteRestoreScreen__try_again">Try again</string>
+    <string name="RemoteRestoreScreen__try_again">फिर से कोशिश करें</string>
     <!-- Title for the network error dialog -->
-    <string name="RemoteRestoreScreen__couldnt_finish_restore">Couldn\'t finish restore</string>
+    <string name="RemoteRestoreScreen__couldnt_finish_restore">रीस्टोर पूरा नहीं हो पाया</string>
     <!-- Body for the network error dialog -->
-    <string name="RemoteRestoreScreen__error_connecting">An error occurred while connecting to the server. Please check your connection and try again.</string>
+    <string name="RemoteRestoreScreen__error_connecting">सर्वर से कनेक्ट करते समय कोई गड़बड़ी हुई। कृपया अपना इंटरनेट कनेक्शन देखें और दोबारा कोशिश करें।</string>
     <!-- Body for the general restore failure dialog -->
-    <string name="RemoteRestoreScreen__error_occurred">An error occurred while restoring your backup. Please try again.</string>
+    <string name="RemoteRestoreScreen__error_occurred">आपके बैकअप को रीस्टोर करने में गड़बड़ी हुई। दोबारा कोशिश करें।</string>
     <!-- Title for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Couldn\'t restore this backup</string>
+    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">यह बैकअप रीस्टोर नहीं हो सका</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">This version of Signal can\'t restore your backup. Update to the latest version and try again.</string>
+    <string name="RemoteRestoreScreen__update_latest">Signal के इस वर्ज़न पर आपका बैकअप रीस्टोर नहीं किया जा सकता। नया वर्ज़न डाउनलोड करें और दोबारा कोशिश करें।</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Update Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Signal अपडेट करें</string>
     <!-- Button to dismiss update dialog -->
-    <string name="RemoteRestoreScreen__not_now">Not now</string>
+    <string name="RemoteRestoreScreen__not_now">अभी नहीं</string>
     <!-- Title for unrecoverable backup failure dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_this_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_this_backup">बैकअप रीस्टोर नहीं किया जा सकता</string>
     <!-- Body for unrecoverable backup failure dialog prompting user to contact support -->
-    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">An error occurred while restoring your backup. Your backup is not recoverable. Please contact support for help.</string>
+    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">आपके बैकअप को रीस्टोर करने में गड़बड़ी हुई। आपके बैकअप को रिकवर नहीं किया जा सकता। मदद के लिए, कृपया सपोर्ट टीम से संपर्क करें।</string>
     <!-- Button to contact support -->
-    <string name="RemoteRestoreScreen__contact_support">Contact support</string>
+    <string name="RemoteRestoreScreen__contact_support">सपोर्ट टीम से संपर्क करें</string>
     <!-- Shown while downloading the backup from the server -->
-    <string name="RemoteRestoreScreen__downloading_backup">Downloading backup…</string>
+    <string name="RemoteRestoreScreen__downloading_backup">बैकअप डाउनलोड हो रहा है…</string>
     <!-- Shown while restoring messages from the downloaded backup -->
-    <string name="RemoteRestoreScreen__restoring_messages">Restoring messages…</string>
+    <string name="RemoteRestoreScreen__restoring_messages">मैसेज रीस्टोर हो रहे हैं…</string>
     <!-- Shown while finalizing the restore -->
-    <string name="RemoteRestoreScreen__finishing_restore">Finishing…</string>
+    <string name="RemoteRestoreScreen__finishing_restore">पूरा हो रहा है…</string>
     <!-- Shown as a generic restoring message -->
-    <string name="RemoteRestoreScreen__restoring">Restoring…</string>
+    <string name="RemoteRestoreScreen__restoring">रीस्टोर किया जा रहा है…</string>
     <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
-    <string name="RemoteRestoreScreen__s_of_s_s">%1$s of %2$s (%3$s)</string>
+    <string name="RemoteRestoreScreen__s_of_s_s">%2$s में से %1$s (%3$s)</string>
 </resources>

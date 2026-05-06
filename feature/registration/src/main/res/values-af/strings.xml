@@ -49,11 +49,11 @@
     <!-- Dialog button to edit the number entered -->
     <string name="RegistrationActivity_edit_number">Wysig nommer</string>
     <!-- Accessibility label for opening the screen specific dropdown menu. -->
-    <string name="RegistrationActivity_open_menu">Open menu</string>
+    <string name="RegistrationActivity_open_menu">Maak kieslys oop</string>
     <!-- Menu option to use a proxy -->
-    <string name="RegistrationActivity_use_proxy">Use proxy</string>
+    <string name="RegistrationActivity_use_proxy">Gebruik tussenganger</string>
     <!-- Menu option to link this as a device -->
-    <string name="RegistrationActivity_link_device">Link device</string>
+    <string name="RegistrationActivity_link_device">Koppel toestel</string>
 
     <!-- CountryCodePickerScreen -->
     <!-- Title of the country code selection screen -->
@@ -198,7 +198,7 @@
     <!-- Error text when key is invalid -->
     <string name="EnterAepScreen__invalid_recovery_key">Ongeldige herwinsleutel</string>
     <!-- Error text when key is correct format but does not match account -->
-    <string name="EnterAepScreen__incorrect_recovery_key">Incorrect recovery key</string>
+    <string name="EnterAepScreen__incorrect_recovery_key">Verkeerde herwinsleutel</string>
     <!-- Text shown while preparing the restore -->
     <string name="LocalBackupRestoreScreen__preparing_restore">Besig om herwinning voor te berei…</string>
     <!-- Title shown while restore is in progress -->
@@ -224,53 +224,53 @@
 
     <!-- RemoteRestoreScreen -->
     <!-- Title for the remote backup restore screen -->
-    <string name="RemoteRestoreScreen__restore_from_backup">Restore from backup</string>
+    <string name="RemoteRestoreScreen__restore_from_backup">Herwin van rugsteun af</string>
     <!-- Shown while fetching backup details from server -->
-    <string name="RemoteRestoreScreen__fetching_backup_details">Fetching backup details…</string>
+    <string name="RemoteRestoreScreen__fetching_backup_details">Herwin tans rugsteunbesonderhede…</string>
     <!-- Button to start restoring the backup -->
-    <string name="RemoteRestoreScreen__restore_backup">Restore backup</string>
+    <string name="RemoteRestoreScreen__restore_backup">Laai rugsteun terug</string>
     <!-- Subtitle showing when the last backup was made, with date and time placeholders -->
-    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">Your last backup was made on %1$s at %2$s.</string>
+    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">Jou laaste rugsteun is op %1$s om %2$s gemaak.</string>
     <!-- Description telling the user their media will restore in the background -->
-    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">Your media will restore in the background. If you choose not to restore now, you won\'t be able to restore later.</string>
+    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">Jou media sal in die agtergrond herstel word. As jy die keuse maak om dit nie nou te herstel nie, sal jy dit nie later kan doen nie.</string>
     <!-- Title for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__backup_not_found">Backup not found</string>
+    <string name="RemoteRestoreScreen__backup_not_found">Rugsteun nie gevind nie</string>
     <!-- Body for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__no_backup_was_found">No backup was found for this account.</string>
+    <string name="RemoteRestoreScreen__no_backup_was_found">Daar is geen rugsteun vir hierdie rekening gevind nie.</string>
     <!-- Title for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_backup">Kan nie rugsteun herwin nie</string>
     <!-- Body for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Your backup can\'t be restored right now. Please try again.</string>
+    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Jou rugsteun kan nie tans herwin word nie. Probeer asb. weer.</string>
     <!-- Button to try again -->
-    <string name="RemoteRestoreScreen__try_again">Try again</string>
+    <string name="RemoteRestoreScreen__try_again">Probeer weer</string>
     <!-- Title for the network error dialog -->
-    <string name="RemoteRestoreScreen__couldnt_finish_restore">Couldn\'t finish restore</string>
+    <string name="RemoteRestoreScreen__couldnt_finish_restore">Kon nie herstel voltooi nie</string>
     <!-- Body for the network error dialog -->
-    <string name="RemoteRestoreScreen__error_connecting">An error occurred while connecting to the server. Please check your connection and try again.</string>
+    <string name="RemoteRestoreScreen__error_connecting">\'n Fout het voorgekom tydens verbinding met die bediener. Gaan asseblief jou netwerkverbinding na en probeer weer.</string>
     <!-- Body for the general restore failure dialog -->
-    <string name="RemoteRestoreScreen__error_occurred">An error occurred while restoring your backup. Please try again.</string>
+    <string name="RemoteRestoreScreen__error_occurred">\'n Fout het voorgekom tydens die herstel van jou rugsteun. Probeer asb. weer.</string>
     <!-- Title for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Couldn\'t restore this backup</string>
+    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Kon nie hierdie rugsteun herwin nie</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">This version of Signal can\'t restore your backup. Update to the latest version and try again.</string>
+    <string name="RemoteRestoreScreen__update_latest">Hierdie weergawe van Signal kan nie jou rugsteun herwin nie. Doen \'n opdatering na die jongste weergawe en probeer weer.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Update Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Werk Signal by</string>
     <!-- Button to dismiss update dialog -->
-    <string name="RemoteRestoreScreen__not_now">Not now</string>
+    <string name="RemoteRestoreScreen__not_now">Nie nou nie</string>
     <!-- Title for unrecoverable backup failure dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_this_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_this_backup">Kan nie rugsteun herwin nie</string>
     <!-- Body for unrecoverable backup failure dialog prompting user to contact support -->
-    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">An error occurred while restoring your backup. Your backup is not recoverable. Please contact support for help.</string>
+    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">\'n Fout het voorgekom tydens die herstel van jou rugsteun. Jou rugsteun is onherwinbaar. Kontak asb. steundiens vir hulp.</string>
     <!-- Button to contact support -->
-    <string name="RemoteRestoreScreen__contact_support">Contact support</string>
+    <string name="RemoteRestoreScreen__contact_support">Kontak Steundiens</string>
     <!-- Shown while downloading the backup from the server -->
-    <string name="RemoteRestoreScreen__downloading_backup">Downloading backup…</string>
+    <string name="RemoteRestoreScreen__downloading_backup">Laai tans rugsteun af…</string>
     <!-- Shown while restoring messages from the downloaded backup -->
-    <string name="RemoteRestoreScreen__restoring_messages">Restoring messages…</string>
+    <string name="RemoteRestoreScreen__restoring_messages">Laai tans boodskappe terug…</string>
     <!-- Shown while finalizing the restore -->
-    <string name="RemoteRestoreScreen__finishing_restore">Finishing…</string>
+    <string name="RemoteRestoreScreen__finishing_restore">Besig om te voltooi…</string>
     <!-- Shown as a generic restoring message -->
-    <string name="RemoteRestoreScreen__restoring">Restoring…</string>
+    <string name="RemoteRestoreScreen__restoring">Herstel tans…</string>
     <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
-    <string name="RemoteRestoreScreen__s_of_s_s">%1$s of %2$s (%3$s)</string>
+    <string name="RemoteRestoreScreen__s_of_s_s">%1$s van %2$s (%3$s)</string>
 </resources>

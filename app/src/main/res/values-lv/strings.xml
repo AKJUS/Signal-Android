@@ -734,6 +734,8 @@
     <string name="ConversationFragment_official_chat">Oficiāla saruna</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Vienīgā oficiālā saruna ar Signal Sekojiet līdzi jaunumiem un informācijai par lietotnes atjauninājumiem.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="zero">%1$d dalībnieki</item>
@@ -1874,6 +1876,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Dzēš</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Dzēš ziņas…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Kārtot pēc</string>
     <string name="MediaOverviewActivity_Newest">jaunākais</string>
     <string name="MediaOverviewActivity_Oldest">vecākais</string>
@@ -6164,6 +6168,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Nosūtītās multivides kvalitāte</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Sūtot augstas kvalitātes multivides saturu, tiks izmantots vairāk datu.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Augsta</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6670,9 +6676,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">Ziedojumu nevarēja apstiprināt</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Jūsu ziedojumu (%1$s mēnesī) nevarēja apstiprināt. Apstipriniet maksājumu platformai iDEAL | Wero savā bankas lietotnē.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Jūsu vienreizējo ziedojumu %1$s apmērā nevarēja apstiprināt. Apstipriniet maksājumu platformai iDEAL | Wero savā bankas lietotnē.</string>
 
     <string name="Boost__enter_custom_amount">Ievadīt pielāgotu summu</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6801,7 +6807,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Jūsu ziedojumu neizdevās nosūtīt tīkla kļūdas dēļ. Pārbaudiet savienojumu un mēģiniet vēlreiz.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Jūsu ziedojumu platformai iDEAL | Wero nevarēja apstrādāt. Mēģiniet citu maksājuma veidu vai sazinieties ar savu banku, lai uzzinātu vairāk.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Ziedojums lietotāja %1$s vārdā</string>
@@ -7029,8 +7035,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Ieslēgt</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal versijas jaunumi &amp; ziņas</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">Šis ir oficiālais un vienīgais sarunu kanāls ar Signal</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7747,7 +7751,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">Jūsu ziedojums joprojām tiek apstrādāts. Apstrāde var ilgt dažas minūtes atkarībā no jūsu savienojuma. Pirms cita ziedojuma veikšanas, lūdzu, uzgaidiet, līdz šis maksājums tiks pabeigts.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Jūsu iDEAL | Wero ziedojums joprojām tiek apstrādāts. Pirms jauna ziedojuma veikšanas apstipriniet maksājumu savā bankas lietotnē.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">Ziedojuma summa ir pārāk liela</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7784,7 +7788,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">Vai pamest Signal, lai apstiprinātu ziedojumu?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Kad ziedojums būs apstiprināts, atgriezieties Signal platformā, lai pabeigtu tā apstrādi.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Jūs tiksiet novirzīts uz %1$s. Kad ziedojums būs apstiprināts, atgriezieties Signal platformā, lai pabeigtu procesu.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7846,7 +7850,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Izvēlieties savu banku</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Apstipriniet ziedojumu ar iDEAL | Wero</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Lai iestatītu regulāro ziedojumu, pieskarieties pie \"Turpināt\", lai apstiprinātu 0,01 € iekasēšanu no jūsu bankas konta. Maksājums jums tiks automātiski atgriezts. Šī darbība ir nepieciešama, lai atļautu ikmēneša ziedojuma %1$s apmērā iekasēšanu no jūsu konta.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9197,7 +9201,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Dublējiet savas ziņas un multividi un izmantojiet Signal drošo, pilnībā šifrēto krātuves pakalpojumu. Nezaudējiet nevienu ziņu, mainot tālruni vai pārinstalējot Signal.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">Pilnībā šifrētas</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

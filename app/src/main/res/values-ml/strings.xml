@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">ഔദ്യോഗിക ചാറ്റ്</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal-ൽ നിന്നുള്ള ഏക ഔദ്യോഗിക ചാറ്റ്. വാർത്തകളും റിലീസ് നോട്ടുകളും വഴി അപ്-ടു-ഡേറ്റ് ആയിരിക്കുക.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d അംഗം</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">ഇല്ലാതാക്കുന്നു</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">സന്ദേശങ്ങൾ ഇല്ലാതാക്കുന്നു…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">ഇങ്ങനെ അടുക്കുക</string>
     <string name="MediaOverviewActivity_Newest">ഏറ്റവും പുതിയത്</string>
     <string name="MediaOverviewActivity_Oldest">ഏറ്റവും പഴയത്</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">അയയ്ക്കുന്ന മീഡിയയുടെ നിലവാരം</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">ഉയർന്ന നിലവാരമുള്ള മീഡിയ അയയ്ക്കുന്നത് കൂടുതൽ ഡാറ്റ ഉപയോഗിക്കും.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">ഉയർന്നത്</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">സംഭാവന സ്ഥിരീകരിക്കാനായില്ല</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">നിങ്ങളുടെ %1$s/മാസം സംഭാവന സ്ഥിരീകരിക്കാനായില്ല. നിങ്ങളുടെ iDEAL | Wero പേയ്മെൻ്റിന് അനുമതി നൽകുന്നതിനായി ബാങ്കിംഗ് ആപ്പ് പരിശോധിക്കുക.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">നിങ്ങളുടെ ഒറ്റത്തവണ %1$s സംഭാവന സ്ഥിരീകരിക്കാനായില്ല. നിങ്ങളുടെ iDEAL | Wero പേയ്മെൻ്റിന് അനുമതി നൽകുന്നതിനായി ബാങ്കിംഗ് ആപ്പ് പരിശോധിക്കുക.</string>
 
     <string name="Boost__enter_custom_amount">ഇഷ്‌ടാനുസൃത തുക നൽകുക</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">ഒരു നെറ്റ്‌വർക്ക് പിശക് കാരണം നിങ്ങളുടെ സംഭാവന അയയ്‌ക്കാൻ കഴിഞ്ഞില്ല. നിങ്ങളുടെ കണക്ഷൻ പരിശോധിച്ച ശേഷം വീണ്ടും ശ്രമിക്കുക.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">നിങ്ങളുടെ iDEAL | Wero സംഭാവന പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല. മറ്റൊരു പേയ്മെന്റ് രീതി പരീക്ഷിക്കുക അല്ലെങ്കിൽ കൂടുതൽ വിവരങ്ങൾക്ക് നിങ്ങളുടെ ബാങ്കുമായി ബന്ധപ്പെടുക.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s എന്നയാളുടെ പേരിലുള്ള സംഭാവന</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">ഓൺ ചെയ്യുക</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal പ്രകാശന കുറിപ്പുകളും വാര്‍ത്തകളും</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">ഇതാണ്, ഔദ്യോഗികവും Signal-ൽ നിന്ന് മാത്രമുള്ളതുമായ ഒരൊറ്റ ചാറ്റ്</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">നിങ്ങളുടെ സംഭാവന ഇപ്പോഴും പ്രോസസ് ചെയ്യുകയാണ്. നിങ്ങളുടെ കണക്ഷൻ അനുസരിച്ച്, ഇതിന് കുറച്ച് മിനിറ്റ് എടുത്തേക്കാം. മറ്റൊരു സംഭാവന നൽകുന്നതിന് മുമ്പ്, ഈ പേയ്‌മെന്റ് പൂർത്തിയാകുന്നതുവരെ കാത്തിരിക്കുക.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">നിങ്ങളുടെ iDEAL | Wero സംഭാവന പ്രോസസ്സ് ചെയ്തുകൊണ്ടിരിക്കുകയാണ്. മറ്റൊരു സംഭാവന നൽകുന്നതിന് മുമ്പ് നിങ്ങളുടെ പേയ്‌മെന്റ് അംഗീകരിക്കുന്നതിന് നിങ്ങളുടെ ബാങ്കിംഗ് ആപ്പ് പരിശോധിക്കുക.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">സംഭാവന തുക വളരെ അധികമാണ്</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">സംഭാവന സ്ഥിരീകരിക്കാൻ Signal-ൽ നിന്ന് പുറത്ത് കടക്കണോ?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ, നിങ്ങളുടെ സംഭാവന പ്രോസസ് ചെയ്യുന്നത് പൂർത്തിയാക്കാൻ Signal-ലേക്ക് മടങ്ങുക.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">നിങ്ങളെ %1$s-ലേക്ക് നയിക്കുന്നതാണ്. സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ, നിങ്ങളുടെ സംഭാവന പ്രോസസ് ചെയ്യുന്നത് പൂർത്തിയാക്കാൻ Signal-ലേക്ക് മടങ്ങുക.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">നിങ്ങളുടെ ബാങ്ക് തിരഞ്ഞെടുക്കുക</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">iDEAL | Wero ഉപയോഗിച്ച് നിങ്ങളുടെ സംഭാവന സ്ഥിരീകരിക്കുക</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">ആവർത്തിച്ചുള്ള സംഭാവന സജ്ജീകരിക്കാൻ, €0,01 നിരക്ക് നിങ്ങളുടെ ബാങ്കുമായി സ്ഥിരീകരിക്കാൻ \'തുടരുക\' ടാപ്പ് ചെയ്യുക. ഇത് ഓട്ടോമാറ്റിയ്ക്കായി റീഫണ്ട് ചെയ്യുകയും നിങ്ങളുടെ അക്കൗണ്ടിൽ നിന്ന് %1$s/മാസം സംഭാവന ഡെബിറ്റ് ചെയ്യാൻ അനുവദിക്കുകയും ചെയ്യും.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Signal-ന്റെ സുരക്ഷിതമായ എൻഡ്-ടു-എൻഡ് എൻക്രിപ്റ്റഡ് സ്റ്റോറേജ് സേവനം ഉപയോഗിച്ച് നിങ്ങളുടെ സന്ദേശങ്ങളും മീഡിയയും ബാക്കപ്പ് ചെയ്യുക. നിങ്ങൾക്ക് ഒരു പുതിയ ഫോൺ ലഭിക്കുമ്പോഴോ Signal വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുമ്പോഴോ ഒരിക്കലും ഒരു സന്ദേശം നഷ്‌ടപ്പെടുത്തരുത്.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">എൻഡ്-ടു-എൻഡ് എൻക്രിപ്റ്റ് ചെയ്തത്</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

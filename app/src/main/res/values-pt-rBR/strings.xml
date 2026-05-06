@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">Conversa oficial</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">A única conversa oficial do Signal. Fique por dentro das notícias e notas de atualização.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d membro</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Excluindo</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Excluindo mensagens…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Ordenar por</string>
     <string name="MediaOverviewActivity_Newest">O mais recente</string>
     <string name="MediaOverviewActivity_Oldest">O mais antigo</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Qualidade da mídia enviada</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Enviar mídia com alta qualidade usará mais dados de internet.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Alta</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">Não foi possível confirmar a doação</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Não foi possível confirmar sua doação de %1$s/mês. Confira o app do seu banco para aprovar o pagamento iDEAL | Wero.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Não foi possível confirmar sua doação única de %1$s. Confira o app do seu banco para aprovar o pagamento iDEAL | Wero.</string>
 
     <string name="Boost__enter_custom_amount">Insira o valor</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Não foi possível enviar sua doação devido a um erro de rede. Verifique a sua conexão e tente novamente.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Não foi possível processar a doação iDEAL | Wero. Tente outra forma de pagamento ou entre em contato com seu banco para obter mais informações.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Doação em nome de %1$s</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Ativar</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Notas de lançamento e notícias do Signal</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">Este é o único chat oficial do Signal</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">Sua doação ainda está sendo processada. Isso pode demorar alguns minutos, dependendo da sua conexão. Espere até que o pagamento seja concluído para fazer outra doação.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Sua doação iDEAL | Wero ainda está sendo processada. Confira o app do seu banco para aprovar o pagamento antes de fazer outra doação.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">Valor da doação muito alto</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">Sair do Signal para confirmar doação?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Após confirmar, volte para o Signal para finalizar o processamento de sua doação.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Direcionaremos você para %1$s. Após confirmar, volte para o Signal para finalizar o processamento de sua doação.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Escolha seu banco</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirmar sua doação com iDEAL | Wero</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Toque em continuar para confirmar uma cobrança de € 0,01 com seu banco e configurar sua doação mensal. Esse valor será reembolsado automaticamente e permitirá que sua doação de %1$s/mês seja debitada de sua conta.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Faça backup das suas mensagens e arquivos de mídia usando o serviço seguro de armazenamento criptografado de ponta a ponta do Signal. Nunca perca uma mensagem ao adquirir um telefone novo ou reinstalar o Signal.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">Criptografado de ponta a ponta</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

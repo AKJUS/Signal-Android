@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">گفتگوی رسمی</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">تنها گفتگوی رسمی از سیگنال. از اخبار و تغییرات جدید با خبر شوید.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d عضو</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">در حال حذف</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">حذف پیام‌ها…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">مرتب‌سازی بر اساس</string>
     <string name="MediaOverviewActivity_Newest">جدیدترین</string>
     <string name="MediaOverviewActivity_Oldest">قدیمی‌ترین</string>
@@ -4198,7 +4202,7 @@
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
     <string name="preferences__enable_passphrase">فعال‌سازی گذرواژهٔ قفل صفحه</string>
     <string name="preferences__lock_signal_and_message_notifications_with_a_passphrase">صفحه و اعلان‌ها را با یک گذرواژه قفل کنید</string>
-    <string name="preferences__screen_security">امنیت صفحه</string>
+    <string name="preferences__screen_security">امنیت صفحه‌نمایش</string>
     <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">قفل کردن خودکار سیگنال بعد از یک بازهٔ زمانی تعیین شدهٔ عدم فعالیت</string>
     <!-- Legacy preference menu item to enable locking of app after inactivity -->
     <string name="preferences__inactivity_timeout_passphrase">گذرواژهٔ پایان مهلت عدم فعالیت</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">کیفیت ارسال رسانه</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">ارسال رسانه با کیفیت بالا از داده‌های بیشتری استفاده خواهد کرد.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">عالی</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">اهدای مالی تأیید نشد</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">کمک مالی شما به‌مبلغ %1$s در ماه تأیید نشد. برای تأیید پرداخت iDEAL | Wero خود، برنامه بانکی‌تان را بررسی کنید.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">کمک مالی یک‌باره شما به‌مبلغ %1$s تأیید نشد. برای تأیید پرداخت iDEAL | Wero خود، برنامه بانکی‌تان را بررسی کنید.</string>
 
     <string name="Boost__enter_custom_amount">وارد کردن مبلغ دلخواه</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">کمک مالی اهدایی شما به دلیل خطای شبکه ارسال نشد. اتصال خود را بررسی و دوباره تلاش کنید.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">کمک مالی iDEAL | Wero شما پردازش نشد. روش پرداخت دیگری را امتحان کنید یا برای اطلاعات بیشتر با بانک خود تماس بگیرید.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">کمک مالی از طرف %1$s</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">روشن کن</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">تازه‌ها و اخبار سیگنال</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">این گفتگوی رسمی و انحصاری سیگنال است</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">اهدای مالی شما هنوز در حال پردازش است. بسته به اتصال اینترنت شما، این پردازش ممکن است چند دقیقه طول بکشد. لطفاً قبل از اهدای کمک مالی دیگر، صبر کنید تا این پرداخت تکمیل شود.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">کمک مالی شما با iDEAL | Wero هنوز در حال پردازش است. برای تأیید پرداخت‌تان و قبل از کمک مالی دیگر، برنامه بانک‌تان را بررسی کنید.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">مبلغ اهدای مالی بیش‌ازحد زیاد است</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">برای تأیید اهدای مالی، از سیگنال خارج می‌شوید؟</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">پس از تأیید، برای تکمیل پردازش اهدای مالی‌تان به سیگنال برگردید.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">به %1$s فرستاده خواهید شد. پس از تأیید، برای تکمیل پردازش کمک مالی‌تان به سیگنال برگردید.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">انتخاب بانک‌تان</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">کمک مالی خود با iDEAL | Wero را تأیید کنید</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">برای راه‌اندازی کمک مالی مکرر خود، روی «ادامه» ضربه بزنید تا هزینه ۰,۰۱ یورو را با بانک خود تأیید کنید. این مبلغ به‌طور خودکار به شما برگردانده می‌شود و امکان برداشت کمک مالی شما به مبلغ %1$s در ماه از حساب‌تان را فراهم می‌کند.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">با استفاده از سرویس ذخیره‌سازی سرتاسر رمزگذاری‌شده و امن سیگنال، از پیام‌ها و رسانه‌های خود پشتیبان‌گیری کنید. وقتی تلفن جدید می‌گیرید یا سیگنال را دوباره نصب می‌کنید، هرگز پیامی را از دست ندهید.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">سرتاسر رمزگذاری‌شده</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

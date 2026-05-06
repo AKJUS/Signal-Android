@@ -748,6 +748,8 @@
     <string name="ConversationFragment_official_chat">Službeni razgovor</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Ovo je jedini službeni razgovor sa Signalom. Budite u toku s novostima i bilješkama o novim verzijama aplikacije.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d član</item>
@@ -1927,6 +1929,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Brisanje</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Brisanje poruka…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Poredaj po</string>
     <string name="MediaOverviewActivity_Newest">Najnovije</string>
     <string name="MediaOverviewActivity_Oldest">Najstarije</string>
@@ -6310,6 +6314,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Kvaliteta poslanih medija</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Slanje visokokvalitetnih medija zahtjeva veću potrošnju mobilnih podataka.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Visoko</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6826,9 +6832,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">Donaciju nije bilo moguće potvrditi</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Vašu donaciju od %1$s mjesečno nije bilo moguće potvrditi. Provjerite svoju aplikaciju mobilnog bankarstva kako biste odobrili plaćanje putem iDEAL | Wero platforme.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Vašu jednokratnu donaciju od %1$s nije bilo moguće potvrditi. Provjerite svoju aplikaciju mobilnog bankarstva kako biste odobrili plaćanje putem iDEAL | Wero platforme.</string>
 
     <string name="Boost__enter_custom_amount">Unesi drugi iznos</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6957,7 +6963,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Slanje donacije nije uspjelo zbog mrežne pogreške. Provjerite internetsku vezu i pokušajte ponovno.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Vašu donaciju putem platforme iDEAL | Wero nije bilo moguće obraditi. Promijenite način plaćanja ili se obratite svojoj banci za više informacija.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donacija u ime korisnika %1$s</string>
@@ -7185,8 +7191,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Uključi</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Bilješke i vijesti o najnovijoj verziji Signala</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">Ovo je službeni i jedini razgovor sa Signalom</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7924,7 +7928,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">Vaša se donacija još uvijek obrađuje. Ovisno o brzini vaše mreže, to može potrajati nekoliko minuta. Pričekajte završetak transakcije prije nego što izvršite novu donaciju.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Vaša donacija putem platforme iDEAL | Wero još uvijek se obrađuje. Provjerite svoju aplikaciju mobilnog bankarstva kako biste odobrili plaćanje prije nego što izvršite novu donaciju.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">Iznos donacije je previsok</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7962,7 +7966,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">Napustiti Signal radi potvrde plaćanja?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Nakon potvrde, vratite se na Signal kako bismo dovršili obradu vaše donacije.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Bit ćete preusmjereni na %1$s. Nakon potvrde, vratite se na Signal kako bismo dovršili obradu vaše donacije.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -8024,7 +8028,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Odaberite banku</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Potvrdite svoju donaciju putem platforme iDEAL | Wero</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Da biste postavili svoju automatsku mjesečnu donaciju, dodirnite \"Nastavi\" i potvrdite naplatu u iznosu od 0,01 € u svojoj banci. Taj će vam iznos automatski biti vraćen, a omogućuje da se naplata vaše mjesečne donacije u iznosu od %1$s € izvrši s vašeg računa.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9391,7 +9395,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Stvorite sigurnosnu kopiju svojih poruka i medijskih zapisa pomoću Signalovog sustava pohrane koji je zaštićen sveobuhvatnim šifriranjem. Nećete izgubiti nijednu poruku kada kupite novi telefon ili ponovno instalirate Signal.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">Zaštićeno sveobuhvatnim šifriranjem</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

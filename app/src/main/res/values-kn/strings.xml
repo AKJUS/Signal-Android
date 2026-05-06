@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">ಅಧಿಕೃತ ಚಾಟ್</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal ನ ಏಕೈಕ ಅಧಿಕೃತ ಚಾಟ್. ಸುದ್ದಿ ಮತ್ತು ಆವೃತ್ತಿ ಟಿಪ್ಪಣಿಗಳೊಂದಿಗೆ ಅಪ್ ಟು ಡೇಟ್ ಆಗಿರಿ.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d ಸದಸ್ಯ</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">ಅಳಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">ಸಂದೇಶಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">ಇವುಗಳಂತೆ ವಿಂಗಡಿಸು</string>
     <string name="MediaOverviewActivity_Newest">ಹೊಸತು</string>
     <string name="MediaOverviewActivity_Oldest">ಹಳೆಯದು</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">ಮಾಧ್ಯಮ ಗುಣಮಟ್ಟವನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">ಉನ್ನತ ಗುಣಮಟ್ಟದ ಮಾಧ್ಯಮವನ್ನು ಕಳುಹಿಸುವಿಕೆಯು ಹೆಚ್ಚು ಡೇಟಾವನ್ನು ಬಳಸಲಿದೆ.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">ಹೆಚ್ಚು</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">ದೇಣಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">ನಿಮ್ಮ %1$s/ತಿಂಗಳು ದೇಣಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನಿಮ್ಮ iDEAL | Wero ಪಾವತಿಯನ್ನು ಅನುಮೋದಿಸಲು ನಿಮ್ಮ ಬ್ಯಾಂಕಿಂಗ್ ಆ್ಯಪ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">ನಿಮ್ಮ ಒಂದು ಬಾರಿಯ %1$s ದೇಣಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನಿಮ್ಮ iDEAL | Wero ಪಾವತಿಯನ್ನು ಅನುಮೋದಿಸಲು ನಿಮ್ಮ ಬ್ಯಾಂಕಿಂಗ್ ಆ್ಯಪ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
 
     <string name="Boost__enter_custom_amount">ಕಸ್ಟಮ್‌ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">ನೆಟ್‌ವರ್ಕ್ ದೋಷದಿಂದಾಗಿ ನಿಮ್ಮ ದೇಣಿಗೆಯನ್ನು ಕಳುಹಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಪರಿಶೀಲಿಸಿ ಹಾಗೂ ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">ನಿಮ್ಮ iDEAL | Wero ದೇಣಿಗೆಯನ್ನು ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಇನ್ನೊಂದು ಪಾವತಿ ವಿಧಾನವನ್ನು ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s ಅವರ ಪರವಾಗಿ ದೇಣಿಗೆ</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">ಆನ್‌ ಮಾಡಿ</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal ರಿಲೀಸ್ ನೋಟ್‌ಗಳು &amp; ಸುದ್ದಿ</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">ಇದು Signal ನ ಅಧಿಕೃತ ಮತ್ತು ಏಕೈಕ ಚಾಟ್ ಆಗಿದೆ</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">ನಿಮ್ಮ ದೇಣಿಗೆಯು ಇನ್ನೂ ಪ್ರಕ್ರಿಯೆಗೊಳ್ಳುತ್ತಿದೆ. ಇದು ನಿಮ್ಮ ಸಂಪರ್ಕವನ್ನು ಅವಲಂಬಿಸಿಕೊಂಡು ಕೆಲವು ನಿಮಿಷಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳಬಹುದು. ಇನ್ನೊಂದು ದೇಣಿಗೆಯನ್ನು ಮಾಡುವ ಮುನ್ನ ಈ ಪಾವತಿ ಪೂರ್ಣಗೊಳ್ಳುವ ತನಕ ದಯವಿಟ್ಟು ಕಾಯಿರಿ.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">ನಿಮ್ಮ iDEAL | Wero ದೇಣಿಗೆ ಇನ್ನೂ ಪ್ರಕ್ರಿಯೆಗೊಳ್ಳುತ್ತಿದೆ. ಇನ್ನೊಂದು ದೇಣಿಗೆ ನೀಡುವ ಮುನ್ನ ನಿಮ್ಮ ಪಾವತಿಯನ್ನು ಅನುಮೋದಿಸಲು ನಿಮ್ಮ ಬ್ಯಾಂಕಿಂಗ್ ಆ್ಯಪ್ ಅನ್ನು ಪರಿಶೀಲಿಸಿ.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">ದೇಣಿಗೆ ಮೊತ್ತ ತೀರಾ ಅಧಿಕವಾಗಿದೆ</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">ದೇಣಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಲು Signal ಅನ್ನು ತೊರೆಯಬೇಕೇ?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">ದೃಢೀಕರಣಗೊಂಡಾಗ, ನಿಮ್ಮ ದೇಣಿಗೆಯ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು Signal ಗೆ ಹಿಂತಿರುಗಿ.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">ನಿಮ್ಮನ್ನು %1$s ಗೆ ಕಳುಹಿಸಲಾಗುತ್ತದೆ. ದೃಢೀಕರಣಗೊಂಡಾಗ, ನಿಮ್ಮ ದೇಣಿಗೆ ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವುದನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು Signal ಗೆ ಹಿಂತಿರುಗಿ.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಆರಿಸಿ</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">iDEAL | Wero ಮೂಲಕ ನಿಮ್ಮ ದೇಣಿಗೆಯನ್ನು ದೃಢೀಕರಿಸಿ</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">ನಿಮ್ಮ ಮರುಕಳಿಸುವ ದೇಣಿಗೆಯನ್ನು ಸೆಟಪ್ ಮಾಡಲು ನಿಮ್ಮ ಬ್ಯಾಂಕ್‌ನೊಂದಿಗೆ €0,01 ಶುಲ್ಕವನ್ನು ಖಚಿತಪಡಿಸಲು ಮುಂದುವರಿಸಿ. ಇದನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಮರುಪಾವತಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮ %1$s/ತಿಂಗಳ ದೇಣಿಗೆಯನ್ನು ನಿಮ್ಮ ಖಾತೆಯಿಂದ ಡೆಬಿಟ್ ಮಾಡಲು ಅನುಮತಿಸುತ್ತದೆ.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Signal ನ ಸುರಕ್ಷಿತ, ಎಂಡ್-ಟು-ಎಂಡ್ ಎನ್ಕ್ರಿಪ್ಟ್ ಆಗಿರುವ ಸಂಗ್ರಹಣೆ ಸೇವೆಯನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಮೆಸೇಜ್‌ಗಳು ಮತ್ತು ಮೀಡಿಯಾವನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ. ನೀವು ಹೊಸ ಫೋನ್ ಅನ್ನು ಪಡೆದಾಗ ಅಥವಾ Signal ಅನ್ನು ಮರುಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದಾಗ ಎಂದಿಗೂ ಮೆಸೇಜ್ ಅನ್ನು ಕಳೆದುಕೊಳ್ಳಬೇಡಿ.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">ಎಂಡ್-ಟು-ಎಂಡ್ ಎನ್ಕ್ರಿಪ್ಟ್ ಮಾಡಲಾಗಿದೆ</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

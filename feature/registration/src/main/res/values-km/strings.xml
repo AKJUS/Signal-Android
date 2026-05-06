@@ -49,11 +49,11 @@
     <!-- Dialog button to edit the number entered -->
     <string name="RegistrationActivity_edit_number">កែលេខ</string>
     <!-- Accessibility label for opening the screen specific dropdown menu. -->
-    <string name="RegistrationActivity_open_menu">Open menu</string>
+    <string name="RegistrationActivity_open_menu">បើកម៉ឺនុយ</string>
     <!-- Menu option to use a proxy -->
-    <string name="RegistrationActivity_use_proxy">Use proxy</string>
+    <string name="RegistrationActivity_use_proxy">ប្រើប្រាស់ប្រូកស៊ី</string>
     <!-- Menu option to link this as a device -->
-    <string name="RegistrationActivity_link_device">Link device</string>
+    <string name="RegistrationActivity_link_device">ភ្ជាប់ឧបករណ៍</string>
 
     <!-- CountryCodePickerScreen -->
     <!-- Title of the country code selection screen -->
@@ -198,7 +198,7 @@
     <!-- Error text when key is invalid -->
     <string name="EnterAepScreen__invalid_recovery_key">សោស្តារមិនមានសុពលភាព</string>
     <!-- Error text when key is correct format but does not match account -->
-    <string name="EnterAepScreen__incorrect_recovery_key">Incorrect recovery key</string>
+    <string name="EnterAepScreen__incorrect_recovery_key">សោស្តារមិនត្រឹមត្រូវ</string>
     <!-- Text shown while preparing the restore -->
     <string name="LocalBackupRestoreScreen__preparing_restore">កំពុងរៀបចំការស្ដារ…</string>
     <!-- Title shown while restore is in progress -->
@@ -224,53 +224,53 @@
 
     <!-- RemoteRestoreScreen -->
     <!-- Title for the remote backup restore screen -->
-    <string name="RemoteRestoreScreen__restore_from_backup">Restore from backup</string>
+    <string name="RemoteRestoreScreen__restore_from_backup">ស្តារចេញពីការបម្រុងទុក</string>
     <!-- Shown while fetching backup details from server -->
-    <string name="RemoteRestoreScreen__fetching_backup_details">Fetching backup details…</string>
+    <string name="RemoteRestoreScreen__fetching_backup_details">កំពុងទាញយកព័ត៌មានលម្អិតនៃការបម្រុងទុក…</string>
     <!-- Button to start restoring the backup -->
-    <string name="RemoteRestoreScreen__restore_backup">Restore backup</string>
+    <string name="RemoteRestoreScreen__restore_backup">ស្តារការបម្រុងទុក</string>
     <!-- Subtitle showing when the last backup was made, with date and time placeholders -->
-    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">Your last backup was made on %1$s at %2$s.</string>
+    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">ការបម្រុងទុកចុងក្រោយរបស់អ្នកត្រូវបានធ្វើឡើងនៅ %1$s ម៉ោង %2$s។</string>
     <!-- Description telling the user their media will restore in the background -->
-    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">Your media will restore in the background. If you choose not to restore now, you won\'t be able to restore later.</string>
+    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">មេឌៀរបស់អ្នកនឹងស្ដារនៅផ្ទៃខាងក្រោយ។ ប្រសិនបើអ្នកជ្រើសរើសមិនស្តារឥឡូវនេះទេ អ្នកនឹងមិនអាចស្តារនៅពេលក្រោយបានឡើយ។</string>
     <!-- Title for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__backup_not_found">Backup not found</string>
+    <string name="RemoteRestoreScreen__backup_not_found">រកមិនឃើញការបម្រុងទុកទេ</string>
     <!-- Body for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__no_backup_was_found">No backup was found for this account.</string>
+    <string name="RemoteRestoreScreen__no_backup_was_found">រកមិនឃើញការបម្រុងទុកសម្រាប់គណនីនេះទេ។</string>
     <!-- Title for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_backup">មិនអាចស្តារការបម្រុងទុកបានទេ</string>
     <!-- Body for the restore failed dialog -->
-    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Your backup can\'t be restored right now. Please try again.</string>
+    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">ការបម្រុងទុករបស់អ្នកមិនអាចស្ដារឡើងវិញទេឥឡូវនេះ។ សូមព្យាយាមម្តងទៀត។</string>
     <!-- Button to try again -->
-    <string name="RemoteRestoreScreen__try_again">Try again</string>
+    <string name="RemoteRestoreScreen__try_again">ព្យាយាមម្តងទៀត</string>
     <!-- Title for the network error dialog -->
-    <string name="RemoteRestoreScreen__couldnt_finish_restore">Couldn\'t finish restore</string>
+    <string name="RemoteRestoreScreen__couldnt_finish_restore">មិនអាចបញ្ចប់ការស្តារបានទេ</string>
     <!-- Body for the network error dialog -->
-    <string name="RemoteRestoreScreen__error_connecting">An error occurred while connecting to the server. Please check your connection and try again.</string>
+    <string name="RemoteRestoreScreen__error_connecting">មានបញ្ហាកើតឡើងពេលកំពុងភ្ជាប់ទៅម៉ាស៊ីនមេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
     <!-- Body for the general restore failure dialog -->
-    <string name="RemoteRestoreScreen__error_occurred">An error occurred while restoring your backup. Please try again.</string>
+    <string name="RemoteRestoreScreen__error_occurred">មានបញ្ហាកើតឡើងខណៈពេលកំពុងស្ដារការបម្រុងទុករបស់អ្នក។ សូមព្យាយាមម្តងទៀត។</string>
     <!-- Title for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Couldn\'t restore this backup</string>
+    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">មិនអាចស្តារការបម្រុងទុកនេះបានទេ</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">This version of Signal can\'t restore your backup. Update to the latest version and try again.</string>
+    <string name="RemoteRestoreScreen__update_latest">កំណែ Signal នេះមិនអាចស្ដារការបម្រុងទុករបស់អ្នកបានទេ។ ដំឡើងកំណែទៅកំណែចុងក្រោយបំផុត រួចព្យាយាមម្តងទៀត។</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Update Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">ដំឡើងកំណែ Signal</string>
     <!-- Button to dismiss update dialog -->
-    <string name="RemoteRestoreScreen__not_now">Not now</string>
+    <string name="RemoteRestoreScreen__not_now">ឥឡូវកុំទាន់</string>
     <!-- Title for unrecoverable backup failure dialog -->
-    <string name="RemoteRestoreScreen__cant_restore_this_backup">Can\'t restore backup</string>
+    <string name="RemoteRestoreScreen__cant_restore_this_backup">មិនអាចស្តារការបម្រុងទុកបានទេ</string>
     <!-- Body for unrecoverable backup failure dialog prompting user to contact support -->
-    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">An error occurred while restoring your backup. Your backup is not recoverable. Please contact support for help.</string>
+    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">មានបញ្ហាកើតឡើងខណៈពេលកំពុងស្ដារការបម្រុងទុករបស់អ្នក។ ការបម្រុងទុករបស់អ្នកមិនអាចស្តារមកវិញបានទេ។ សូមទាក់ទងទៅកាន់ផ្នែកជំនួយដើម្បីទទួលបានជំនួយ។</string>
     <!-- Button to contact support -->
-    <string name="RemoteRestoreScreen__contact_support">Contact support</string>
+    <string name="RemoteRestoreScreen__contact_support">ទាក់ទងផ្នែកជំនួយ</string>
     <!-- Shown while downloading the backup from the server -->
-    <string name="RemoteRestoreScreen__downloading_backup">Downloading backup…</string>
+    <string name="RemoteRestoreScreen__downloading_backup">កំពុងទាញយកការបម្រុងទុក…</string>
     <!-- Shown while restoring messages from the downloaded backup -->
-    <string name="RemoteRestoreScreen__restoring_messages">Restoring messages…</string>
+    <string name="RemoteRestoreScreen__restoring_messages">កំពុងស្ដារសារ…</string>
     <!-- Shown while finalizing the restore -->
-    <string name="RemoteRestoreScreen__finishing_restore">Finishing…</string>
+    <string name="RemoteRestoreScreen__finishing_restore">កំពុងបញ្ចប់…</string>
     <!-- Shown as a generic restoring message -->
-    <string name="RemoteRestoreScreen__restoring">Restoring…</string>
+    <string name="RemoteRestoreScreen__restoring">កំពុងស្ដារ…</string>
     <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
-    <string name="RemoteRestoreScreen__s_of_s_s">%1$s of %2$s (%3$s)</string>
+    <string name="RemoteRestoreScreen__s_of_s_s">%1$s នៃ %2$s (%3$s)</string>
 </resources>

@@ -706,6 +706,8 @@
     <string name="ConversationFragment_official_chat">官方聊天号</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">这是 Signal 的唯一官方聊天号，方便您及时了解新闻动态和版本发布说明。</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="other">%1$d 个成员</item>
@@ -1768,6 +1770,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">正在删除</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">正在删除消息…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">排序</string>
     <string name="MediaOverviewActivity_Newest">最新</string>
     <string name="MediaOverviewActivity_Oldest">最旧</string>
@@ -5872,6 +5876,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">已发送媒体质量</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">发送高质量媒体将会使用更多数据。</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">高</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6358,9 +6364,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">无法确认捐款</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">您的 %1$s/月捐款无法确认。请检查您的银行应用以批准您的 iDEAL | Wero 付款。</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">您的 %1$s 单次捐款无法确认。请检查您的银行应用以批准您的 iDEAL | Wero 付款。</string>
 
     <string name="Boost__enter_custom_amount">输入自定义金额</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6489,7 +6495,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">由于出现网络错误，您的捐款无法送出。请检查您的网络连接并重试。</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">您的 iDEAL | Wero 捐款无法处理。请尝试另一种付款方式或联系您的银行了解详情。</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">代%1$s捐款</string>
@@ -6717,8 +6723,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">开启</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal 版本说明与新闻</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">这是 Signal 的官方且唯一聊天号</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7393,7 +7397,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">您的捐款仍在处理中。这可能需要几分钟时间，视您的网络连接情况而定。请等待这笔付款完成后再进行另一笔捐款。</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">您的 iDEAL | Wero 捐款仍在处理中。请先检查您的银行应用以批准您的付款，然后再进行另一笔捐款。</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">捐款金额太高</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7428,7 +7432,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">要离开 Signal 以确认捐款吗？</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">确认捐款后，请返回 Signal 以完成捐款处理。</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">您将会跳转至 %1$s。确认捐款后，请返回 Signal 以完成捐款处理。</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7490,7 +7494,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">选择您的银行</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">确认您的 iDEAL | Wero 捐款</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">如要设置您的定期捐款，请点击“继续”以便与您的银行确认扣除一笔 0.01 欧元的费用。这笔费用将会自动退还，并允许每月从您的账户中扣除 %1$s 用于捐款。</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -8809,7 +8813,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">欢迎使用 Signal 的安全端对端加密存储服务对您的消息和媒体进行备份。无论您是更换手机还是重装 Signal，您的消息都不会丢失。</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">端对端加密</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

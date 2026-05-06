@@ -748,6 +748,8 @@
     <string name="ConversationFragment_official_chat">Oficjalny czat</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">To oficjalny i jedyny czat twórców aplikacji Signal. Bądź na bieżąco z nowościami i aktualizacjami.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d osoba</item>
@@ -1927,6 +1929,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Usuwanie</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Usuwanie wiadomości…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Sortuj</string>
     <string name="MediaOverviewActivity_Newest">Najnowsze</string>
     <string name="MediaOverviewActivity_Oldest">Najstarsze</string>
@@ -6310,6 +6314,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Jakość wysyłanych multimediów</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Wysyłanie multimediów w wysokiej jakości zużywa więcej danych.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Wysoka</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6826,9 +6832,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">Nie udało się potwierdzić darowizny</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Nie udało się potwierdzić Twojej darowizny %1$s miesięcznie. Zatwierdź płatność metodą iDEAL | Wero w swojej aplikacji bankowej.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Nie udało się potwierdzić Twojej jednorazowej darowizny %1$s. Zatwierdź płatność metodą iDEAL | Wero w swojej aplikacji bankowej.</string>
 
     <string name="Boost__enter_custom_amount">Podaj inną kwotę</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6957,7 +6963,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Nie udało się wpłacić darowizny z powodu błędu sieci. Sprawdź połączenie z internetem i spróbuj ponownie.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Nie udało się przetworzyć Twojej darowizny metodą iDEAL | Wero. Użyj innej metody płatności lub skontaktuj się ze swoim bankiem, aby otrzymać więcej informacji.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s, wpłacam w Twoim imieniu darowiznę</string>
@@ -7185,8 +7191,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Włącz</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Aktualizacje i nowości w aplikacji Signal</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">To oficjalny i jedyny czat twórców aplikacji Signal</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7864,7 +7868,7 @@
     <!-- Story view receipts toggle title -->
     <string name="StoriesPrivacySettingsFragment__view_receipts">Informacje o wyświetleniach</string>
     <!-- Story view receipts toggle message -->
-    <string name="StoriesPrivacySettingsFragment__see_and_share">Bądź na bieżąco z liczbą wyświetleń relacji i udostępniaj statystyki innym. Po wyłączeniu tej funkcji stracisz dostęp do informacji o wyświetleniach.</string>
+    <string name="StoriesPrivacySettingsFragment__see_and_share">Bądź na bieżąco z liczbą wyświetleń relacji i udostępniaj statystyki innym. Jeśli wyłączysz tę opcję, stracisz dostęp do informacji o wyświetleniach.</string>
 
     <!-- NewStoryItem -->
     <string name="NewStoryItem__new_story">Nowa relacja</string>
@@ -7924,7 +7928,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">Twoja darowizna jest jeszcze przetwarzana. W zależności od połączenia z internetem może to potrwać kilka minut. Zanim wpłacisz kolejną darowiznę, poczekaj, aż ta płatność zostanie zrealizowana.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Twoja darowizna metodą iDEAL | Wero jest jeszcze przetwarzana. Zanim przekażesz kolejną darowiznę, zatwierdź płatność w swojej aplikacji bankowej.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">Zbyt duża kwota darowizny</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7962,7 +7966,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">Wyjść z aplikacji Signal, aby zatwierdzić darowiznę?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Gdy zatwierdzisz płatność, wróć do aplikacji Signal, aby dokończyć przekazywanie darowizny.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Przekierujemy Cię teraz do serwisu %1$s. Gdy zatwierdzisz płatność, wróć do aplikacji Signal, aby dokończyć przekazywanie darowizny.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -8024,7 +8028,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Wybierz swój bank</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Potwierdź darowiznę metodą iDEAL | Wero</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Aby skonfigurować darowiznę cykliczną, przejdź dalej i potwierdź w banku obciążenie konta kwotą 0,01 euro. Zostanie ona automatycznie zwrócona, a procedura ta pozwoli na pobieranie z Twojego konta %1$s miesięcznie.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9391,7 +9395,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Twórz kopie zapasowe wiadomości i multimediów w usłudze bezpiecznego przechowywania Signal z szyfrowaniem end-to-end. Dzięki temu nie stracisz historii wiadomości nawet po zmianie telefonu czy ponownej instalacji aplikacji Signal.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">Szyfrowanie end-to-end</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

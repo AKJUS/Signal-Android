@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">அதிகாரப்பூர்வ உரையாடல்</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">சிக்னல் வழங்கும் ஒரே அதிகாரப்பூர்வ உரையாடல். செய்திகள் மற்றும் ரிலீஸ் குறிப்புகளுடன் புதுப்பித்த நிலையில் இருங்கள்.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d உறுப்பினர்</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">நீக்கப்படுகிறது</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">செய்திகள் நீக்கப்படுகிறது…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">மூலம் வரிசைப்படுத்து</string>
     <string name="MediaOverviewActivity_Newest">புதியது</string>
     <string name="MediaOverviewActivity_Oldest">பழையது</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">அனுப்பிய மீடியா தரம்</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">உயர்தரத்தை அனுப்புகிறது ஊடகம் அதிக தரவைப் பயன்படுத்தும்.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">உயர்</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">நன்கொடையை உறுதிப்படுத்த முடியவில்லை</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">உங்கள் %1$s/மாதம் நன்கொடை உறுதிப்படுத்த முடியவில்லை. உங்கள் iDEAL | Wero பேமெண்ட்டை அங்கீகரிக்க, உங்கள் வங்கி செயலியைச் சரிபாருங்கள்.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">உங்களின் ஒன்-டைம் %1$s நன்கொடையை உறுதிப்படுத்த முடியவில்லை. உங்கள் iDEAL | Wero பேமெண்ட்டை அங்கீகரிக்க, உங்கள் வங்கி செயலியைச் சரிபாருங்கள்.</string>
 
     <string name="Boost__enter_custom_amount">விருப்பத் தொகையை உள்ளிடவும்</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">நெட்வொர்க் பிழையின் காரணமாக உங்கள் நன்கொடையை அனுப்ப முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும்.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">உங்களின் iDEAL | Wero நன்கொடையைச் செயல்படுத்த முடியவில்லை. மற்றொரு பேமெண்ட் முறையை முயலுங்கள் அல்லது மேலும் தகவலுக்கு உங்கள் வங்கியைத் தொடர்பு கொள்ளுங்கள்.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s சார்பாக நன்கொடை</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">இயக்கு</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">சிக்னல் வெளியீடு குறிப்புகள், செய்திகள்</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">இது அதிகாரப்பூர்வமானது மேலும் சிக்னல் சாட்டிலிருந்து மட்டும் பெறப்படுகிறது</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">உங்கள் நன்கொடை இன்னும் செயல்படுத்தப்படுகிறது. உங்கள் இணைப்பைப் பொறுத்து இதற்குச் சில நிமிடங்கள் ஆகலாம். மற்றொரு நன்கொடை அளிப்பதற்கு முன், இந்தக் கட்டணம் முடியும் வரை காத்திருக்கவும்.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">உங்களின் iDEAL | Wero நன்கொடைக்கான செயல்பாடு இன்னும் செயலாக்கத்தில் உள்ளது. மற்றொரு நன்கொடை வழங்குவதற்கு முன், உங்கள் பேமெண்ட்டை அங்கீகரிக்க, உங்கள் வங்கி செயலியைச் சரிபார்க்கவும்.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">நன்கொடை தொகை மிக அதிகம்</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">நன்கொடையை உறுதிப்படுத்த சிக்னலை விட்டு வெளியேறுவதா?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">உறுதிசெய்யப்பட்டதும், உங்கள் நன்கொடையைச் செயல்படுத்தலை முடிக்க சிக்னலுக்குத் திரும்பவும்.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">நீங்கள் %1$sக்கு அழைத்துச் செல்லப்படுவீர்கள். உறுதிசெய்யப்பட்டதும், உங்கள் நன்கொடையைச் செயல்படுத்தலை முடிக்க சிக்னலுக்குத் திரும்பவும்.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">உங்கள் வங்கியைத் தேர்ந்தெடுக்கவும்</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">iDEAL | Wero உடன் உங்கள் நன்கொடையை உறுதிப்படுத்தவும்</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">உங்கள் தொடர் நன்கொடையை அமைக்க, உங்கள் வங்கியில் €0,01 கட்டணத்தை உறுதிசெய்ய அழுத்தவும். இது தானாகத் திருப்பி அளிக்கப்படும் மற்றும் உங்கள் %1$s/மாத நன்கொடையை உங்கள் கணக்கிலிருந்து டெபிட் செய்ய அனுமதிக்கும்.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">சிக்னலின் பாதுகாப்பான, எண்ட்-டூ-எண்ட் குறியாக்கம் செய்யப்பட்ட சேமிப்பகச் சேவையைப் பயன்படுத்தி உங்கள் செய்திகளையும் ஊடகத்தையும் காப்புப்பிரதி எடுத்துக்கொள்ளுங்கள். புதிய தொலைபேசியைப் பெறும்போது அல்லது சிக்னலை மீண்டும் நிறுவும்போது எந்தவொரு செய்தியையும் தவறவிடாதீர்கள்.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">எண்டு-டு-எண்டு குறியாக்கம் செய்யப்பட்டது</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

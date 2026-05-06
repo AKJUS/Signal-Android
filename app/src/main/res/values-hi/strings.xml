@@ -242,7 +242,7 @@
     <!-- Dialog message when reporting spam of a group and we can determine the group member that invited you, placeholder is a name -->
     <string name="BlockUnblockDialog_report_spam_group_named_adder">इससे Signal को पता चल जाएगा कि आपको ग्रुप में शामिल होने के लिए इनवाइट भेजने वाला व्यक्ति %1$s, स्पैम भेज सकता है। Signal किसी भी चैट का कॉन्टेंट नहीं देख सकता।</string>
     <!-- Dialog message when reporting spam of a group and we cannot determine the group member that invited you -->
-    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">इससे Signal को पता चल जाएगा कि जिस व्यक्ति ने आपको इस ग्रुप में शामिल होने के लिए इनवाइट भेजा है, वह स्पैम भेज सकता है। Signal किसी भी चैट का कॉन्टेंट नहीं देख सकता।</string>
+    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">इससे Signal को पता चल जाएगा कि आपको इस ग्रुप से जुड़ने के लिए इनवाइट भेजने वाला व्यक्ति स्पैम भेज सकता है। Signal किसी भी चैट का कॉन्टेंट नहीं देख सकता।Signal किसी भी चैट का कॉन्टेंट नहीं देख सकता।</string>
 
     <!-- BucketedThreadMedia -->
     <string name="BucketedThreadMedia_Today">आज</string>
@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">ऑफ़िशियल चैट</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal की ओर से एकमात्र ऑफ़िशियल चैट। खबरों और रिलीज़ नोट की मदद से अप-टू-डेट रहें।</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d सदस्य</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">डिलीट किया जा रहा है</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">मैसेज डिलीट किए जा रहे हैं…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">इस तरह सॉर्ट करें</string>
     <string name="MediaOverviewActivity_Newest">सबसे नया</string>
     <string name="MediaOverviewActivity_Oldest">सबसे पुराना</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">भेजे गए मीडिया की क्वालिटी</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">हाई क्वालिटी मीडिया भेजने में ज़्यादा डेटा लगेगा।</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">हाई</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6065,7 +6071,7 @@
     <string name="Donate2022Q2Megaphone_not_now">अभी नहीं</string>
 
     <!-- EditReactionsFragment -->
-    <string name="EditReactionsFragment__customize_reactions">प्रतिक्रियाएँ कस्टमाइज़ करें</string>
+    <string name="EditReactionsFragment__customize_reactions">रिएक्शन कस्टमाइज़ करें</string>
     <string name="EditReactionsFragment__tap_to_replace_an_emoji">इमोजी बदलने के लिए टैप करें</string>
     <string name="EditReactionsFragment__reset">रीसेट करें</string>
     <string name="EditReactionsFragment_save">सेव करें</string>
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">डोनेशन की पुष्टि नहीं हो पाई</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">आपके %1$s/माह वाले डोनेशन की पुष्टि नहीं हो सकी। अपने iDEAL | Wero पेमेंट को मंज़ूरी देने के लिए अपना बैंकिंग ऐप देखें।</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">आपके %1$s के एकमुश्त डोनेशन की पुष्टि नहीं हो सकी। अपने iDEAL | Wero पेमेंट को मंज़ूरी देने के लिए अपना बैंकिंग ऐप देखें।</string>
 
     <string name="Boost__enter_custom_amount">कस्टम राशि दर्ज करें</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">नेटवर्क की गड़बड़ी की वजह से आपका डोनेशन भेजा नहीं जा सका। अपना कनेक्शन देखें और फिर से कोशिश करें।</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">आपका iDEAL | Wero डोनेशन प्रोसेस नहीं हो सका। पेमेंट करने का कोई और तरीका आज़माएं या फिर ज़्यादा जानकारी के लिए अपने बैंक से संपर्क करें।</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s के बदले डोनेशन</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">चालू करें</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal की ताज़ा रिलीज़ और खबरें</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">यह Signal की ओर से आधिकारिक और इकलौती चैट है</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7128,9 +7132,9 @@
     <!-- My story privacy fine print about what the privacy settings are for -->
     <string name="MyStorySettingsFragment__choose_who_can_view_your_story">चुनें कि आपकी स्टोरी कौन देख सकते हैं। आपके द्वारा पहले ही भेजी जा चुकी स्टोरी पर बदलाव लागू नहीं होंगे।</string>
     <!-- Section header for options related to replies and reactions -->
-    <string name="MyStorySettingsFragment__replies_amp_reactions">जवाब और प्रतिक्रियाएँ</string>
+    <string name="MyStorySettingsFragment__replies_amp_reactions">जवाब और रिएक्शन</string>
     <!-- Switchable option for allowing replies and reactions on your stories -->
-    <string name="MyStorySettingsFragment__allow_replies_amp_reactions">जवाब और प्रतिक्रियाएँ अनुमत करें</string>
+    <string name="MyStorySettingsFragment__allow_replies_amp_reactions">जवाब और रिएक्शन की अनुमति दें</string>
     <!-- Summary for switchable option allowing replies and reactions on your story -->
     <string name="MyStorySettingsFragment__let_people_who_can_view_your_story_react_and_reply">आपकी स्टोरी देख सकने वाले लोगों को प्रतिक्रिया और जवाब देने दें</string>
     <!-- Signal connections bolded text in the Signal Connections sheet -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">आपका डोनेशन अभी भी प्रोसेस हो रहा है। इसमें थोड़ा समय लग सकता है। यह इस पर निर्भर करता है कि आपका इंटरनेट कनेक्शन कैसा है। कृपया, दूसरा डोनेशन शुरू करने से पहले, इस पेमेंट के पूरा होने का इंतज़ार करें।</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">आपका iDEAL | Wero डोनेशन अभी प्रोसेस हो रहा है। दूसरा डोनेशन शुरू करने से पहले, अपने पेमेंट को मंज़ूरी देने के लिए अपना बैंकिंग ऐप देखें।</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">डोनेशन की राशि बहुत ज़्यादा है</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">डोनेशन की पुष्टि के लिए Signal बंद करना है?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">पुष्टि होने के बाद, डोनेशन की प्रक्रिया पूरी करने के लिए Signal पर लौटें।</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">आपको %1$s पर भेजा जाएगा। पुष्टि होने के बाद, डोनेशन की प्रोसेस पूरी करने के लिए Signal पर लौटें।</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">अपना बैंक चुनें</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">iDEAL | Wero से अपने डोनेशन की पुष्टि करें</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">रिकरिंग डोनेशन सेटअप करने के लिए \'जारी रखें\' पर टैप करें, ताकि आपके बैंक अकाउंट से ₹300 कटने की मंज़ूरी मिल सके। यह राशि अपने-आप रिफ़ंड हो जाएगी और आपके अकाउंट से %1$s/महीने का डोनेशन अपने-आप कटता रहेगा।</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Signal की सिक्योर और एंड-टू-एंड एनक्रिप्टेड स्टोरेज सेवा का इस्तेमाल करके अपने मैसेज और मीडिया का बैकअप लें। नया फ़ोन लेने या Signal को रीइंस्टॉल करने पर, कभी भी अपने मैसेज न खोएं।</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">एंड-टू-एंड एनक्रिप्टेड</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

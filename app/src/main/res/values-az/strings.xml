@@ -720,6 +720,8 @@
     <string name="ConversationFragment_official_chat">Rəsmi çat</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal-dan gələn yeganə rəsmi çat. Xəbərlər və buraxılış qeydləri ilə günün nəbzini tutun.</string>
+    <!-- Label shown in place of the input in the Signal release notes conversation -->
+    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d üzv</item>
@@ -1821,6 +1823,8 @@
     </plurals>
     <string name="MediaOverviewActivity_Media_delete_progress_title">Silinir</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">Mesajlar silinir…</string>
+    <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d of %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">Sırala</string>
     <string name="MediaOverviewActivity_Newest">Ən yeni</string>
     <string name="MediaOverviewActivity_Oldest">Ən köhnə</string>
@@ -6018,6 +6022,8 @@
     <!-- Category title for the quality of the media to be sent -->
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Göndərilən media keyfiyyəti</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Yüksək keyfiyyətli media göndərərkən, daha çox verilənlər istifadə ediləcək.</string>
+    <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Yüksək</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6514,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">İanəni təsdiqləmək mümkün olmadı</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Your %1$s/month donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">%1$s/ay ianənizi təsdiqləmək mümkün olmadı. iDEAL | Wero ilə etdiyiniz ödənişi təsdiq etmək üçün bank tətbiqini yoxlayın.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Your one-time %1$s donation couldn\'t be confirmed. Check your banking app to approve your iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Birdəfəlik %1$s ianənizi təsdiqləmək mümkün olmadı. iDEAL | Wero ilə etdiyiniz ödənişi təsdiq etmək üçün bank tətbiqini yoxlayın.</string>
 
     <string name="Boost__enter_custom_amount">Xüsusi məbləğ daxil et</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6645,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Şəbəkə xətasına görə ianənizi göndərmək mümkün olmadı. Bağlantınızı yoxlayıb yenidən cəhd edin.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Your iDEAL | Wero donation couldn\'t be processed. Try another payment method or contact your bank for more information.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">iDEAL | Wero vasitəsilə etdiyiniz ianəni emal etmək mümkün olmadı. Başqa ödəniş üsulunu sınayın və ya daha ətraflı məlumat üçün bankınızla əlaqə saxlayın.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s adından ianə</string>
@@ -6873,8 +6879,6 @@
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Aç</string>
 
-    <!-- Description shown for the Signal Release Notes channel -->
-    <string name="ReleaseNotes__signal_release_notes_and_news">Signal buraxılış qeydləri və xəbərləri</string>
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
     <string name="ReleaseNotes__this_is_official_chat">Bu Signal-ın rəsmi və yeganə çatıdır</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
@@ -7570,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">İanəniz hələ də emal edilir. Bağlantınızdan asılı olaraq bu bir neçə dəqiqə çəkə bilər. Başqa bir ianə etməzdən əvvəl bu ödənişin tamamlanmasını gözləyin.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Your iDEAL | Wero donation is still processing. Check your banking app to approve your payment before making another donation.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">iDEAL | Wero vasitəsilə etdiyiniz ianə hələ də emal olunur. Başqa ianə etməzdən əvvəl ödənişinizi təsdiqləmək üçün bank tətbiqinizi yoxlayın.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">İanə miqdarı çox yüksəkdir</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7606,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">İanəni təsdiqləmək üçün Signal-dan çıxılsın?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Təsdiqlədikdən sonra ianənizin emalını tamamlamaq üçün Signal-a qayıdın.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">You\'ll be sent to %1$s. When confirmed, return to Signal to finish processing your donation.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">%1$s tətbiqinə yönləndiriləcəksiniz. Təsdiqlədikdən sonra ianənizin emalını tamamlamaq üçün Signal-a qayıdın.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7668,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Bankınızı seçin</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">Confirm your donation with iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">iDEAL | Wero ilə etdiyiniz ianəni təsdiqləyin</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Təkrar ianənizi tənzimləmək məqsədilə bankınızla 0,01€ dəyərində ödənişi təsdiqləmək üçün \"davam et\" üzərinə toxunun. Bu məbləğ avtomatik olaraq geri qaytarılacaq və aylıq %1$s dəyərində ianənizin hesabınızdan tutulmasına imkan verəcək.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9003,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Back up your messages and media using Signal\'s secure, end-to-end encrypted storage service. Never lose a message when you get a new phone or reinstall Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Signal-ın təhlükəsiz, tam şifrələnmiş yaddaş xidmətindən istifadə edərək mesaj və media fayllarınızın ehtiyat nüsxəsini çıxarın. Yeni telefon aldıqda və ya Signal-ı təkrar quraşdırdıqda mesajı heç vaxt itirməyin.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">Tam şifrələnmə</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->
