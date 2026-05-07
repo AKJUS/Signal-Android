@@ -514,6 +514,17 @@
     </issue>
 
     <issue
+        id="SoonBlockedPrivateApi"
+        message="Reflective access to mAttachInfo will throw an exception when targeting API 35 and above"
+        errorLine1="      Field attachInfoField = View.class.getDeclaredField(&quot;mAttachInfo&quot;);"
+        errorLine2="                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/org/thoughtcrime/securesms/components/KeyboardAwareLinearLayout.java"
+            line="157"
+            column="31"/>
+    </issue>
+
+    <issue
         id="SimpleDateFormat"
         message="To get local formatting use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()`, or use `new SimpleDateFormat(String template, Locale locale)` with for example `Locale.US` for ASCII dates."
         errorLine1="  private val sameDayDateFormat: SimpleDateFormat by lazy { SimpleDateFormat(&quot;yyyyMMdd&quot;) }"
