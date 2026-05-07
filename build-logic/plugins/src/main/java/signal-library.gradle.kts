@@ -24,6 +24,10 @@ android {
     vectorDrawables.useSupportLibrary = true
   }
 
+  testOptions {
+    targetSdk = libs.versions.targetSdk.get().toInt()
+  }
+
   compileOptions {
     isCoreLibraryDesugaringEnabled = true
     sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
@@ -31,6 +35,7 @@ android {
   }
 
   lint {
+    targetSdk = libs.versions.targetSdk.get().toInt()
     disable += "InvalidVectorPath"
     lintConfig = rootProject.file("lint.xml")
   }
