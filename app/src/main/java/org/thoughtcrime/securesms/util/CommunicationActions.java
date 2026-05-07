@@ -57,7 +57,6 @@ import org.whispersystems.signalservice.api.push.UsernameLinkComponents;
 import io.reactivex.rxjava3.core.Single;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -352,7 +351,7 @@ public class CommunicationActions {
    * Otherwise returns false, indicating it was not a quick restore link.
    */
   public static boolean handlePotentialQuickRestoreUrl(@NonNull FragmentActivity activity, @NonNull String potentialQuickRestoreUrl, @NonNull Runnable onContinue) {
-    URI uri = URI.create(potentialQuickRestoreUrl);
+    Uri uri = Uri.parse(potentialQuickRestoreUrl);
 
     if ("sgnl".equalsIgnoreCase(uri.getScheme()) && "rereg".equalsIgnoreCase(uri.getHost())) {
       new MaterialAlertDialogBuilder(activity)
