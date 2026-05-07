@@ -76,7 +76,9 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
   }
 
   private val directShareTarget: RecipientId?
-    get() = intent.getStringExtra(ShortcutManagerCompat.EXTRA_SHORTCUT_ID).let { ConversationUtil.getRecipientId(it) }
+    get() = intent.getStringExtra(ShortcutManagerCompat.EXTRA_SHORTCUT_ID)
+      .let { ConversationUtil.getRecipientId(it) }
+      ?.takeUnless { it.isUnknown }
 
   override fun onPreCreate() {
     super.onPreCreate()
@@ -278,24 +280,30 @@ class ShareActivity : PassphraseRequiredActivity(), MultiselectForwardFragment.C
 
     val multiShareArgs = shareEvent.getMultiShareArgs()
     lifecycleDisposable += ConversationIntents.createBuilder(this, shareEvent.contact.recipientId, -1L)
-      .subscribeBy { conversationIntentBuilder ->
-        conversationIntentBuilder
-          .withDataUri(multiShareArgs.dataUri)
-          .withDataType(multiShareArgs.dataType)
-          .withMedia(multiShareArgs.media)
-          .withDraftText(multiShareArgs.draftText)
-          .withStickerLocator(multiShareArgs.stickerLocator)
-          .asBorderless(multiShareArgs.isBorderless)
-          .withShareDataTimestamp(System.currentTimeMillis())
+      .subscribeBy(
+        onSuccess = { conversationIntentBuilder ->
+          conversationIntentBuilder
+            .withDataUri(multiShareArgs.dataUri)
+            .withDataType(multiShareArgs.dataType)
+            .withMedia(multiShareArgs.media)
+            .withDraftText(multiShareArgs.draftText)
+            .withStickerLocator(multiShareArgs.stickerLocator)
+            .asBorderless(multiShareArgs.isBorderless)
+            .withShareDataTimestamp(System.currentTimeMillis())
 
-        val conversationIntent = conversationIntentBuilder.build()
-        val mainActivityIntent = MainActivity.clearTop(this).apply {
-          action = ConversationIntents.ACTION
-          putExtras(conversationIntent)
+          val conversationIntent = conversationIntentBuilder.build()
+          val mainActivityIntent = MainActivity.clearTop(this).apply {
+            action = ConversationIntents.ACTION
+            putExtras(conversationIntent)
+          }
+          finish()
+          startActivity(mainActivityIntent)
+        },
+        onError = { throwable ->
+          Log.w(TAG, "Failed to build conversation intent for share target.", throwable)
+          finish()
         }
-        finish()
-        startActivity(mainActivityIntent)
-      }
+      )
   }
 
   private fun openMediaInterstitial(shareEvent: ShareEvent.OpenMediaInterstitial) {
