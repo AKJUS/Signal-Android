@@ -91,11 +91,14 @@ android.sourceSets.all {
   kotlinExt.sourceSets.findByName(name) ?: kotlinExt.sourceSets.create(name)
 }
 // AGP 9.0's built-in Kotlin doesn't pick up extra java.srcDir entries from Android
-// source sets, so add the testShared dir directly to test/androidTest Kotlin
-// compile tasks.
+// source sets, so add shared dirs directly to the relevant Kotlin compile tasks.
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
-  if (name.contains("UnitTest") || name.contains("AndroidTest")) {
+  val isTestTask = name.contains("UnitTest") || name.contains("AndroidTest")
+  if (isTestTask) {
     source("$projectDir/src/testShared")
+  }
+  if (!isTestTask && (name.contains("Mocked") || name.contains("Benchmark"))) {
+    source("$projectDir/src/benchmarkShared/java")
   }
 }
 
