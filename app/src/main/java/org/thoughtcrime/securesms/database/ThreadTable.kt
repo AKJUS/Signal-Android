@@ -305,6 +305,14 @@ class ThreadTable(context: Context, databaseHelper: SignalDatabase) : DatabaseTa
       .run()
   }
 
+  fun updateSnippetContentTypeSilently(threadId: Long, snippetMessageId: Long, mimeType: String) {
+    writableDatabase
+      .update(TABLE_NAME)
+      .values(SNIPPET_CONTENT_TYPE to mimeType)
+      .where("$ID = ? AND $SNIPPET_MESSAGE_ID = ?", threadId, snippetMessageId)
+      .run()
+  }
+
   fun updateSnippet(threadId: Long, snippet: String?, attachment: Uri?, date: Long, type: Long, unarchive: Boolean) {
     if (isSilentType(type)) {
       return

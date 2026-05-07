@@ -1364,6 +1364,7 @@ class AttachmentTable(
 
     val filePathsToDelete: MutableSet<String> = mutableSetOf()
     val contentTypesToDelete: MutableSet<String> = mutableSetOf()
+    var threadId: Long = -1
 
     writableDatabase.withinTransaction { db ->
       db.select(DATA_FILE, CONTENT_TYPE, ID)
@@ -1411,10 +1412,14 @@ class AttachmentTable(
 
       AppDependencies.databaseObserver.notifyAttachmentDeletedObservers()
 
-      val threadId = messages.getThreadIdForMessage(messageId)
+      threadId = messages.getThreadIdForMessage(messageId)
       if (threadId > 0) {
         notifyConversationListeners(threadId)
       }
+    }
+
+    if (threadId > 0) {
+      SignalDatabase.threads.updateSnippetContentTypeSilently(threadId, messageId, MediaUtil.VIEW_ONCE)
     }
 
     deleteDataFiles(filePathsToDelete, contentTypesToDelete)
