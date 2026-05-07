@@ -1680,6 +1680,11 @@ object SyncMessageProcessor {
   }
 
   private fun handleSynchronizeAttachmentBackfillRequest(request: SyncMessage.AttachmentBackfillRequest, timestamp: Long) {
+    if (SignalStore.account.isLinkedDevice) {
+      log(timestamp, "[AttachmentBackfillRequest] Linked device ignores attachment backfill request.")
+      return
+    }
+
     if (request.targetMessage == null || request.targetConversation == null) {
       warn(timestamp, "[AttachmentBackfillRequest] Target message or target conversation was unset! Can't formulate a response, ignoring.")
       return
