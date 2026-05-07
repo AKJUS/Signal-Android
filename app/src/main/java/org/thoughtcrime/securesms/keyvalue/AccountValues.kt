@@ -84,6 +84,7 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
     private const val KEY_ACCOUNT_REGISTERED_AT = "account.registered_at"
 
     private const val KEY_HAS_LINKED_DEVICES = "account.has_linked_devices"
+    private const val KEY_HAS_INACTIVE_PRIMARY_DEVICE_ALERT = "account.has_inactive_primary_device_alert"
 
     private const val KEY_ACCOUNT_ENTROPY_POOL = "account.account_entropy_pool"
     private const val KEY_RESTORED_ACCOUNT_ENTROPY_KEY = "account.restored_account_entropy_pool"
@@ -486,6 +487,9 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
 
   val isLinkedDevice: Boolean
     get() = !isPrimaryDevice
+
+  @get:JvmName("hasInactivePrimaryDeviceAlert")
+  var hasInactivePrimaryDeviceAlert: Boolean by booleanValue(KEY_HAS_INACTIVE_PRIMARY_DEVICE_ALERT, false)
 
   /** The local user's full username (nickname.discriminator), if set. */
   var username: String?

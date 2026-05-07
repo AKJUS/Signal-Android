@@ -39,6 +39,8 @@ class SignalWebSocketHealthMonitor(
 
     private val KEEP_ALIVE_SEND_CADENCE: Duration = OkHttpWebSocketConnection.KEEPALIVE_FREQUENCY_SECONDS.seconds
     private val KEEP_ALIVE_SEND_CADENCE_BACKGROUND: Duration = 60.seconds
+
+    private const val ALERT_IDLE_PRIMARY_DEVICE = "idle-primary-device"
   }
 
   private val executor: Executor = Executors.newSingleThreadExecutor()
@@ -133,6 +135,15 @@ class SignalWebSocketHealthMonitor(
         SignalStore.misc.isClientDeprecated = true
         webSocket?.forceNewWebSocket()
       }
+    }
+  }
+
+  override fun onReceivedAlerts(alerts: Array<out String>, isIdentifiedWebSocket: Boolean) {
+    if (!isIdentifiedWebSocket) {
+      return
+    }
+    executor.execute {
+      SignalStore.account.hasInactivePrimaryDeviceAlert = SignalStore.account.isLinkedDevice && alerts.contains(ALERT_IDLE_PRIMARY_DEVICE)
     }
   }
 

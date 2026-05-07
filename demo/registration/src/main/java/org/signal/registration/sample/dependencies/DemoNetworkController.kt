@@ -550,6 +550,7 @@ class DemoNetworkController(
       val healthMonitor = object : HealthMonitor {
         override fun onKeepAliveResponse(sentTimestamp: Long, isIdentifiedWebSocket: Boolean) {}
         override fun onMessageError(status: Int, isIdentifiedWebSocket: Boolean) {}
+        override fun onReceivedAlerts(alerts: Array<out String>, isIdentifiedWebSocket: Boolean) {}
       }
 
       val libSignalConnection = LibSignalChatConnection(

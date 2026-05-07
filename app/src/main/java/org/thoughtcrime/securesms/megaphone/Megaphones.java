@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.core.app.NotificationManagerCompat;
 
-import java.util.stream.Collectors;
 import com.bumptech.glide.Glide;
 
 import org.signal.core.util.DiskUtil;
@@ -44,6 +43,7 @@ import org.thoughtcrime.securesms.profiles.username.NewWaysToConnectDialogFragme
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.storage.StorageSyncHelper;
 import org.thoughtcrime.securesms.util.ByteUnit;
+import org.thoughtcrime.securesms.util.CommunicationActions;
 import org.thoughtcrime.securesms.util.DateUtils;
 import org.thoughtcrime.securesms.util.Environment;
 import org.thoughtcrime.securesms.util.RemoteConfig;
@@ -59,6 +59,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * Creating a new megaphone:
@@ -91,11 +92,11 @@ public final class Megaphones {
 
     List<Megaphone> megaphones = buildDisplayOrder(context, records).entrySet().stream()
                                                                     .filter(e -> {
-                                         MegaphoneRecord   record   = Objects.requireNonNull(records.get(e.getKey()));
-                                         MegaphoneSchedule schedule = e.getValue();
+                                                                      MegaphoneRecord   record   = Objects.requireNonNull(records.get(e.getKey()));
+                                                                      MegaphoneSchedule schedule = e.getValue();
 
-                                         return !record.isFinished() && schedule.shouldDisplay(record.getSeenCount(), record.getLastSeen(), record.getFirstVisible(), currentTime);
-                                       })
+                                                                      return !record.isFinished() && schedule.shouldDisplay(record.getSeenCount(), record.getLastSeen(), record.getFirstVisible(), currentTime);
+                                                                    })
                                                                     .map(Map.Entry::getKey)
                                                                     .map(records::get)
                                                                     .map(record -> Megaphones.forRecord(context, record))
@@ -118,14 +119,14 @@ public final class Megaphones {
     return new LinkedHashMap<>() {{
       put(Event.PINS_FOR_ALL, new PinsForAllSchedule());
       put(Event.CLIENT_DEPRECATED, SignalStore.misc().isClientDeprecated() ? ALWAYS : NEVER);
-      put(Event.NEW_LINKED_DEVICE, shouldShowNewLinkedDeviceMegaphone() ? ALWAYS: NEVER);
+      put(Event.NEW_LINKED_DEVICE, shouldShowNewLinkedDeviceMegaphone() ? ALWAYS : NEVER);
       put(Event.NOTIFICATIONS, shouldShowNotificationsMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(30)) : NEVER);
       put(Event.GRANT_FULL_SCREEN_INTENT, shouldShowGrantFullScreenIntentPermission(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
       put(Event.BACKUP_SCHEDULE_PERMISSION, shouldShowBackupSchedulePermissionMegaphone(context) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
       put(Event.ONBOARDING, shouldShowOnboardingMegaphone(context) ? ALWAYS : NEVER);
       put(Event.TURN_OFF_CENSORSHIP_CIRCUMVENTION, shouldShowTurnOffCircumventionMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(7)) : NEVER);
       put(Event.REMOTE_MEGAPHONE, shouldShowRemoteMegaphone(records) ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(1)) : NEVER);
-      put(Event.LINKED_DEVICE_INACTIVE, shouldShowLinkedDeviceInactiveMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)): NEVER);
+      put(Event.LINKED_DEVICE_INACTIVE, shouldShowLinkedDeviceInactiveMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(3)) : NEVER);
 
       // Specifically putting backup reminders here, above PIN reminders
       put(Event.BACKUP_LOW_STORAGE_UPSELL, shouldShowBackupLowStorageUpsell(context) ? new BackupUpsellSchedule(records, TimeUnit.DAYS.toMillis(60), TimeUnit.DAYS.toMillis(120)) : NEVER);
@@ -142,6 +143,7 @@ public final class Megaphones {
       put(Event.SET_UP_YOUR_USERNAME, shouldShowSetUpYourUsernameMegaphone(records) ? ALWAYS : NEVER);
       put(Event.ADD_A_PROFILE_PHOTO, shouldShowAddAProfilePhotoMegaphone(context) ? ALWAYS : NEVER);
       put(Event.PNP_LAUNCH, shouldShowPnpLaunchMegaphone() ? ALWAYS : NEVER);
+      put(Event.INACTIVE_PRIMARY, shouldShowInactivePrimaryMegaphone() ? RecurringSchedule.every(TimeUnit.DAYS.toMillis(7)) : NEVER);
     }};
   }
 
@@ -203,6 +205,8 @@ public final class Megaphones {
         return buildVerifyBackupKeyMegaphone();
       case USE_NEW_ON_DEVICE_BACKUPS:
         return buildUseNewOnDeviceBackupsMegaphone();
+      case INACTIVE_PRIMARY:
+        return buildInactivePrimaryMegaphone();
       default:
         throw new IllegalArgumentException("Event not handled!");
     }
@@ -527,6 +531,23 @@ public final class Megaphones {
         .build();
   }
 
+  private static @NonNull Megaphone buildInactivePrimaryMegaphone() {
+    return new Megaphone.Builder(Event.INACTIVE_PRIMARY, Megaphone.Style.BASIC)
+        .setImage(R.drawable.megaphone_inactive_primary)
+        .setTitle(R.string.InactivePrimary__title)
+        .setBody(R.string.InactivePrimary__body)
+        .setActionButton(R.string.InactivePrimary__got_it, (megaphone, controller) -> {
+          controller.onMegaphoneSnooze(Event.INACTIVE_PRIMARY);
+        })
+        .setSecondaryButton(R.string.InactivePrimary__learn_more, ((megaphone, controller) -> {
+          CommunicationActions.openBrowserLink(
+              controller.getMegaphoneActivity(),
+              controller.getMegaphoneActivity().getString(R.string.inactive_primary_support)
+          );
+        }))
+        .build();
+  }
+
   private static boolean shouldShowOnboardingMegaphone(@NonNull Context context) {
     return SignalStore.account().isPrimaryDevice() && SignalStore.onboarding().hasOnboarding(context);
   }
@@ -593,6 +614,10 @@ public final class Megaphones {
 
   private static boolean shouldShowPnpLaunchMegaphone() {
     return SignalStore.account().isPrimaryDevice() && TextUtils.isEmpty(SignalStore.account().getUsername()) && !SignalStore.uiHints().hasCompletedUsernameOnboarding();
+  }
+
+  private static boolean shouldShowInactivePrimaryMegaphone() {
+    return SignalStore.account().isLinkedDevice() && SignalStore.account().hasInactivePrimaryDeviceAlert();
   }
 
   private static boolean shouldShowGenericBackupsMegaphone(@NonNull Context context) {
@@ -756,7 +781,8 @@ public final class Megaphones {
     BACKUP_MEDIA_SIZE_UPSELL("backup_media_upsell"),
     BACKUP_LOW_STORAGE_UPSELL("backup_storage_upsell"),
     VERIFY_BACKUP_KEY("verify_backup_key"),
-    USE_NEW_ON_DEVICE_BACKUPS("use_new_on_device_backups");
+    USE_NEW_ON_DEVICE_BACKUPS("use_new_on_device_backups"),
+    INACTIVE_PRIMARY("inactive_primary");
 
     private final String key;
 
