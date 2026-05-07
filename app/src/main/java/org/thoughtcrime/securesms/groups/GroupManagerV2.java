@@ -175,7 +175,12 @@ final class GroupManagerV2 {
 
     Map<UUID, UuidCiphertext> uuidCipherTexts = new HashMap<>();
     for (Recipient recipient : recipients) {
-      uuidCipherTexts.put(recipient.requireServiceId().getRawUuid(), clientZkGroupCipher.encrypt(recipient.requireServiceId().getLibSignalServiceId()));
+      Optional<ServiceId> serviceId = recipient.getServiceId();
+      if (serviceId.isPresent()) {
+        uuidCipherTexts.put(serviceId.get().getRawUuid(), clientZkGroupCipher.encrypt(serviceId.get().getLibSignalServiceId()));
+      } else {
+        Log.w(TAG, "Recipient " + recipient.getId() + " has no ServiceId, skipping for group call peek");
+      }
     }
 
     return uuidCipherTexts;
