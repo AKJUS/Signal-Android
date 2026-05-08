@@ -144,21 +144,7 @@ class MainNavigationViewModel(
 
     viewModelScope.launch {
       internalDetailLocation.collect { location ->
-        when (location) {
-          is MainNavigationDetailLocation.Conversation -> {
-            internalActiveChatThreadId.update { location.controllerKey }
-          }
-
-          is MainNavigationDetailLocation.CallLinkDetails -> {
-            internalActiveCallId.update { location.controllerKey }
-          }
-
-          is MainNavigationDetailLocation.Calls -> {
-            internalActiveCallId.update { location.controllerKey }
-          }
-
-          else -> Unit
-        }
+        updateActiveStateForLocation(location)
       }
     }
   }
@@ -187,8 +173,9 @@ class MainNavigationViewModel(
 
     earlyFocusedPaneRequested = null
 
-    earlyNavigationDetailLocationRequested?.let {
-      goTo(it)
+    earlyNavigationDetailLocationRequested?.let { detail ->
+      lockPaneToSecondary = false
+      updateActiveStateForLocation(detail)
     }
 
     return this.navigator!!
@@ -235,6 +222,24 @@ class MainNavigationViewModel(
       is MainNavigationDetailLocation.Calls.CallLinks.EditCallLinkName -> setDetailLocation(location)
 
       is MainNavigationDetailLocation.Conversation -> goToConversation(location)
+    }
+  }
+
+  private fun updateActiveStateForLocation(location: MainNavigationDetailLocation) {
+    when (location) {
+      is MainNavigationDetailLocation.Conversation -> {
+        internalActiveChatThreadId.update { location.controllerKey }
+      }
+
+      is MainNavigationDetailLocation.CallLinkDetails -> {
+        internalActiveCallId.update { location.controllerKey }
+      }
+
+      is MainNavigationDetailLocation.Calls -> {
+        internalActiveCallId.update { location.controllerKey }
+      }
+
+      else -> Unit
     }
   }
 
