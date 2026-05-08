@@ -54,6 +54,7 @@ import org.thoughtcrime.securesms.mediasend.v2.MediaSelectionNavigator
 import org.thoughtcrime.securesms.mediasend.v2.MediaSelectionState
 import org.thoughtcrime.securesms.mediasend.v2.MediaSelectionViewModel
 import org.thoughtcrime.securesms.mediasend.v2.stories.StoriesMultiselectForwardActivity
+import org.thoughtcrime.securesms.mediasend.v2.videos.VideoTrimData
 import org.thoughtcrime.securesms.mms.MediaConstraints
 import org.thoughtcrime.securesms.mms.SentMediaQuality
 import org.thoughtcrime.securesms.recipients.Recipient
@@ -339,7 +340,10 @@ class MediaReviewFragment : Fragment(R.layout.v2_media_review_fragment), Schedul
       pagerAdapter.submitMedia(state.selectedMedia)
 
       selectionAdapter.submitList(
-        state.selectedMedia.map { MediaReviewSelectedItem.Model(it, state.focusedMedia == it) } + MediaReviewAddItem.Model
+        state.selectedMedia.map {
+          val trimStartTimeUs = (state.editorStateMap[it.uri] as? VideoTrimData)?.startTimeUs ?: 0L
+          MediaReviewSelectedItem.Model(it, state.focusedMedia == it, trimStartTimeUs)
+        } + MediaReviewAddItem.Model
       )
 
       presentSendButton(readyToSend, state.sendType, state.recipient)
