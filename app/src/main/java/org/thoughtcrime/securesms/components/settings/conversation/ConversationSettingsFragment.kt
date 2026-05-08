@@ -542,7 +542,9 @@ class ConversationSettingsFragment :
                   .build()
 
                 startActivity(intent)
-                requireActivity().finish()
+                if (requireActivity() !is MainNavigationChatDetailRouter) {
+                  requireActivity().finish()
+                }
               }
           }
         )
@@ -812,7 +814,9 @@ class ConversationSettingsFragment :
                 recipient = group,
                 onRowClick = {
                   CommunicationActions.startConversation(requireActivity(), group, null)
-                  requireActivity().finish()
+                  if (requireActivity() !is MainNavigationChatDetailRouter) {
+                    requireActivity().finish()
+                  }
                 }
               )
             )
