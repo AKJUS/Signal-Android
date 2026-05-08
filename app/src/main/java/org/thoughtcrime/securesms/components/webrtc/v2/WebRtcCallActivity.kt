@@ -122,6 +122,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   private var answeredFromNotification: Boolean = false
   private var ephemeralStateDisposable = Disposable.empty()
   private val callPermissionsDialogController = CallPermissionsDialogController()
+  private val eventBusSubscriber = EventBusSubscriber()
 
   override fun attachBaseContext(newBase: Context) {
     delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
@@ -240,8 +241,8 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     initializeScreenshotSecurity()
 
-    if (!EventBus.getDefault().isRegistered(this)) {
-      EventBus.getDefault().register(this)
+    if (!EventBus.getDefault().isRegistered(eventBusSubscriber)) {
+      EventBus.getDefault().register(eventBusSubscriber)
     }
 
     val rtcViewModel = EventBus.getDefault().getStickyEvent(WebRtcViewModel::class.java)
@@ -285,7 +286,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     disableIncomingRingingVanity()
 
     if (!isInPipMode() || isFinishing) {
-      EventBus.getDefault().unregister(this)
+      EventBus.getDefault().unregister(eventBusSubscriber)
     }
 
     if (!callPermissionsDialogController.isAskingForPermission && !viewModel.isCallStarting && !isChangingConfigurations) {
@@ -307,7 +308,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     ephemeralStateDisposable.dispose()
 
     if (!isInPipMode() || isFinishing) {
-      EventBus.getDefault().unregister(this)
+      EventBus.getDefault().unregister(eventBusSubscriber)
       requestNewSizesThrottle.clear()
     }
 
@@ -329,7 +330,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     Log.d(TAG, "onDestroy")
     super.onDestroy()
     windowInfoTrackerCallbackAdapter.removeWindowLayoutInfoListener(windowLayoutInfoConsumer)
-    EventBus.getDefault().unregister(this)
+    EventBus.getDefault().unregister(eventBusSubscriber)
   }
 
   @SuppressLint("MissingSuperCall")
@@ -387,13 +388,11 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     AppDependencies.signalCallManager.resendMediaKeys()
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun onRecaptchaRequiredEvent(recaptchaRequiredEvent: RecaptchaRequiredEvent) {
+  private fun onRecaptchaRequiredEvent(recaptchaRequiredEvent: RecaptchaRequiredEvent) {
     RecaptchaProofBottomSheetFragment.show(supportFragmentManager)
   }
 
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onEventMainThread(event: WebRtcViewModel) {
+  private fun onEventMainThread(event: WebRtcViewModel) {
     Log.i(TAG, "Got message from service: ${event.describeDifference(previousEvent)}")
 
     val previousCallState: WebRtcViewModel.State? = previousEvent?.state
@@ -582,8 +581,8 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       if (info.isInPictureInPictureMode) {
         callScreen.maybeDismissAudioPicker()
 
-        if (!EventBus.getDefault().isRegistered(this)) {
-          EventBus.getDefault().register(this)
+        if (!EventBus.getDefault().isRegistered(eventBusSubscriber)) {
+          EventBus.getDefault().register(eventBusSubscriber)
         }
       }
       viewModel.setIsLandscapeEnabled(info.isInPictureInPictureMode)
@@ -1408,6 +1407,18 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     override fun onLaunchPendingRequestsSheet() {
       PendingParticipantsBottomSheet().show(supportFragmentManager, BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG)
+    }
+  }
+
+  private inner class EventBusSubscriber {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRecaptchaRequiredEvent(recaptchaRequiredEvent: RecaptchaRequiredEvent) {
+      this@WebRtcCallActivity.onRecaptchaRequiredEvent(recaptchaRequiredEvent)
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    fun onEventMainThread(event: WebRtcViewModel) {
+      this@WebRtcCallActivity.onEventMainThread(event)
     }
   }
 }
