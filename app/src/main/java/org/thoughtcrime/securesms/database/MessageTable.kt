@@ -316,6 +316,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     private const val INDEX_THREAD_UNREAD_COUNT = "message_thread_unread_count_index"
     private const val INDEX_STORY_TYPE = "message_story_type_index"
     private const val INDEX_ARCHIVED_STORY = "message_story_archived_index"
+    private const val INDEX_STARRED = "message_starred_index"
 
     @JvmField
     val CREATE_INDEXS = arrayOf(
@@ -344,7 +345,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       "CREATE INDEX IF NOT EXISTS message_pinned_at_index ON $TABLE_NAME ($PINNED_AT)",
       "CREATE INDEX IF NOT EXISTS message_deleted_by_index ON $TABLE_NAME ($DELETED_BY)",
       "CREATE INDEX IF NOT EXISTS $INDEX_ARCHIVED_STORY ON $TABLE_NAME ($STORY_ARCHIVED, $STORY_TYPE, $DATE_SENT) WHERE $STORY_TYPE > 0 AND $STORY_ARCHIVED > 0",
-      "CREATE INDEX IF NOT EXISTS message_starred_index ON $TABLE_NAME ($STARRED) WHERE $STARRED > 0",
+      "CREATE INDEX IF NOT EXISTS $INDEX_STARRED ON $TABLE_NAME ($STARRED) WHERE $STARRED > 0",
       "CREATE INDEX IF NOT EXISTS message_collapsed_state_index ON $TABLE_NAME ($COLLAPSED_STATE)",
       "CREATE INDEX IF NOT EXISTS message_collapsed_head_id_index ON $TABLE_NAME ($COLLAPSED_HEAD_ID)"
     )
@@ -2205,7 +2206,7 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
       args = null
     }
 
-    return mmsReaderFor(queryMessages(where, args, reverse = true)).use { reader ->
+    return mmsReaderFor(queryMessages(where, args, reverse = true, index = INDEX_STARRED)).use { reader ->
       reader.mapNotNull { it }
     }.withAttachments()
   }
