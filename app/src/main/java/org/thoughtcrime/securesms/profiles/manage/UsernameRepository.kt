@@ -442,6 +442,7 @@ object UsernameRepository {
         SignalDatabase.recipients.setUsername(Recipient.self().id, updatedUsername.username)
         SignalStore.account.usernameSyncState = AccountValues.UsernameSyncState.IN_SYNC
         SignalStore.account.usernameSyncErrorCount = 0
+        SignalStore.misc.needsUsernameRestore = false
 
         SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
         StorageSyncHelper.scheduleSyncForDataChange()
@@ -474,6 +475,7 @@ object UsernameRepository {
         SignalDatabase.recipients.setUsername(Recipient.self().id, username.username)
         SignalStore.account.usernameSyncState = AccountValues.UsernameSyncState.IN_SYNC
         SignalStore.account.usernameSyncErrorCount = 0
+        SignalStore.misc.needsUsernameRestore = false
 
         SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
         StorageSyncHelper.scheduleSyncForDataChange()
@@ -531,6 +533,7 @@ object UsernameRepository {
         SignalStore.account.usernameLink = null
         SignalStore.account.usernameSyncState = AccountValues.UsernameSyncState.IN_SYNC
         SignalStore.account.usernameSyncErrorCount = 0
+        SignalStore.misc.needsUsernameRestore = false
         SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
         StorageSyncHelper.scheduleSyncForDataChange()
         Log.i(TAG, "[deleteUsername] Successfully deleted the username.")

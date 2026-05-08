@@ -21,6 +21,7 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.isTerminal
 import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.profiles.manage.UsernameRepository
@@ -399,6 +400,12 @@ class RefreshOwnProfileJob private constructor(parameters: Parameters) : BaseJob
   private fun checkUsernameIsInSync() {
     if (SignalStore.misc.needsUsernameRestore) {
       Log.d(TAG, "Username restore is still pending. Skipping consistency check.")
+      if (SignalStore.account.isRegistered && SignalStore.account.aci != null && SignalStore.registration.restoreDecisionState.isTerminal) {
+        AppDependencies.jobManager
+          .startChain(ReclaimUsernameAndLinkJob())
+          .then(RefreshOwnProfileJob())
+          .enqueue()
+      }
       return
     }
 
