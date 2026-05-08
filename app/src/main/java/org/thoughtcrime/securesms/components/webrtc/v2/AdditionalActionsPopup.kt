@@ -46,6 +46,8 @@ data class AdditionalActionsState(
   val isShown: Boolean = false,
   val reactions: PersistentList<String> = persistentListOf(),
   val isSelfHandRaised: Boolean = false,
+  val isScreenSharing: Boolean = false,
+  val displayScreenShareToggle: Boolean = false,
   @Stable val listener: AdditionalActionsListener = AdditionalActionsListener.Empty
 )
 
@@ -53,11 +55,13 @@ interface AdditionalActionsListener {
   fun onReactClick(reaction: String)
   fun onReactWithAnyClick()
   fun onRaiseHandClick(raised: Boolean)
+  fun onScreenShareClick(sharing: Boolean)
 
   object Empty : AdditionalActionsListener {
     override fun onReactClick(reaction: String) = Unit
     override fun onReactWithAnyClick() = Unit
     override fun onRaiseHandClick(raised: Boolean) = Unit
+    override fun onScreenShareClick(sharing: Boolean) = Unit
   }
 }
 
@@ -91,7 +95,10 @@ private fun AdditionalActionsPopupContent(
 
     CallScreenMenu(
       onRaiseHandClick = state.listener::onRaiseHandClick,
-      isSelfHandRaised = state.isSelfHandRaised
+      isSelfHandRaised = state.isSelfHandRaised,
+      isScreenSharing = state.isScreenSharing,
+      displayScreenShareToggle = state.displayScreenShareToggle,
+      onScreenShareClick = state.listener::onScreenShareClick
     )
   }
 }
@@ -135,7 +142,10 @@ private fun CallReactionScrubber(
 @Composable
 private fun CallScreenMenu(
   isSelfHandRaised: Boolean,
-  onRaiseHandClick: (Boolean) -> Unit
+  onRaiseHandClick: (Boolean) -> Unit,
+  isScreenSharing: Boolean = false,
+  displayScreenShareToggle: Boolean = false,
+  onScreenShareClick: (Boolean) -> Unit = {}
 ) {
   Column(
     modifier = Modifier
@@ -147,6 +157,14 @@ private fun CallScreenMenu(
       title = if (isSelfHandRaised) stringResource(R.string.CallOverflowPopupWindow__lower_hand) else stringResource(R.string.CallOverflowPopupWindow__raise_hand),
       onClick = { onRaiseHandClick(!isSelfHandRaised) }
     )
+
+    if (displayScreenShareToggle) {
+      CallScreenMenuOption(
+        imageVector = ImageVector.vectorResource(R.drawable.symbol_screen_share_24),
+        title = if (isScreenSharing) stringResource(R.string.CallOverflowPopupWindow__stop_screen_share) else stringResource(R.string.CallOverflowPopupWindow__share_screen),
+        onClick = { onScreenShareClick(!isScreenSharing) }
+      )
+    }
   }
 }
 

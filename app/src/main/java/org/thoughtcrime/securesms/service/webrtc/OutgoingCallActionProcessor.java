@@ -157,7 +157,7 @@ public class OutgoingCallActionProcessor extends DeviceAwareActionProcessor {
                                                 RingRtcDynamicConfiguration.getAudioConfig(),
                                                 videoState.requireLocalSink(),
                                                 callParticipant.getVideoSink(),
-                                                videoState.requireCamera(),
+                                                videoState.requireRouter(),
                                                 callSetupState.getIceServers(),
                                                 hideIp,
                                                 NetworkUtil.getCallingDataMode(context),
@@ -170,7 +170,7 @@ public class OutgoingCallActionProcessor extends DeviceAwareActionProcessor {
 
     return currentState.builder()
                        .changeLocalDeviceState()
-                       .cameraState(currentState.getVideoState().requireCamera().getCameraState())
+                       .cameraState(currentState.getVideoState().requireRouter().getCameraState())
                        .build();
   }
 

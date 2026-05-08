@@ -14,6 +14,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.media.AudioManager
+import android.media.projection.MediaProjectionConfig
+import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
@@ -22,6 +24,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
@@ -38,6 +41,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -123,6 +127,11 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   private var ephemeralStateDisposable = Disposable.empty()
   private val callPermissionsDialogController = CallPermissionsDialogController()
   private val eventBusSubscriber = EventBusSubscriber()
+  private val mediaProjectionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == RESULT_OK && result.data != null) {
+      AppDependencies.signalCallManager.startScreenShare(result.data!!)
+    }
+  }
 
   override fun attachBaseContext(newBase: Context) {
     delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
@@ -209,6 +218,17 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       askAudioPermissions {
         callScreen.setMicEnabled(viewModel.microphoneEnabled.value)
       }
+    }
+
+    lifecycleScope.launch {
+      viewModel
+        .isLocalScreenSharing
+        .drop(1)
+        .collect { sharing ->
+          if (!sharing && !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            AppDependencies.signalCallManager.setEnableVideo(false)
+          }
+        }
     }
   }
 
@@ -312,7 +332,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       requestNewSizesThrottle.clear()
     }
 
-    if (!isChangingConfigurations && !isInMultiWindowModeCompat()) {
+    if (!isChangingConfigurations && !isInMultiWindowModeCompat() && !viewModel.isLocalScreenSharing.value) {
       AppDependencies.signalCallManager.setEnableVideo(false)
     }
 
@@ -985,7 +1005,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       is CallEvent.StartCall -> startCall(event.isVideoCall)
       is CallEvent.ShowGroupCallSafetyNumberChange -> SafetyNumberBottomSheet.forGroupCall(event.identityRecords).show(supportFragmentManager)
       is CallEvent.SwitchToSpeaker -> callScreen.switchToSpeakerView()
-      is CallEvent.ShowSwipeToSpeakerHint -> callScreen.showSpeakerViewHint()
+      is CallEvent.ShowSwipeToScreenShareHint -> callScreen.showScreenShareHint()
       is CallEvent.ShowRemoteMuteToast -> callScreen.showRemoteMuteToast(event.getDescription(this))
       is CallEvent.ShowLargeGroupAutoMuteToast -> {
         callScreen.onCallStateUpdate(CallControlsChange.MIC_OFF)
@@ -1389,6 +1409,20 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     override fun onAudioPermissionsRequested(onGranted: Runnable?) {
       askAudioPermissions { onGranted?.run() }
+    }
+
+    override fun onScreenShareChanged(sharing: Boolean) {
+      if (sharing) {
+        val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        val intent = if (Build.VERSION.SDK_INT >= 34) {
+          mediaProjectionManager.createScreenCaptureIntent(MediaProjectionConfig.createConfigForDefaultDisplay())
+        } else {
+          mediaProjectionManager.createScreenCaptureIntent()
+        }
+        mediaProjectionLauncher.launch(intent)
+      } else {
+        AppDependencies.signalCallManager.stopScreenShare()
+      }
     }
   }
 

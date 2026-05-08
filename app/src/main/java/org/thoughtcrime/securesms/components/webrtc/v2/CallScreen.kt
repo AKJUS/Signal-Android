@@ -77,6 +77,7 @@ import org.thoughtcrime.securesms.events.CallParticipantId
 import org.thoughtcrime.securesms.events.GroupCallRaiseHandEvent
 import org.thoughtcrime.securesms.events.GroupCallReactionEvent
 import org.thoughtcrime.securesms.events.WebRtcViewModel
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.ringrtc.CameraState
@@ -171,11 +172,15 @@ fun CallScreen(
   val additionalActionsPopupState = TriggerAlignedPopupState.rememberTriggerAlignedPopupState()
   val additionalActionsState = remember(
     callScreenState.reactions,
-    localParticipant.isHandRaised
+    localParticipant.isHandRaised,
+    callScreenState.isLocalScreenSharing,
+    callControlsState.displayEndCallButton
   ) {
     AdditionalActionsState(
       reactions = callScreenState.reactions,
       isSelfHandRaised = localParticipant.isHandRaised,
+      isScreenSharing = callScreenState.isLocalScreenSharing,
+      displayScreenShareToggle = callControlsState.displayEndCallButton && SignalStore.labs.screenShare,
       listener = additionalActionsListener,
       triggerAlignedPopupState = additionalActionsPopupState
     )
@@ -505,7 +510,7 @@ fun CallScreen(
   )
 
   SwipeToSpeakerHintPopup(
-    visible = callScreenState.displaySwipeToSpeakerHint,
+    hintType = callScreenState.swipeHint,
     onDismiss = onSwipeToSpeakerHintDismissed,
     modifier = Modifier
       .statusBarsPadding()

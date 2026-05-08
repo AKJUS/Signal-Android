@@ -151,6 +151,15 @@ private fun LabsSettingsContent(
           onCheckChanged = { onEvent(LabsSettingsEvents.ToggleStarredMessages(it)) }
         )
       }
+
+      item {
+        Rows.ToggleRow(
+          checked = state.screenShare,
+          text = "Screen Sharing",
+          label = "Share your screen during calls. Adds a screen share option to the overflow menu in 1:1 and group calls.",
+          onCheckChanged = { onEvent(LabsSettingsEvents.ToggleScreenShare(it)) }
+        )
+      }
     }
   }
 }

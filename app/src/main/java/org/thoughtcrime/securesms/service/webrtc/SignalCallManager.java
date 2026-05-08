@@ -265,6 +265,18 @@ public final class SignalCallManager implements CallManager.Observer, GroupCall.
     process((s, p) -> p.handleSetEnableVideo(s, enabled));
   }
 
+  public void startScreenShare(@NonNull android.content.Intent mediaProjectionData) {
+    process((s, p) -> p.handleSetLocalScreenShare(s, true, mediaProjectionData));
+  }
+
+  public void stopScreenShare() {
+    process((s, p) -> p.handleSetLocalScreenShare(s, false, null));
+  }
+
+  public void onScreenSharingServiceReady() {
+    process((s, p) -> p.handleScreenSharingServiceReady(s));
+  }
+
   public void setIncomingRingingVanity(boolean enabled) {
     process((s, p) -> p.handleSetIncomingRingingVanity(s, enabled));
   }

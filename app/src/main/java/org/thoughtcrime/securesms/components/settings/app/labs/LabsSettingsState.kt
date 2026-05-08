@@ -15,6 +15,6 @@ data class LabsSettingsState(
   val groupSuggestionsForMembers: Boolean = false,
   val betterSearch: Boolean = false,
   val autoLowerHand: Boolean = false,
-
-  val starredMessages: Boolean = false
+  val starredMessages: Boolean = false,
+  val screenShare: Boolean = false
 )

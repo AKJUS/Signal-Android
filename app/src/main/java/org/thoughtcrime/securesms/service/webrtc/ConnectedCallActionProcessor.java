@@ -1,5 +1,6 @@
 package org.thoughtcrime.securesms.service.webrtc;
 
+import android.content.Intent;
 import android.os.ResultReceiver;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,11 @@ import org.signal.ringrtc.CallManager;
 import org.thoughtcrime.securesms.events.CallParticipant;
 import org.thoughtcrime.securesms.events.CallParticipantId;
 import org.thoughtcrime.securesms.events.WebRtcViewModel;
+import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.thoughtcrime.securesms.ringrtc.OutgoingVideoSourceRouter;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
+import org.thoughtcrime.securesms.service.webrtc.state.LocalDeviceState;
+import org.thoughtcrime.securesms.webrtc.CallNotificationBuilder;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcEphemeralState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
 
@@ -50,7 +55,7 @@ public class ConnectedCallActionProcessor extends DeviceAwareActionProcessor {
 
     currentState = currentState.builder()
                                .changeLocalDeviceState()
-                               .cameraState(currentState.getVideoState().requireCamera().getCameraState())
+                               .cameraState(currentState.getVideoState().requireRouter().getCameraState())
                                .build();
 
     boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled();
@@ -120,6 +125,74 @@ public class ConnectedCallActionProcessor extends DeviceAwareActionProcessor {
   @Override
   protected @NonNull WebRtcServiceState handleScreenSharingEnable(@NonNull WebRtcServiceState currentState, boolean enable) {
     return activeCallDelegate.handleScreenSharingEnable(currentState, enable);
+  }
+
+  @Override
+  protected @NonNull WebRtcServiceState handleSetLocalScreenShare(@NonNull WebRtcServiceState currentState, boolean enable, @Nullable Intent mediaProjectionData) {
+    Log.i(TAG, "handleSetLocalScreenShare(): enable: " + enable);
+
+    OutgoingVideoSourceRouter router = currentState.getVideoState().requireRouter();
+
+    RecipientId recipientId = currentState.getCallInfoState().requireActivePeer().getRecipient().getId();
+
+    if (enable && mediaProjectionData != null) {
+      Log.i(tag, "Updating service for media projection, then can screen share");
+      ActiveCallManager.ActiveCallForegroundService.update(context, CallNotificationBuilder.TYPE_ESTABLISHED, recipientId, true, true);
+
+      return currentState.builder()
+                         .changeLocalDeviceState()
+                         .setMediaProjectionIntent(mediaProjectionData)
+                         .build();
+    } else {
+      router.stopScreenShare();
+
+      boolean cameraWasEnabled = currentState.getLocalDeviceState().getCameraState().isEnabled();
+      ActiveCallManager.ActiveCallForegroundService.update(context, CallNotificationBuilder.TYPE_ESTABLISHED, recipientId, cameraWasEnabled, false);
+
+      try {
+        webRtcInteractor.getCallManager().setVideoEnable(cameraWasEnabled, false);
+      } catch (CallException e) {
+        return callFailure(currentState, "setVideoEnable() after screen share failed: ", e);
+      }
+
+      return currentState.builder()
+                         .changeLocalDeviceState()
+                         .isScreenSharing(false)
+                         .setMediaProjectionIntent(null)
+                         .build();
+    }
+  }
+
+  @Override
+  protected @NonNull WebRtcServiceState handleScreenSharingServiceReady(@NonNull WebRtcServiceState currentState) {
+    Log.i(tag, "handleScreenSharingServiceReady()");
+
+    LocalDeviceState localDeviceState      = currentState.getLocalDeviceState();
+    Intent           mediaProjectionIntent = localDeviceState.getMediaProjectionIntent();
+
+    if (localDeviceState.isScreenSharing()) {
+      Log.w(tag, "handleScreenSharingServiceReady(): already screensharing!");
+      return currentState;
+    }
+
+    if (mediaProjectionIntent == null) {
+      Log.w(tag, "handleScreenSharingServiceReady(): Media intent is null, bailing");
+      return currentState;
+    }
+
+    OutgoingVideoSourceRouter router = currentState.getVideoState().requireRouter();
+
+    try {
+      webRtcInteractor.getCallManager().setVideoEnable(true, true);
+    } catch (CallException e) {
+      return callFailure(currentState, "setVideoEnable() for screen share failed: ", e);
+    }
+    router.startScreenShare(mediaProjectionIntent);
+
+    return currentState.builder()
+                       .changeLocalDeviceState()
+                       .isScreenSharing(true)
+                       .build();
   }
 
   @Override

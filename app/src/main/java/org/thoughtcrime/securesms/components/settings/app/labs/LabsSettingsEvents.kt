@@ -12,6 +12,6 @@ sealed interface LabsSettingsEvents {
   data class ToggleGroupSuggestionsForMembers(val enabled: Boolean) : LabsSettingsEvents
   data class ToggleBetterSearch(val enabled: Boolean) : LabsSettingsEvents
   data class ToggleAutoLowerHand(val enabled: Boolean) : LabsSettingsEvents
-
   data class ToggleStarredMessages(val enabled: Boolean) : LabsSettingsEvents
+  data class ToggleScreenShare(val enabled: Boolean) : LabsSettingsEvents
 }
