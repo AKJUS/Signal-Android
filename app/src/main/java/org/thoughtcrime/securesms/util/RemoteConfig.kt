@@ -1289,6 +1289,17 @@ object RemoteConfig {
   )
 
   /**
+   * Enables software Vp9 support for 1:1 calls
+   */
+  @JvmStatic
+  @get:JvmName("enableSoftwareVp9")
+  val enableSoftwareVp9: Boolean by remoteBoolean(
+    key = "android.calling.enableSoftwareVp9",
+    defaultValue = false,
+    hotSwappable = true
+  )
+
+  /**
    * Whether or not to allow admins to terminate groups.
    */
   @JvmStatic
