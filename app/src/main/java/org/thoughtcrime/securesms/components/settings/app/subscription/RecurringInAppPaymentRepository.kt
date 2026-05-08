@@ -297,6 +297,7 @@ object RecurringInAppPaymentRepository {
       if (response.status == 200 || response.status == 204) {
         Log.d(TAG, "Successfully set user subscription to level $subscriptionLevel with response code ${response.status}", true)
         SignalStore.inAppPayments.updateLocalStateForLocalSubscribe(subscriberType)
+        MultiDeviceSubscriptionSyncRequestJob.enqueue()
         syncAccountRecord().subscribe()
       } else {
         if (response.applicationError.isPresent) {
