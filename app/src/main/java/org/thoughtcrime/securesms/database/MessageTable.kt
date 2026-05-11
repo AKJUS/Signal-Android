@@ -32,7 +32,6 @@ import org.signal.core.util.Base64
 import org.signal.core.util.CursorUtil
 import org.signal.core.util.SqlUtil
 import org.signal.core.util.SqlUtil.buildArgs
-import org.signal.core.util.SqlUtil.buildCustomCollectionQuery
 import org.signal.core.util.SqlUtil.buildSingleCollectionQuery
 import org.signal.core.util.SqlUtil.buildTrueUpdateQuery
 import org.signal.core.util.SqlUtil.getNextAutoIncrementId
@@ -4909,37 +4908,39 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     }
 
     val byQuoteDescriptor: MutableMap<QuoteDescriptor, MessageRecord> = HashMap(records.size)
-    val args: MutableList<Array<String>> = ArrayList(records.size)
+    val timestamps: MutableList<Long> = ArrayList(records.size)
 
     for (record in records) {
       val timestamp = record.dateSent
 
       byQuoteDescriptor[QuoteDescriptor(timestamp, record.fromRecipient.id)] = record
-      args.add(buildArgs(timestamp, record.fromRecipient.id, -1))
+      timestamps.add(timestamp)
     }
 
     val quotedIds: MutableSet<Long> = mutableSetOf()
 
     val pastRevisionMessageIds = records.mapNotNull { it.originalMessageId?.id }.toSet()
 
-    buildCustomCollectionQuery("$QUOTE_ID = ?  AND $QUOTE_AUTHOR = ? AND $SCHEDULED_DATE = ?", args).forEach { query ->
-      readableDatabase
-        .select(ID, QUOTE_ID, QUOTE_AUTHOR)
-        .from(TABLE_NAME)
-        .where(query.where, query.whereArgs)
-        .run()
-        .forEach { cursor ->
-          val messageId = cursor.requireLong(ID)
-          if (messageId !in pastRevisionMessageIds) {
-            val quoteLocator = QuoteDescriptor(
-              timestamp = cursor.requireLong(QUOTE_ID),
-              author = RecipientId.from(cursor.requireNonNullString(QUOTE_AUTHOR))
-            )
+    val quoteIdQuery = SqlUtil.buildFastCollectionQuery(QUOTE_ID, timestamps)
 
+    readableDatabase
+      .select(ID, QUOTE_ID, QUOTE_AUTHOR)
+      .from(TABLE_NAME)
+      .where("${quoteIdQuery.where} AND $SCHEDULED_DATE = -1", quoteIdQuery.whereArgs)
+      .run()
+      .forEach { cursor ->
+        val messageId = cursor.requireLong(ID)
+        if (messageId !in pastRevisionMessageIds) {
+          val quoteLocator = QuoteDescriptor(
+            timestamp = cursor.requireLong(QUOTE_ID),
+            author = RecipientId.from(cursor.requireNonNullString(QUOTE_AUTHOR))
+          )
+
+          if (byQuoteDescriptor.containsKey(quoteLocator)) {
             quotedIds += byQuoteDescriptor[quoteLocator]!!.id
           }
         }
-    }
+      }
 
     return quotedIds
   }
