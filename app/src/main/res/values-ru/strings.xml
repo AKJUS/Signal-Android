@@ -749,7 +749,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Это единственный официальный чат от Signal. Будьте в курсе новостей и свежих релизов.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Это единственный официальный чат от Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d участник</item>
@@ -2077,7 +2077,7 @@
     <string name="MessageRecord_s_joined_signal">%1$s теперь в Signal!</string>
     <string name="MessageRecord_you_disabled_disappearing_messages">Вы отключили исчезающие сообщения.</string>
     <string name="MessageRecord_s_disabled_disappearing_messages">%1$s отключил(-а) исчезающие сообщения.</string>
-    <string name="MessageRecord_you_set_disappearing_message_time_to_s">Вы установили время исчезновения сообщений в %1$s.</string>
+    <string name="MessageRecord_you_set_disappearing_message_time_to_s">Вы установили время исчезновения сообщений на %1$s.</string>
     <string name="MessageRecord_s_set_disappearing_message_time_to_s">%1$s установил(-а) время исчезновения сообщений в%2$s.</string>
     <string name="MessageRecord_disappearing_message_time_set_to_s">Таймер исчезновения сообщений установлен в %1$s.</string>
     <string name="MessageRecord_this_group_was_updated_to_a_new_group">Эта группа была обновлена до Новой группы.</string>
@@ -6315,7 +6315,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Качество отправляемого медиа</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Отправление медиа в высоком качестве использует больше данных.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Голосовые сообщения и стикеры (менее %1$s) всегда загружаются автоматически.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Высокое</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->

@@ -6520,9 +6520,9 @@
     <!-- Dialog title shown when a donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet -->
     <string name="ManageDonationsFragment__couldnt_confirm_donation">Hindi makumpirma ang donation</string>
     <!-- Dialog message shown when a monthly donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Ang iyong %1$s/month na donasyon ay hindi ma-confirm. I-check ang iyong banking app para ma-approve ang iyong iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_monthly_s_donation_couldnt_be_confirmed_ideal_wero">Hindi ma-confirm ang iyong %1$s/month na donation. I-check ang iyong banking app para ma-approve ang iyong iDEAL | Wero payment.</string>
     <!-- Dialog message shown when a one-time donation requires verifying/confirmation outside of the app and the user hasn\'t done that yet, placeholder is money amount -->
-    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Ang iyong one-time %1$s na donasyon ay hindi ma-confirm. i-check ang banking app mo para ma-approve ang iyong iDEAL | Wero payment.</string>
+    <string name="ManageDonationsFragment__your_one_time_s_donation_couldnt_be_confirmed_ideal_wero">Hindi ma-confirm ang iyong one-time %1$s na donation. I-check ang banking app mo para ma-approve ang iyong iDEAL | Wero payment.</string>
 
     <string name="Boost__enter_custom_amount">Maglagay ng Custom Amount</string>
     <!-- Error label when the amount is smaller than what we can accept -->
@@ -6651,7 +6651,7 @@
     <!-- Displayed as a dialog message when the user\'s profile could not be fetched, likely due to lack of internet -->
     <string name="DonationsErrors__your_donation_could_not_be_sent">Hindi maipadala ang donation mo dahil sa network error. I-check ang iyong connection at subukan ulit.</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
-    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Ang iDEAL | Wero na donasyon mo ay hindi maproseso. Subukan ang ibang payment method o tawagan ang iyong bangko para sa karagdagang impormasyon.</string>
+    <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">Hindi maproseso ang iyong iDEAL | Wero donation. Subukan ang ibang payment method o tawagan ang iyong bangko para sa karagdagang impormasyon.</string>
 
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donation sa pangalan ni %1$s</string>
@@ -7574,7 +7574,7 @@
     <!-- Dialog body when a user tries to donate while they already have a pending one time donation. -->
     <string name="DonateToSignalFragment__your_payment_is_still_being_processed_onetime">Pina-process pa ang iyong donation. Maaari itong tumagal nang ilang minuto depende sa connection mo. Hintaying makumpleto ang payment na ito bago gumawa ng panibagong donation.</string>
     <!-- Dialog body when a user opens the manage donations main screen and they have a pending iDEAL donation -->
-    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Ang iyong iDEAL | Wero na donasyon ay pinoproseso pa. I-check ang iyong banking app para ma-approve ang iyong payment bago gumawa ng panibagong donasyon.</string>
+    <string name="DonateToSignalFragment__your_ideal_wero_payment_is_still_processing">Pinoproseso pa ang iyong iDEAL | Wero donation. I-check ang iyong banking app para ma-approve ang iyong payment bago gumawa ng panibagong donation.</string>
     <!-- Dialog title shown when a user tries to donate an amount higher than is allowed for a given payment method. -->
     <string name="DonateToSignal__donation_amount_too_high">Masyadong mataas ang halaga ng donation</string>
     <!-- Dialog body shown when a user tries to donate an amount higher than is allowed for a given payment method, place holder is the maximum -->
@@ -7610,7 +7610,7 @@
     <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">Gusto mo bang umalis sa Signal para ma-confirm ang donation?</string>
     <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">Kapag na-confirm na ito, bumalik sa Signal para tapusin ang pag-process ng iyong donation.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
-    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Mapupunta ka sa %1$s. Kapag na-confirm na ito, bumalik sa Signal para tapusin ang pag-process ng iyong donasyon.</string>
+    <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">Mapupunta ka sa %1$s. Kapag na-confirm na ito, bumalik sa Signal para tapusin ang pag-process ng iyong donation.</string>
 
     <!-- BankTransferMandateFragment -->
     <!-- Title of screen displaying the bank transfer mandate -->
@@ -7672,7 +7672,7 @@
     <!-- Default label for bank selection -->
     <string name="IdealTransferDetailsFragment__choose_your_bank">Piliin ang iyong bangko</string>
     <!-- Dialog title shown when using iDEAL payment for setting up a monthly donation -->
-    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">I-confirm ang donasyon mo sa iDEAL | Wero</string>
+    <string name="IdealTransferDetailsFragment__confirm_your_donation_with_ideal_wero">I-confirm ang donation mo sa iDEAL | Wero</string>
     <!-- Dialog warning shown when using iDEAL payment for setting up a monthly donation. Placeholder is donation amount.Z -->
     <string name="IdealTransferDetailsFragment__to_setup_your_recurring_donation">Para i-setup ang iyong recurring na donasyon, i-tap ang continue para kumpirmahin ang €0.01 na charge sa bangkong ginamit mo. Automatic itong mare-refund at ang iyong %1$s/buwan na donasyon ay ibabawas sa account mo.</string>
     <!-- Dialog button shown when using iDEAL payment for setting up a monthly donation to continue with the donation -->
@@ -9007,7 +9007,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">I-back up ang messages at media mo gamit ang secure, end-to-end encrypted storage service ng Signal. Hindi ka mawawalan ng anumang message kapag nakakuha ka ng bagong phone o nagre-install ng Signal.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">I-back up ang messages at media mo gamit ang secure, end-to-end encrypted storage service ng Signal. Huwag mawalan ng message kapag nakakuha ka ng bagong phone o nagre-install ka ng Signal.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">End-to-end Encrypted</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->

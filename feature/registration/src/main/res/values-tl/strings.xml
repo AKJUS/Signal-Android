@@ -198,7 +198,7 @@
     <!-- Error text when key is invalid -->
     <string name="EnterAepScreen__invalid_recovery_key">Invalid ang recovery key</string>
     <!-- Error text when key is correct format but does not match account -->
-    <string name="EnterAepScreen__incorrect_recovery_key">Mali ang recovery key</string>
+    <string name="EnterAepScreen__incorrect_recovery_key">Maling recovery key</string>
     <!-- Text shown while preparing the restore -->
     <string name="LocalBackupRestoreScreen__preparing_restore">Hinahanda ang pag-restore…</string>
     <!-- Title shown while restore is in progress -->
@@ -236,17 +236,17 @@
     <!-- Title for the backup not found dialog -->
     <string name="RemoteRestoreScreen__backup_not_found">Hindi mahanap ang backup</string>
     <!-- Body for the backup not found dialog -->
-    <string name="RemoteRestoreScreen__no_backup_was_found">Walang backup na nakita para sa account na ito.</string>
+    <string name="RemoteRestoreScreen__no_backup_was_found">Walang nakitang backup para sa account na ito.</string>
     <!-- Title for the restore failed dialog -->
     <string name="RemoteRestoreScreen__cant_restore_backup">Hindi ma-restore ang backup</string>
     <!-- Body for the restore failed dialog -->
     <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Hindi ma-restore ang backup mo ngayon. Subukan ulit.</string>
     <!-- Button to try again -->
-    <string name="RemoteRestoreScreen__try_again">Subukang muli</string>
+    <string name="RemoteRestoreScreen__try_again">Subukan ulit</string>
     <!-- Title for the network error dialog -->
     <string name="RemoteRestoreScreen__couldnt_finish_restore">Hindi matapos ang pag-restore</string>
     <!-- Body for the network error dialog -->
-    <string name="RemoteRestoreScreen__error_connecting">Nagkaroon ng error habang kumokonekta sa server. Tignan ang iyong connection at subukan ulit.</string>
+    <string name="RemoteRestoreScreen__error_connecting">Nagkaroon ng error habang kumokonekta sa server. Paki check ang iyong connection at subukan ulit.</string>
     <!-- Body for the general restore failure dialog -->
     <string name="RemoteRestoreScreen__error_occurred">Nagkaroon ng error habang sinusubukang i-restore ang backup mo. Subukan ulit.</string>
     <!-- Title for the invalid backup version dialog -->
@@ -260,7 +260,7 @@
     <!-- Title for unrecoverable backup failure dialog -->
     <string name="RemoteRestoreScreen__cant_restore_this_backup">Hindi ma-restore ang backup</string>
     <!-- Body for unrecoverable backup failure dialog prompting user to contact support -->
-    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">Nagkaroon ng error habang sinusubukang i-restore ang backup mo. Hindi na maaaring i-recover ang backup mo. Paki contact ang support para makakuha ng tulong.</string>
+    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">Nagkaroon ng error habang sinusubukang i-restore ang backup mo. Hindi na maaaring ma-recover ang backup mo. Paki contact ang support para makakuha ng tulong.</string>
     <!-- Button to contact support -->
     <string name="RemoteRestoreScreen__contact_support">Kontakin ang Support</string>
     <!-- Shown while downloading the backup from the server -->

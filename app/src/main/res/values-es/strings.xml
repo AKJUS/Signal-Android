@@ -721,7 +721,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">El único chat oficial de Signal. Mantente al día con las novedades y las notas de las nuevas versiones.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">El único chat oficial de Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d participante</item>
@@ -6023,7 +6023,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Calidad de fotos y vídeos</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Si seleccionas alta calidad, se usarán más datos.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Los mensajes de voz y los stickers (de menos de %1$s) siempre se descargan automáticamente.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Alta</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->

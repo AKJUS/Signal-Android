@@ -707,7 +707,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal မှ တစ်ခုတည်းသော တရားဝင်ချက်(တ်)။ သတင်းများနှင့် ထုတ်ဝေမှုမှတ်ချက်များကို အပ်ဒိတ်ရယူလိုက်ပါ။</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Signal မှ တစ်ခုတည်းသော တရားဝင်ချက်(တ်)</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="other">အဖွဲ့ဝင် %1$d ဦး</item>
@@ -1771,7 +1771,7 @@
     <string name="MediaOverviewActivity_Media_delete_progress_title">ဖျက်နေဆဲ</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">မက်ဆေ့ချ်များကို ဖျက်နေပါသည်…</string>
     <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
-    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d ၏ %2$d</string>
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d/%2$d</string>
     <string name="MediaOverviewActivity_Sort_by">၎င်းအလိုက်စီရင်ပါ</string>
     <string name="MediaOverviewActivity_Newest">နောက်ဆုံးပေါ်</string>
     <string name="MediaOverviewActivity_Oldest">အဟောင်းဆုံး</string>
@@ -5877,7 +5877,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">မီဒီယာ အရည်အသွေး ပို့ပြီး</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">အရည်အသွေးမြင့်သည့် မီဒီယာဖိုင်ကို ပို့လျှင် ဒေတာ ပိုသုံးပါလိမ့်မည်။</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">အသံမက်ဆေ့(ချ်)နှင့် စတစ်ကာများ (%1$s အောက်) ကို အမြဲတမ်း အလိုအလျောက် ဒေါင်းလုဒ်လုပ်ပါသည်။</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">မြင့်သော</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->

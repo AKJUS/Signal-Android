@@ -707,7 +707,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">这是 Signal 的唯一官方聊天号，方便您及时了解新闻动态和版本发布说明。</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">这是 Signal 的唯一官方聊天号</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="other">%1$d 个成员</item>
@@ -1771,7 +1771,7 @@
     <string name="MediaOverviewActivity_Media_delete_progress_title">正在删除</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">正在删除消息…</string>
     <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
-    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d / %2$d 匹配</string>
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$d / %2$d</string>
     <string name="MediaOverviewActivity_Sort_by">排序</string>
     <string name="MediaOverviewActivity_Newest">最新</string>
     <string name="MediaOverviewActivity_Oldest">最旧</string>
@@ -5877,7 +5877,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">已发送媒体质量</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">发送高质量媒体将会使用更多数据。</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">语音消息和表情（小于 %1$s）始终自动下载。</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">高</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->

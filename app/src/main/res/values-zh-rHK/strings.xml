@@ -707,7 +707,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal 官方及唯一版本的聊天。隨時了解最新消息和發行版本備註。</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Signal 唯一的官方聊天室</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="other">%1$d 位成員</item>
@@ -5877,7 +5877,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">送出媒體的品質</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">傳送高品質的媒體將會使用較多數據。</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">語音訊息及貼圖（小於 %1$s）每次都會自動下載。</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">高品質</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->

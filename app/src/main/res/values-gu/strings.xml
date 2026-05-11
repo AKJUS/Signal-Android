@@ -721,7 +721,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signalની એકમાત્ર સત્તાવાર ચેટ. સમાચાર અને રિલીઝ નોટ સાથે અપ ટૂ ડેટ રહો.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Signalની એકમાત્ર સત્તાવાર ચેટ</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d સભ્યો</item>
@@ -1824,7 +1824,7 @@
     <string name="MediaOverviewActivity_Media_delete_progress_title">કાઢી નાખો</string>
     <string name="MediaOverviewActivity_Media_delete_progress_message">મેસેજ કાઢી નાખો…</string>
     <!-- Format string showing current vs. total items being deleted, e.g. "12 of 207" -->
-    <string name="MediaOverviewActivity_Media_delete_progress_count">%1$dની%2$d</string>
+    <string name="MediaOverviewActivity_Media_delete_progress_count">%2$dમાંથી %1$d</string>
     <string name="MediaOverviewActivity_Sort_by">વર્ગીકરણ કરો</string>
     <string name="MediaOverviewActivity_Newest">નવીનતમ</string>
     <string name="MediaOverviewActivity_Oldest">જૂની</string>
@@ -6023,7 +6023,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">મોકલેલ મીડિયાની ગુણવત્તા</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">ઉચ્ચ ગુણવત્તાના મીડિયા મોકલવાથી વધુ ડેટા વાપરશે.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">વોઇસ મેસેજ અને સ્ટીકર (%1$s થી ઓછી સાઇઝના) હંમેશા આપમેળે ડાઉનલોડ થાય છે.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">ઉચ્ચ</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
