@@ -255,6 +255,7 @@ public final class JobManagerFactories {
       put(ReclaimUsernameAndLinkJob.KEY,               new ReclaimUsernameAndLinkJob.Factory());
       put(RefreshAttributesJob.KEY,                    new RefreshAttributesJob.Factory());
       put(RefreshCallLinkDetailsJob.KEY,               new RefreshCallLinkDetailsJob.Factory());
+      put(RefreshDonationSubscriptionStatusJob.KEY,    new RefreshDonationSubscriptionStatusJob.Factory());
       put(RefreshSvrCredentialsJob.KEY,                new RefreshSvrCredentialsJob.Factory());
       put(RefreshOwnProfileJob.KEY,                    new RefreshOwnProfileJob.Factory());
       put(RemoteConfigRefreshJob.KEY,                  new RemoteConfigRefreshJob.Factory());
