@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -72,6 +74,7 @@ fun VerifyDisplayScreen(
   val context = LocalContext.current
   val backPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
   val displayName by rememberRecipientField(state.recipient) { getDisplayName(context) }
+  val scrollState = rememberScrollState()
 
   Scaffolds.Settings(
     title = stringResource(R.string.AndroidManifest__verify_safety_number),
@@ -82,6 +85,7 @@ fun VerifyDisplayScreen(
       horizontalAlignment = Alignment.CenterHorizontally,
       modifier = Modifier
         .fillMaxWidth()
+        .verticalScroll(scrollState)
         .padding(it)
     ) {
       SafetyNumberQr(
@@ -121,36 +125,38 @@ fun VerifyDisplayScreen(
         )
       )
 
-      AutomaticKeyVerificationBlock(
-        state = state,
-        emitter = emitter
-      )
+      if (state.isAutomaticVerificationVisible) {
+        AutomaticKeyVerificationBlock(
+          state = state,
+          emitter = emitter
+        )
 
-      Text(
-        text = buildAnnotatedString {
-          append(stringResource(R.string.verify_display_fragment__auto_verify_not_available))
-          append(" ")
+        Text(
+          text = buildAnnotatedString {
+            append(stringResource(R.string.verify_display_fragment__auto_verify_not_available))
+            append(" ")
 
-          val url = stringResource(R.string.verify_display_fragment__link)
-          withLink(
-            link = LinkAnnotation.Clickable(
-              tag = "auto-verify-learn-more",
-              styles = TextLinkStyles(
-                style = SpanStyle(
-                  color = MaterialTheme.colorScheme.primary
+            val url = stringResource(R.string.verify_display_fragment__link)
+            withLink(
+              link = LinkAnnotation.Clickable(
+                tag = "auto-verify-learn-more",
+                styles = TextLinkStyles(
+                  style = SpanStyle(
+                    color = MaterialTheme.colorScheme.primary
+                  )
                 )
-              )
+              ) {
+                CommunicationActions.openBrowserLink(context, url)
+              }
             ) {
-              CommunicationActions.openBrowserLink(context, url)
+              append(stringResource(R.string.LearnMoreTextView_learn_more))
             }
-          ) {
-            append(stringResource(R.string.LearnMoreTextView_learn_more))
-          }
-        },
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(vertical = 12.dp)
-      )
+          },
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.padding(vertical = 12.dp)
+        )
+      }
     }
   }
 
