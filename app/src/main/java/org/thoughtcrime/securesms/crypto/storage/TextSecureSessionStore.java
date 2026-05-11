@@ -76,7 +76,7 @@ public class TextSecureSessionStore implements SignalServiceSessionStore {
     try (SignalSessionLock.Lock unused = ReentrantSessionLock.INSTANCE.acquire()) {
       SessionRecord sessionRecord = SignalDatabase.sessions().load(accountId, address);
 
-      return sessionRecord != null && sessionRecord.hasSenderChain();
+      return sessionRecord != null && sessionRecord.hasSenderChain(0.0);
     }
   }
 
@@ -188,6 +188,6 @@ public class TextSecureSessionStore implements SignalServiceSessionStore {
   }
 
   private static boolean isActive(@Nullable SessionRecord record) {
-    return record != null && record.hasSenderChain();
+    return record != null && record.hasSenderChain(0.0);
   }
 }
