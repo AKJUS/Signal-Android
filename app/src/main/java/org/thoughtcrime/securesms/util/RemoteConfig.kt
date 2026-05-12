@@ -1365,5 +1365,16 @@ object RemoteConfig {
     hotSwappable = true
   )
 
+  /**
+   * Whether to use our custom [org.signal.core.util.Linkifier] for web URL detection.
+   */
+  @JvmStatic
+  @get:JvmName("useNewLinkifier")
+  val useNewLinkifier: Boolean by remoteBoolean(
+    key = "android.useNewLinkifier",
+    defaultValue = false,
+    hotSwappable = true
+  )
+
   // endregion
 }
