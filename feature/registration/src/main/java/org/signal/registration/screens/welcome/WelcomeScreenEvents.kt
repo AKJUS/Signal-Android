@@ -12,4 +12,5 @@ sealed class WelcomeScreenEvents : DebugLoggableModel() {
   data object LinkDevice : WelcomeScreenEvents()
   data object HasOldPhone : WelcomeScreenEvents()
   data object DoesNotHaveOldPhone : WelcomeScreenEvents()
+  data object ViewTermsAndPrivacy : WelcomeScreenEvents()
 }

@@ -79,7 +79,7 @@ fun WelcomeScreen(
   var showBottomSheet by remember { mutableStateOf(false) }
   val windowBreakpoint = rememberWindowBreakpoint()
   val onRestoreOrTransferClick = { showBottomSheet = true }
-  val onTermsAndPrivacyClick: () -> Unit = {}
+  val onTermsAndPrivacyClick = { onEvent(WelcomeScreenEvents.ViewTermsAndPrivacy) }
 
   when (windowBreakpoint) {
     WindowBreakpoint.SMALL -> {

@@ -8,6 +8,7 @@
 package org.signal.registration
 
 import android.os.Parcelable
+import android.widget.Toast
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
@@ -35,6 +38,8 @@ import kotlinx.serialization.Serializable
 import org.signal.core.models.AccountEntropyPool
 import org.signal.core.ui.navigation.ResultEffect
 import org.signal.core.ui.navigation.TransitionSpecs
+import org.signal.core.util.LinkActions
+import org.signal.core.util.LinkActions.OpenUrlError
 import org.signal.core.util.serialization.AccountEntropyPoolSerializer
 import org.signal.registration.screens.accountlocked.AccountLockedScreen
 import org.signal.registration.screens.accountlocked.AccountLockedScreenEvents
@@ -275,12 +280,15 @@ fun RegistrationNavHost(
         initialState.key is RegistrationRoute.CountryCodePicker -> {
           TransitionSpecs.VerticalSlide.popTransitionSpec.invoke(this)
         }
+
         initialState.key == RegistrationRoute.EnterAepForLocalBackup.toString() || initialState.key == RegistrationRoute.EnterAepForRemoteBackupPreRegistration.toString() -> {
           TransitionSpecs.HorizontalSlide.transitionSpec.invoke(this)
         }
+
         initialState.key == RegistrationRoute.LocalBackupRestore.toString() && targetState.key == RegistrationRoute.PhoneNumberEntry.toString() -> {
           TransitionSpecs.HorizontalSlide.transitionSpec.invoke(this)
         }
+
         else -> {
           TransitionSpecs.HorizontalSlide.popTransitionSpec.invoke(this)
         }
@@ -306,6 +314,8 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
 
   // --- Welcome Screen
   entry<RegistrationRoute.Welcome> {
+    val context = LocalContext.current
+    val termsAndPrivacyUrl = stringResource(R.string.terms_and_privacy_policy_url)
     WelcomeScreen(
       onEvent = { event ->
         when (event) {
@@ -313,6 +323,13 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
           WelcomeScreenEvents.LinkDevice -> throw NotImplementedError("Haven't implemented linked devices yet")
           WelcomeScreenEvents.HasOldPhone -> parentEventEmitter.navigateTo(RegistrationRoute.Permissions(nextRoute = RegistrationRoute.QuickRestoreQrScan))
           WelcomeScreenEvents.DoesNotHaveOldPhone -> parentEventEmitter.navigateTo(RegistrationRoute.Permissions(nextRoute = RegistrationRoute.ArchiveRestoreSelection.forManualRestore()))
+          WelcomeScreenEvents.ViewTermsAndPrivacy -> {
+            LinkActions.openUrl(context, termsAndPrivacyUrl) { error ->
+              when (error) {
+                OpenUrlError.NoBrowserFound -> Toast.makeText(context, R.string.LinkActions_error_no_browser_found, Toast.LENGTH_SHORT).show()
+              }
+            }
+          }
         }
       }
     )
@@ -395,6 +412,7 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
             registrationViewModel.resultBus.sendResult(CAPTCHA_RESULT, event.token)
             parentEventEmitter.navigateBack()
           }
+
           CaptchaScreenEvents.Cancel -> {
             parentEventEmitter.navigateBack()
           }
@@ -502,6 +520,7 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
             // TODO: Navigate to appropriate next screen (likely back to welcome or phone entry)
             parentEventEmitter.navigateTo(RegistrationRoute.Welcome)
           }
+
           AccountLockedScreenEvents.LearnMore -> {
             // TODO: Open learn more URL
           }
