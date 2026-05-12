@@ -329,7 +329,8 @@ class ConversationViewModel(
       recipientRepository.groupRecord
     ) { _, r, g -> Pair(r, g) }
       .subscribeOn(Schedulers.io())
-      .flatMapSingle { (r, g) -> repository.getIdentityRecords(r, g.orNull()) }
+      .throttleLatest(250, TimeUnit.MILLISECONDS, true)
+      .switchMapSingle { (r, g) -> repository.getIdentityRecords(r, g.orNull()) }
       .subscribeBy { newState ->
         identityRecordsStore.update { newState }
       }
