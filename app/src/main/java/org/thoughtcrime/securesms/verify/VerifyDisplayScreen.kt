@@ -331,6 +331,7 @@ private fun AutomaticKeyVerificationBlock(
           modifier = Modifier
             .padding(vertical = 16.dp)
             .padding(start = 12.dp)
+            .weight(1f, fill = false)
         )
 
         if (hasInfoSheet) {
