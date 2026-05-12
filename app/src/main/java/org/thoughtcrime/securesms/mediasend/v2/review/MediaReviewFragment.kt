@@ -42,7 +42,9 @@ import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
 import org.thoughtcrime.securesms.conversation.MessageSendType
+import org.thoughtcrime.securesms.conversation.ReenableScheduledMessagesDialogFragment
 import org.thoughtcrime.securesms.conversation.ScheduleMessageContextMenu
+import org.thoughtcrime.securesms.conversation.ScheduleMessageDialogCallback
 import org.thoughtcrime.securesms.conversation.ScheduleMessageTimePickerBottomSheet
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardActivity
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
@@ -76,7 +78,7 @@ import org.signal.core.ui.R as CoreUiR
 /**
  * Allows the user to view and edit selected media.
  */
-class MediaReviewFragment : Fragment(R.layout.v2_media_review_fragment), ScheduleMessageTimePickerBottomSheet.ScheduleCallback, VideoThumbnailsRangeSelectorView.RangeDragListener {
+class MediaReviewFragment : Fragment(R.layout.v2_media_review_fragment), ScheduleMessageTimePickerBottomSheet.ScheduleCallback, ScheduleMessageDialogCallback, VideoThumbnailsRangeSelectorView.RangeDragListener {
 
   private val sharedViewModel: MediaSelectionViewModel by viewModels(
     ownerProducer = { requireActivity() }
@@ -282,8 +284,7 @@ class MediaReviewFragment : Fragment(R.layout.v2_media_review_fragment), Schedul
             scheduledSendTime = null
             ScheduleMessageTimePickerBottomSheet.showSchedule(childFragmentManager)
           } else {
-            scheduledSendTime = time
-            sendButton.performClick()
+            startScheduledSend(time)
           }
         }
         true
@@ -792,6 +793,18 @@ class MediaReviewFragment : Fragment(R.layout.v2_media_review_fragment), Schedul
   }
 
   override fun onScheduleSend(scheduledTime: Long) {
+    startScheduledSend(scheduledTime)
+  }
+
+  override fun onSchedulePermissionsGranted(metricId: String?, scheduledDate: Long) {
+    scheduledSendTime = scheduledDate
+    sendButton.performClick()
+  }
+
+  private fun startScheduledSend(scheduledTime: Long) {
+    if (ReenableScheduledMessagesDialogFragment.showIfNeeded(requireContext(), childFragmentManager, null, scheduledTime)) {
+      return
+    }
     scheduledSendTime = scheduledTime
     sendButton.performClick()
   }
