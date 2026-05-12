@@ -104,8 +104,10 @@ fun CallScreen(
   savedLocalParticipantLandscape: Boolean = false,
   callScreenState: CallScreenState,
   callControlsState: CallControlsState,
+  callParticipantsPagerState: CallParticipantsPagerState,
   callScreenController: CallScreenController = CallScreenController.rememberCallScreenController(
     skipHiddenState = callControlsState.skipHiddenState,
+    hasMultipleRemoteParticipants = callParticipantsPagerState.callParticipants.size > 1,
     onControlsToggled = {},
     callControlsState = callControlsState,
     callControlsListener = CallScreenControlsListener.Empty
@@ -113,7 +115,6 @@ fun CallScreen(
   callScreenControlsListener: CallScreenControlsListener = CallScreenControlsListener.Empty,
   callScreenSheetDisplayListener: CallScreenSheetDisplayListener = CallScreenSheetDisplayListener.Empty,
   additionalActionsListener: AdditionalActionsListener = AdditionalActionsListener.Empty,
-  callParticipantsPagerState: CallParticipantsPagerState,
   pendingParticipantsListener: PendingParticipantsListener = PendingParticipantsListener.Empty,
   callParticipantUpdatePopupController: CallParticipantUpdatePopupController,
   overflowParticipants: List<CallParticipant>,

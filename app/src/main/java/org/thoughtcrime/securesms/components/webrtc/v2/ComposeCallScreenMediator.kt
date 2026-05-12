@@ -164,6 +164,7 @@ class ComposeCallScreenMediator(private val activity: WebRtcCallActivity, viewMo
 
       val callScreenController = CallScreenController.rememberCallScreenController(
         skipHiddenState = callControlsState.skipHiddenState,
+        hasMultipleRemoteParticipants = callParticipantsPagerState.callParticipants.size > 1,
         onControlsToggled = onControlsToggled,
         callControlsState = callControlsState,
         callControlsListener = callScreenControlsListener
