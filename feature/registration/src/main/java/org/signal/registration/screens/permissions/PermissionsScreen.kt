@@ -158,6 +158,8 @@ private fun MediumLayout(
   permissionsState: MultiplePermissionsState,
   onProceed: () -> Unit
 ) {
+  val scrollState = rememberScrollState()
+
   RegistrationScreen(
     modifier = modifier.fillMaxSize(),
     content = {
@@ -184,31 +186,20 @@ private fun MediumLayout(
           )
         }
 
-        Box(
+        Column(
           modifier = Modifier
             .weight(1f)
-            .fillMaxHeight(),
-          contentAlignment = Alignment.BottomCenter
+            .fillMaxHeight()
+            .verticalScroll(scrollState)
+            .padding(horizontal = 24.dp)
         ) {
-          val scrollState = rememberScrollState()
-
-          Column(
-            modifier = Modifier
-              .fillMaxHeight()
-              .verticalScroll(scrollState)
-              .padding(horizontal = 24.dp)
-          ) {
-            PermissionList(permissions)
-            Spacer(modifier = Modifier.padding(48.dp))
-          }
-
-          PermissionButtons(
-            onProceed,
-            permissionsState,
-            scrollState.canScrollForward
-          )
+          PermissionList(permissions)
+          Spacer(modifier = Modifier.padding(48.dp))
         }
       }
+    },
+    footer = {
+      PermissionButtons(onProceed, permissionsState, scrollState.canScrollForward)
     }
   )
 }
@@ -220,6 +211,8 @@ private fun LargeLayout(
   permissionsState: MultiplePermissionsState,
   onProceed: () -> Unit
 ) {
+  val scrollState = rememberScrollState()
+
   RegistrationScreen(
     modifier = modifier.fillMaxSize(),
     content = {
@@ -246,31 +239,20 @@ private fun LargeLayout(
           )
         }
 
-        Box(
+        Column(
           modifier = Modifier
             .weight(1f)
-            .fillMaxHeight(),
-          contentAlignment = Alignment.BottomCenter
+            .fillMaxHeight()
+            .verticalScroll(scrollState)
+            .padding(horizontal = 24.dp)
         ) {
-          val scrollState = rememberScrollState()
-
-          Column(
-            modifier = Modifier
-              .fillMaxHeight()
-              .verticalScroll(scrollState)
-              .padding(horizontal = 24.dp)
-          ) {
-            PermissionList(permissions)
-            Spacer(modifier = Modifier.padding(48.dp))
-          }
-
-          PermissionButtons(
-            onProceed,
-            permissionsState,
-            scrollState.canScrollForward
-          )
+          PermissionList(permissions)
+          Spacer(modifier = Modifier.padding(48.dp))
         }
       }
+    },
+    footer = {
+      PermissionButtons(onProceed, permissionsState, scrollState.canScrollForward)
     }
   )
 }
@@ -349,10 +331,10 @@ private fun PermissionRow(
 }
 
 @Composable
-private fun PermissionButtons(onProceed: () -> Unit, permissionsState: MultiplePermissionsState, canScrollForward: Boolean) {
+private fun PermissionButtons(onProceed: () -> Unit, permissionsState: MultiplePermissionsState, showElevation: Boolean) {
   Surface(
     modifier = Modifier.fillMaxWidth(),
-    shadowElevation = if (canScrollForward) 8.dp else 0.dp
+    shadowElevation = if (showElevation) 8.dp else 0.dp
   ) {
     Row(
       horizontalArrangement = Arrangement.Absolute.Right,
