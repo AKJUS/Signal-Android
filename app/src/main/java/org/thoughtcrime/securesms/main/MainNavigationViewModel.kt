@@ -308,7 +308,7 @@ class MainNavigationViewModel(
   }
 
   fun onMegaphoneSnoozed(event: Megaphones.Event) {
-    megaphoneRepository.markSeen(event)
+    megaphoneRepository.markInteractedWith(event)
     internalMegaphone.update { Megaphone.NONE }
   }
 

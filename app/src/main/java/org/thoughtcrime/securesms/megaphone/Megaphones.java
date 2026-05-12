@@ -95,7 +95,7 @@ public final class Megaphones {
                                                                       MegaphoneRecord   record   = Objects.requireNonNull(records.get(e.getKey()));
                                                                       MegaphoneSchedule schedule = e.getValue();
 
-                                                                      return !record.isFinished() && schedule.shouldDisplay(record.getSeenCount(), record.getLastSeen(), record.getFirstVisible(), currentTime);
+                                                                      return !record.getFinished() && schedule.shouldDisplay(record.getInteractionCount(), record.getLastInteractionTime(), record.getFirstVisible(), currentTime);
                                                                     })
                                                                     .map(Map.Entry::getKey)
                                                                     .map(records::get)
@@ -600,7 +600,7 @@ public final class Megaphones {
    */
   private static boolean shouldShowSetUpYourUsernameMegaphone(@NonNull Map<Event, MegaphoneRecord> records) {
     boolean                        hasUsername                    = SignalStore.account().isRegistered() && SignalStore.account().getUsername() != null;
-    boolean                        hasCompleted                   = MapUtil.mapOrDefault(records, Event.SET_UP_YOUR_USERNAME, MegaphoneRecord::isFinished, false);
+    boolean                        hasCompleted                   = MapUtil.mapOrDefault(records, Event.SET_UP_YOUR_USERNAME, MegaphoneRecord::getFinished, false);
     long                           phoneNumberDiscoveryDisabledAt = SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityModeTimestamp();
     PhoneNumberDiscoverabilityMode listingMode                    = SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityMode();
 
