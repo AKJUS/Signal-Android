@@ -147,7 +147,7 @@ class ChangeNumberRepository(
     Log.i(TAG, "Submitting prekeys with PNI identity key: ${pniIdentityKeyPair.publicKey.fingerprint}")
 
     retryChangeLocalNumberNetworkOperation {
-      SignalNetwork.keys.setPreKeys(
+      SignalNetwork.keys.setPreKeysSync(
         PreKeyUpload(
           serviceIdType = ServiceIdType.PNI,
           signedPreKey = signedPreKey,
