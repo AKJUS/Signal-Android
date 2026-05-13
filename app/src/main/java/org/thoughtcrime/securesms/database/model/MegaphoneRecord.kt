@@ -7,5 +7,6 @@ data class MegaphoneRecord(
   val interactionCount: Int,
   val lastInteractionTime: Long,
   val firstVisible: Long,
+  val lastVisible: Long,
   val finished: Boolean
 )
