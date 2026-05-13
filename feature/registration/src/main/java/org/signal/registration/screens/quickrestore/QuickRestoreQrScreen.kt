@@ -35,7 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.AllDevicePreviews
@@ -43,6 +44,7 @@ import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.QrCode
 import org.signal.core.ui.compose.QrCodeData
 import org.signal.core.ui.compose.SignalIcons
+import org.signal.registration.R
 
 /**
  * Screen to display QR code for restoring from an old device.
@@ -66,7 +68,7 @@ fun QuickRestoreQrScreen(
     Spacer(modifier = Modifier.height(16.dp))
 
     Text(
-      text = "Scan from old device",
+      text = stringResource(R.string.QuickRestoreQRScreen__scan),
       style = MaterialTheme.typography.headlineMedium,
       textAlign = TextAlign.Center
     )
@@ -115,7 +117,7 @@ fun QuickRestoreQrScreen(
                 verticalArrangement = Arrangement.Center
               ) {
                 Text(
-                  text = "QR code scanned",
+                  text = stringResource(R.string.QuickRestoreQRScreen__scanned),
                   style = MaterialTheme.typography.bodyMedium,
                   color = MaterialTheme.colorScheme.onSurfaceVariant,
                   textAlign = TextAlign.Center
@@ -124,7 +126,7 @@ fun QuickRestoreQrScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(onClick = { onEvent(QuickRestoreQrEvents.RetryQrCode) }) {
-                  Text("Retry")
+                  Text(stringResource(R.string.QuickRestoreQRScreen__retry))
                 }
               }
             }
@@ -135,7 +137,7 @@ fun QuickRestoreQrScreen(
                 verticalArrangement = Arrangement.Center
               ) {
                 Text(
-                  text = "Failed to generate QR code",
+                  text = stringResource(R.string.QuickRestoreQRScreen__failed),
                   style = MaterialTheme.typography.bodyMedium,
                   color = MaterialTheme.colorScheme.error,
                   textAlign = TextAlign.Center
@@ -144,7 +146,7 @@ fun QuickRestoreQrScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Button(onClick = { onEvent(QuickRestoreQrEvents.RetryQrCode) }) {
-                  Text("Retry")
+                  Text(stringResource(R.string.QuickRestoreQRScreen__retry))
                 }
               }
             }
@@ -160,18 +162,18 @@ fun QuickRestoreQrScreen(
       modifier = Modifier.widthIn(max = 320.dp)
     ) {
       InstructionRow(
-        icon = SignalIcons.Phone.painter,
-        instruction = "On your old phone, open Signal"
+        vector = SignalIcons.Phone.imageVector,
+        instruction = stringResource(R.string.QuickRestoreQRScreen__step_1)
       )
 
       InstructionRow(
-        icon = SignalIcons.Camera.painter,
-        instruction = "Go to Settings > Transfer account"
+        vector = SignalIcons.Camera.imageVector,
+        instruction = stringResource(R.string.QuickRestoreQRScreen__step_2)
       )
 
       InstructionRow(
-        icon = SignalIcons.QrCode.painter,
-        instruction = "Scan this QR code"
+        vector = SignalIcons.QrCode.imageVector,
+        instruction = stringResource(R.string.QuickRestoreQRScreen__step_3)
       )
     }
 
@@ -180,7 +182,7 @@ fun QuickRestoreQrScreen(
     TextButton(
       onClick = { onEvent(QuickRestoreQrEvents.Cancel) }
     ) {
-      Text("Cancel")
+      Text(stringResource(android.R.string.cancel))
     }
 
     Spacer(modifier = Modifier.height(16.dp))
@@ -199,7 +201,7 @@ fun QuickRestoreQrScreen(
         ) {
           CircularProgressIndicator(modifier = Modifier.size(24.dp))
           Spacer(modifier = Modifier.width(16.dp))
-          Text("Registering...")
+          Text(stringResource(R.string.QuickRestoreQRScreen__reregister))
         }
       }
     )
@@ -211,11 +213,11 @@ fun QuickRestoreQrScreen(
       onDismissRequest = { onEvent(QuickRestoreQrEvents.DismissError) },
       confirmButton = {
         TextButton(onClick = { onEvent(QuickRestoreQrEvents.DismissError) }) {
-          Text("OK")
+          Text(stringResource(android.R.string.ok))
         }
       },
       text = {
-        Text(state.errorMessage ?: "An error occurred during registration")
+        Text(state.errorMessage ?: stringResource(R.string.QuickRestoreQRScreen__error))
       }
     )
   }
@@ -223,7 +225,7 @@ fun QuickRestoreQrScreen(
 
 @Composable
 private fun InstructionRow(
-  icon: Painter,
+  vector: ImageVector,
   instruction: String
 ) {
   Row(
@@ -231,7 +233,7 @@ private fun InstructionRow(
     verticalAlignment = Alignment.CenterVertically
   ) {
     Icon(
-      painter = icon,
+      imageVector = vector,
       contentDescription = null,
       tint = MaterialTheme.colorScheme.onSurfaceVariant
     )

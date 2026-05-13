@@ -512,6 +512,8 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
   // -- Account Locked Screen
   entry<RegistrationRoute.AccountLocked> { key ->
     val daysRemaining = (key.timeRemainingMs / (1000 * 60 * 60 * 24)).toInt()
+    val context = LocalContext.current
+    val learnMoreUrl = stringResource(R.string.AccountLockedScreen__learn_more_url)
     AccountLockedScreen(
       state = AccountLockedState(daysRemaining = daysRemaining),
       onEvent = { event ->
@@ -522,7 +524,11 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
           }
 
           AccountLockedScreenEvents.LearnMore -> {
-            // TODO: Open learn more URL
+            LinkActions.openUrl(context, learnMoreUrl) { error ->
+              when (error) {
+                OpenUrlError.NoBrowserFound -> Toast.makeText(context, R.string.LinkActions_error_no_browser_found, Toast.LENGTH_SHORT).show()
+              }
+            }
           }
         }
       }
