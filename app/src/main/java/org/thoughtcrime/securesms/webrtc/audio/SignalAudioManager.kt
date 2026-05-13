@@ -18,13 +18,13 @@ import org.signal.core.util.ThreadUtil
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
 import org.signal.core.util.safeUnregisterReceiver
+import org.signal.network.util.Preconditions
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.audio.AudioDeviceUpdatedListener
 import org.thoughtcrime.securesms.audio.SignalBluetoothManager
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.AndroidTelecomUtil
-import org.whispersystems.signalservice.api.util.Preconditions
 
 private val TAG = Log.tag(SignalAudioManager::class.java)
 

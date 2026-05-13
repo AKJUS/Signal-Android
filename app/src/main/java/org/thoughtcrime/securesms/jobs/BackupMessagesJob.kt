@@ -23,6 +23,7 @@ import org.signal.core.util.logging.logW
 import org.signal.libsignal.messagebackup.BackupForwardSecrecyToken
 import org.signal.libsignal.net.SvrBStoreResponse
 import org.signal.libsignal.zkgroup.VerificationFailedException
+import org.signal.network.NetworkResult
 import org.signal.network.api.SvrBApi
 import org.signal.protos.resumableuploads.ResumableUpload
 import org.thoughtcrime.securesms.R
@@ -52,7 +53,6 @@ import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.RemoteConfig
-import org.whispersystems.signalservice.api.NetworkResult
 import org.whispersystems.signalservice.api.messages.AttachmentTransferProgress
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachment
 import org.whispersystems.signalservice.api.push.exceptions.ResumeLocationInvalidException

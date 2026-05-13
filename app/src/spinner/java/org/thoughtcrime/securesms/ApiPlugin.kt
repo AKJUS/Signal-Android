@@ -12,6 +12,7 @@ import org.signal.core.util.Hex
 import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey
+import org.signal.network.util.JsonUtil
 import org.signal.spinner.Plugin
 import org.signal.spinner.PluginResult
 import org.signal.storageservice.storage.protos.groups.Member
@@ -33,7 +34,6 @@ import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.profiles.SignalServiceProfile
-import org.whispersystems.signalservice.internal.util.JsonUtil
 
 class ApiPlugin : Plugin {
   companion object {

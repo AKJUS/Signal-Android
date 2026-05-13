@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.signal.network.util.Preconditions
 import org.signal.paging.PagedData
 import org.signal.paging.PagingConfig
 import org.signal.paging.PagingController
@@ -37,7 +38,6 @@ import org.thoughtcrime.securesms.search.SearchFilter
 import org.thoughtcrime.securesms.search.SearchRepository
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList
 import org.thoughtcrime.securesms.util.adapter.mapping.PagingMappingAdapter
-import org.whispersystems.signalservice.api.util.Preconditions
 
 /**
  * Manages paged contact search data, query/filter state, and contact selection. Drives

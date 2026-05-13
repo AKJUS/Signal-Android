@@ -13,6 +13,7 @@ import org.signal.core.util.toByteArray
 import org.signal.libsignal.net.RequestResult
 import org.signal.libsignal.protocol.InvalidKeyException
 import org.signal.libsignal.protocol.ecc.ECPublicKey
+import org.signal.network.NetworkResult
 import org.thoughtcrime.securesms.attachments.AttachmentUploadUtil
 import org.thoughtcrime.securesms.backup.BackupFileIOError
 import org.thoughtcrime.securesms.backup.v2.ArchiveValidator
@@ -28,7 +29,6 @@ import org.thoughtcrime.securesms.linkdevice.LinkDeviceRepository.createAndUploa
 import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.registration.secondary.DeviceNameCipher
-import org.whispersystems.signalservice.api.NetworkResult
 import org.whispersystems.signalservice.api.link.LinkedDeviceVerificationCodeResponse
 import org.whispersystems.signalservice.api.link.TransferArchiveError
 import org.whispersystems.signalservice.api.link.WaitForLinkedDeviceResponse
