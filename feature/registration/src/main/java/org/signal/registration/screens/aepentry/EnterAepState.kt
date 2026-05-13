@@ -8,6 +8,9 @@ package org.signal.registration.screens.aepentry
 import org.signal.registration.util.DebugLoggableModel
 
 data class EnterAepState(
+  /** The user's typed text, preserved verbatim (illegal chars stripped). Bound to the TextField so #/= stay visible as the user types them. */
+  val enteredText: String = "",
+  /** Storage-normalized lowercase form of [enteredText], used for validation and submit. */
   val backupKey: String = "",
   val isBackupKeyValid: Boolean = false,
   val aepValidationError: AepValidationError? = null,

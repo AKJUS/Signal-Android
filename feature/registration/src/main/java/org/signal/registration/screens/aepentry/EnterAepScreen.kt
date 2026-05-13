@@ -226,7 +226,7 @@ private fun RecoveryKeyTextField(state: EnterAepState, onEvent: (EnterAepEvents)
   val autoFillHelper = backupKeyAutoFillHelper { onEvent(EnterAepEvents.BackupKeyChanged(it)) }
 
   TextField(
-    value = state.backupKey,
+    value = state.enteredText,
     onValueChange = {
       onEvent(EnterAepEvents.BackupKeyChanged(it))
       autoFillHelper.onValueChanged(it)
@@ -302,12 +302,13 @@ private fun NextButton(state: EnterAepState, onEvent: (EnterAepEvents) -> Unit, 
 }
 
 /**
- * Visual formatter for backup keys — groups characters with spaces.
+ * Visual formatter for backup keys — groups characters with spaces. Preserves whatever the user
+ * typed verbatim (no character swapping).
  */
 private class AepVisualTransformation(private val chunkSize: Int) : VisualTransformation {
   override fun filter(text: AnnotatedString): TransformedText {
     var output = ""
-    for ((i, c) in text.withIndex()) {
+    for ((i, c) in text.text.withIndex()) {
       output += c
       if (i % chunkSize == chunkSize - 1) {
         output += " "
@@ -355,6 +356,7 @@ private fun EnterAepScreenFilledPreview() {
   Previews.Preview {
     EnterAepScreen(
       state = EnterAepState(
+        enteredText = "uy38jh2778hjjhj8lk19ga61s672jsj089r023s6a57809bap92j2yh5t326vv7t",
         backupKey = "uy38jh2778hjjhj8lk19ga61s672jsj089r023s6a57809bap92j2yh5t326vv7t",
         isBackupKeyValid = true
       ),
@@ -369,6 +371,7 @@ private fun EnterAepScreenErrorPreview() {
   Previews.Preview {
     EnterAepScreen(
       state = EnterAepState(
+        enteredText = "uy38jh2778hjjhj8lk19ga61s672jsj089r023s6a57809bap92j2yh5t326vv7t",
         backupKey = "uy38jh2778hjjhj8lk19ga61s672jsj089r023s6a57809bap92j2yh5t326vv7t",
         isBackupKeyValid = false,
         aepValidationError = AepValidationError.Invalid
