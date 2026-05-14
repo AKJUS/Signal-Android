@@ -105,7 +105,7 @@ public class GroupConnectedActionProcessor extends GroupActionProcessor {
                                .cameraState(router.getCameraState())
                                .build();
 
-    boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled();
+    boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled() || currentState.getLocalDeviceState().isScreenSharing();
     boolean remoteVideoEnabled = currentState.getCallInfoState().getRemoteCallParticipantsMap().values().stream().anyMatch(CallParticipant::isVideoEnabled);
     webRtcInteractor.updatePhoneState(WebRtcUtil.getInCallPhoneState(context, localVideoEnabled, remoteVideoEnabled));
 
@@ -144,11 +144,16 @@ public class GroupConnectedActionProcessor extends GroupActionProcessor {
         return groupCallFailure(currentState, "Unable to restore video mute after screen share", e);
       }
 
-      return currentState.builder()
-                         .changeLocalDeviceState()
-                         .isScreenSharing(false)
-                         .setMediaProjectionIntent(null)
-                         .build();
+      currentState = currentState.builder()
+                                 .changeLocalDeviceState()
+                                 .isScreenSharing(false)
+                                 .setMediaProjectionIntent(null)
+                                 .build();
+
+      boolean remoteVideoEnabled = currentState.getCallInfoState().getRemoteCallParticipantsMap().values().stream().anyMatch(CallParticipant::isVideoEnabled);
+      webRtcInteractor.updatePhoneState(WebRtcUtil.getInCallPhoneState(context, cameraWasEnabled, remoteVideoEnabled));
+
+      return currentState;
     }
   }
 
@@ -180,10 +185,16 @@ public class GroupConnectedActionProcessor extends GroupActionProcessor {
     }
     router.startScreenShare(mediaProjectionIntent);
 
-    return currentState.builder()
-                       .changeLocalDeviceState()
-                       .isScreenSharing(true)
-                       .build();
+    currentState = currentState.builder()
+                               .changeLocalDeviceState()
+                               .isScreenSharing(true)
+                               .build();
+
+    boolean remoteVideoEnabled = currentState.getCallInfoState().getRemoteCallParticipantsMap().values().stream().anyMatch(CallParticipant::isVideoEnabled);
+    webRtcInteractor.updatePhoneState(WebRtcUtil.getInCallPhoneState(context, true, remoteVideoEnabled));
+    WebRtcUtil.enableSpeakerPhoneIfNeeded(webRtcInteractor, currentState);
+
+    return currentState;
   }
 
   @Override

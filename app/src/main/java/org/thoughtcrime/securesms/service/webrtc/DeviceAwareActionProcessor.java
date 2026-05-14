@@ -29,7 +29,7 @@ public abstract class DeviceAwareActionProcessor extends WebRtcActionProcessor {
     Log.i(tag, "handleAudioDeviceChanged(): active: " + activeDevice + " available: " + availableDevices);
 
     if (currentState.getCallInfoState().getCallState() == WebRtcViewModel.State.CALL_CONNECTED) {
-      boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled();
+      boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled() || currentState.getLocalDeviceState().isScreenSharing();
       boolean remoteVideoEnabled = currentState.getCallInfoState().getRemoteCallParticipantsMap().values().stream().anyMatch(CallParticipant::isVideoEnabled);
       webRtcInteractor.updatePhoneState(WebRtcUtil.getInCallPhoneState(context, localVideoEnabled, remoteVideoEnabled));
     } else {
