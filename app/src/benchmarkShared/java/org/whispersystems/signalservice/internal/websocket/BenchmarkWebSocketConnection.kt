@@ -8,6 +8,9 @@ package org.whispersystems.signalservice.internal.websocket
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import org.signal.network.websocket.WebSocketRequestMessage
+import org.signal.network.websocket.WebSocketResponseMessage
+import org.signal.network.websocket.WebsocketResponse
 import org.thoughtcrime.securesms.util.JsonUtils
 import org.thoughtcrime.securesms.util.SignalTrace
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState
