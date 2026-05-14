@@ -22,6 +22,7 @@
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="inactive_primary_support" translatable="false">https://support.signal.org/hc/articles/9021007554074</string> -->
 
     <!-- First placeholder is productId, second placeholder is app package -->
     <string name="backup_subscription_management_url">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
@@ -707,7 +708,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Signal이 운영하는 유일한 공식 채널. 여기서 최신 소식과 릴리스 노트를 확인하세요.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Signal이 운영하는 유일한 공식 채팅</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="other">멤버 %1$d명</item>
@@ -2094,7 +2095,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s 님의 메시지를 전달할 수 없습니다.</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s 님이 전화번호를 변경했습니다.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">새로운 기능이 마음에 드시나요? 원하실 경우 일회성 기부로 Signal에 마음을 전하실 수 있어요.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">새로운 기능이 마음에 드시나요? 원하실 경우 일회성 후원으로 Signal에 마음을 전하실 수 있어요.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s 님과 해당 사용자 번호 %2$s의 메시지 기록을 병합했습니다.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -2617,6 +2618,10 @@
     <string name="CallOverflowPopupWindow__lower_hand">손 내리기</string>
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">취소</string>
+    <!-- A clickable button to share your screen in a call -->
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
+    <!-- A clickable button to stop sharing your screen in a call -->
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">보기</string>
 
@@ -2731,6 +2736,8 @@
 
     <!-- CallToastPopupWindow -->
     <string name="CallToastPopupWindow__swipe_to_view_screen_share">스와이프하여 화면 공유 보기</string>
+    <!-- Hint shown to teach the user they can swipe between the grid view and the active speaker view -->
+    <string name="CallToastPopupWindow__swipe_to_view_speaker">Swipe to view speaker</string>
 
     <!-- ProxyBottomSheetFragment -->
     <string name="ProxyBottomSheetFragment_proxy_server">프록시 서버</string>
@@ -5877,7 +5884,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">미디어 전송 품질</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">고품질 미디어는 더 많은 모바일 데이터를 사용할 수 있습니다.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">%1$s 미만의 음성 메시지와 스티커를 항상 자동 다운로드합니다.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">높음</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6353,7 +6360,7 @@
     <string name="ManageDonationsFragment__my_support">후원 표시</string>
     <string name="ManageDonationsFragment__manage_subscription">구독 관리</string>
     <!-- Label for Donation Receipts button -->
-    <string name="ManageDonationsFragment__donation_receipts">기부 영수증</string>
+    <string name="ManageDonationsFragment__donation_receipts">후원 영수증</string>
     <string name="ManageDonationsFragment__badges">배지</string>
     <!-- Label that externally links to Signal Donor FAQ page -->
     <string name="ManageDonationsFragment__subscription_faq">후원자 FAQ</string>
@@ -6412,7 +6419,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__monthly_donation_cancelled">월 정기후원이 취소되었어요</string>
     <!-- Displayed in the bottom sheet when a boost badge expires -->
     <string name="ExpiredBadgeBottomSheetDialogFragment__your_boost_badge_has_expired_and">부스트 배지가 만료되어 더 이상 프로필에 표시되지 않습니다.</string>
-    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_reactivate">일회성 기부를 통해 부스트 배지를 30일 더 활성화할 수 있습니다.</string>
+    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_reactivate">일회성 후원을 통해 부스트 배지를 30일 더 활성화할 수 있습니다.</string>
     <!-- Displayed when we do not think the user is a subscriber when their boost expires -->
     <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_keep">Signal은 계속 이용하실 수 있지만, 매월 소액의 후원으로 함께해 주시면 Signal의 지속적인 운영에 큰 힘이 될 수 있어요.</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__become_a_sustainer">후원자 되기</string>
@@ -6466,7 +6473,7 @@
     <string name="DonationsErrors__learn_more">자세히 알아보기</string>
     <!-- Displayed on "My Support" screen when user subscription payment method failed. -->
     <string name="DonationsErrors__error_processing_payment_s">후원을 처리하는 중 오류가 발생했어요. %1$s</string>
-    <string name="DonationsErrors__your_payment">기부를 처리할 수 없어 요금이 청구되지 않았습니다. 다시 시도해 주세요.</string>
+    <string name="DonationsErrors__your_payment">후원을 처리할 수 없어 요금이 청구되지 않았습니다. 다시 시도해 주세요.</string>
     <string name="DonationsErrors__still_processing">아직 처리 중</string>
     <string name="DonationsErrors__couldnt_add_badge">배지를 추가할 수 없습니다.</string>
     <!-- Displayed when backup credential could not be redeemed. Dialog or notification title -->
@@ -6540,7 +6547,7 @@
     <!-- Stripe decline code incorrect expiration year -->
     <string name="DeclineCode__the_expiration_year">결제 수단의 만료 연도가 잘못됐습니다. Google Pay에서 업데이트하고 다시 시도하세요.</string>
     <!-- Stripe decline code issuer not available -->
-    <string name="DeclineCode__try_completing_the_payment_again">기부를 다시 시도하거나 은행에 자세한 정보를 문의하세요.</string>
+    <string name="DeclineCode__try_completing_the_payment_again">후원을 다시 시도하거나 은행에 자세한 정보를 문의하세요.</string>
     <!-- Stripe decline code processing error -->
     <string name="DeclineCode__try_again">다시 시도하거나 자세한 정보를 은행에 문의하세요.</string>
 
@@ -6564,7 +6571,7 @@
     <!-- Failure code text for insufficient funds, displayed in a dialog or notification -->
     <string name="StripeFailureCode__the_bank_account_provided">제공한 은행 계좌에 잔액이 부족하여 거래를 완료할 수 없습니다. 다시 시도하거나 은행에 문의하여 자세한 정보를 확인하세요.</string>
     <!-- Failure code text for revoked authorization of payment, displayed in a dialog or notification -->
-    <string name="StripeFailureCode__this_payment_was_revoked">예금주가 이 기부를 취소하여 처리할 수 없습니다. 요금이 청구되지 않았습니다.</string>
+    <string name="StripeFailureCode__this_payment_was_revoked">예금주가 이 후원을 취소하여 처리할 수 없습니다. 요금이 청구되지 않았습니다.</string>
     <!-- Failure code text for a payment lacking an authorized mandate or incorrect mandate, displayed in a dialog or notification -->
     <string name="StripeFailureCode__an_error_occurred_while_processing_this_payment">후원을 처리하는 중 오류가 발생했어요. 다시 시도해 주세요.</string>
     <!-- Failure code text for a closed account, deceased recipient, or one with blocked direct debits, displayed in a dialog or notification -->
@@ -6737,7 +6744,7 @@
     <!-- Donation receipts recurring tab label -->
     <string name="DonationReceiptListFragment__recurring">정기후원</string>
     <!-- Donation receipts one-time tab label -->
-    <string name="DonationReceiptListFragment__one_time">일회성 기부</string>
+    <string name="DonationReceiptListFragment__one_time">일회성 후원</string>
     <!-- Donation receipts gift tab -->
     <string name="DonationReceiptListFragment__for_a_friend">친구 대신</string>
     <!-- Donation receipts gift tab label -->
@@ -6749,9 +6756,9 @@
     <!-- Donation receipts share PNG -->
     <string name="DonationReceiptDetailsFragment__share_receipt">영수증 공유</string>
     <!-- Donation receipts list end note -->
-    <string name="DonationReceiptListFragment__if_you_have">Signal을 다시 설치했다면 이전 기부 영수증은 사용할 수 없습니다.</string>
+    <string name="DonationReceiptListFragment__if_you_have">Signal을 다시 설치했다면 이전 후원 영수증은 사용할 수 없습니다.</string>
     <!-- Donation receipts document title -->
-    <string name="DonationReceiptDetailsFragment__donation_receipt">기부 영수증</string>
+    <string name="DonationReceiptDetailsFragment__donation_receipt">후원 영수증</string>
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">금액</string>
     <!-- Donation receipts thanks -->
@@ -7151,7 +7158,7 @@
     <!-- Text explaining that gift will be sent to the chosen recipient -->
     <string name="GiftFlowConfirmationFragment__the_recipient_will_be_notified">받는 사람에게 1대1 메시지로 후원 알림이 발송됩니다. 아래에 나만의 메시지를 추가하세요.</string>
     <!-- Text explaining that this gift is a one time donation -->
-    <string name="GiftFlowConfirmationFragment__one_time_donation">일회성 기부</string>
+    <string name="GiftFlowConfirmationFragment__one_time_donation">일회성 후원</string>
     <!-- Hint for add message input -->
     <string name="GiftFlowConfirmationFragment__add_a_message">메시지 추가</string>
     <!-- Displayed in the dialog while verifying the chosen recipient -->
@@ -7406,7 +7413,7 @@
     <!-- Donation pill toggle monthly text -->
     <string name="DonationPillToggle__monthly">월 정기후원</string>
     <!-- Donation pill toggle one-time text -->
-    <string name="DonationPillToggle__one_time">일회성 기부</string>
+    <string name="DonationPillToggle__one_time">일회성 후원</string>
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
@@ -7514,7 +7521,7 @@
     <!-- Top text block of donation pending sheet displayed after subscribing via a bank transfer. Placeholder is the badge name. -->
     <string name="DonationPendingBottomSheet__your_monthly_donation_is_pending">월 정기후원이 대기 중입니다. 후원이 완료되면 프로필에 %1$s 배지를 표시할 수 있습니다.</string>
     <!-- Top text block of donation pending sheet displayed after one-time donation via a bank transfer. Placeholder is the badge name. -->
-    <string name="DonationPendingBottomSheet__your_one_time_donation_is_pending">일회성 기부가 처리 대기 중입니다. 후원이 완료되면 프로필에 %1$s 배지를 표시할 수 있어요.</string>
+    <string name="DonationPendingBottomSheet__your_one_time_donation_is_pending">일회성 후원이 처리 대기 중입니다. 후원이 완료되면 프로필에 %1$s 배지를 표시할 수 있어요.</string>
     <!-- Bottom text block of donation pending sheet displayed after donating via a bank transfer. Placeholder is for learn more. -->
     <string name="DonationPendingBottomSheet__bank_transfers_usually_take">계좌 이체를 처리하는 데 영업일 기준 1~14일이 걸릴 수 있습니다. %1$s</string>
     <!-- Learn more text for donation pending sheet displayed after donating via a bank transfer. -->
@@ -8051,6 +8058,15 @@
     <string name="UseNewOnDeviceBackups__upgrade">업그레이드</string>
     <!-- Button of a megaphone that will snooze the reminder to upgrade to the new local backups type -->
     <string name="UseNewOnDeviceBackups__not_now">나중에 하기</string>
+
+    <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
+    <string name="InactivePrimary__learn_more">Learn more</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
+    <string name="InactivePrimary__got_it">Got it</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"백업을 복원하려면 Signal을 다시 설치해 주세요. 설치한 후에는 앱을 열고 \'백업 복원\'을 탭한 다음, 백업 폴더를 확인하세요."</string>
@@ -8835,7 +8851,7 @@
     <!-- Screen body part 1 -->
     <string name="MessageBackupsKeyEducationScreen__your_backup_key_is_a">복구 키는 백업을 복구하는 데 필요한 64자 코드입니다.</string>
     <!-- Screen body part 2 -->
-    <string name="MessageBackupsKeyEducationScreen__store_your_recovery">안전한 암호 관리자와 같은 안전한 곳에 복구 키를 보관하고 다른 사람과 공유하지 마세요.</string>
+    <string name="MessageBackupsKeyEducationScreen__store_your_recovery">안전한 비밀번호 관리자와 같은 안전한 곳에 복구 키를 보관하고 다른 사람과 공유하지 마세요.</string>
     <!-- Screen body part 3 -->
     <string name="MessageBackupsKeyEducationScreen__if_you_lose_it">키를 분실하면 메시지를 복구할 수 없습니다.</string>
     <!-- Screen body shown when upgrading on-device backups to a new recovery key (part 1). -->
@@ -8869,19 +8885,19 @@
     <!-- Copy to clipboard button label -->
     <string name="MessageBackupsKeyRecordScreen__copy_to_clipboard">클립보드에 복사</string>
     <!-- Label for the button to save a recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__save_to_password_manager">암호 관리자에 저장</string>
+    <string name="MessageBackupsKeyRecordScreen__save_to_password_manager">비밀번호 관리자에 저장</string>
     <!-- Dialog title confirming that the user wants to save a recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_title">암호 관리자에 저장할까요?</string>
+    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_title">비밀번호 관리자에 저장할까요?</string>
     <!-- Dialog message confirming that the user wants to save a recovery key to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_body">복구 키는 안전하다고 신뢰할 수 있는 비밀번호 관리자에만 저장하세요. Signal은 특정 비밀번호 관리자를 별도로 추천하지 않습니다.</string>
     <!-- ID used when saving the recovery key to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__backup_key_password_manager_id">Signal 안전 백업</string>
     <!-- Message shown after the recovery key is successfully saved to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__save_to_password_manager_success">암호 관리자에 저장함</string>
+    <string name="MessageBackupsKeyRecordScreen__save_to_password_manager_success">비밀번호 관리자에 저장함</string>
     <!-- Dialog title shown when there is an error saving the recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__cant_save_to_password_manager_title">암호 관리자에 저장할 수 없음</string>
+    <string name="MessageBackupsKeyRecordScreen__cant_save_to_password_manager_title">비밀번호 관리자에 저장할 수 없어요</string>
     <!-- Dialog message shown when there is an error saving the recovery key because no compatible password manager was detected. -->
-    <string name="MessageBackupsKeyRecordScreen__missing_password_manager_message">암호 관리자를 설정하지 않았거나, 사용 중인 암호 관리자가 지원되지 않습니다.</string>
+    <string name="MessageBackupsKeyRecordScreen__missing_password_manager_message">비밀번호 관리자를 설정하지 않았거나, 사용 중인 비밀번호 관리자가 지원되지 않습니다.</string>
     <!-- Dialog message shown when there is an error saving the recovery key because the user previously chose not to save Signal passwords to their password manager. -->
     <string name="MessageBackupsKeyRecordScreen__password_save_prompt_disabled_message">이전에 Signal의 비밀번호를 Google 비밀번호 관리자에 저장하지 않도록 선택했습니다. Google 비밀번호 관리자 설정에서 \'거부된 사이트 및 앱\'에서 Signal을 삭제하고 다시 시도하세요.</string>
     <!-- Label for a button that navigates to the device settings -->
@@ -9073,7 +9089,7 @@
     <!-- Dialog title shown when entered AEP doesn\'t work to register with provided e164 -->
     <string name="EnterBackupKey_incorrect_backup_key_title">잘못된 복구 키</string>
     <!-- Dialog message shown when entered AEP doesn\'t work to register with provided e164 -->
-    <string name="EnterBackupKey_incorrect_backup_key_message">Signal 안전 백업을 활성화할 때 저장한 것과 동일한 전화번호와 64자 복구 키를 사용하여 등록하고 있는지 확인하세요. 이 키 없이는 백업을 복구할 수 없습니다.</string>
+    <string name="EnterBackupKey_incorrect_backup_key_message">Signal 안전 백업 활성화 시 저장한 전화번호와 64자 복구 키가 맞는지 확인해 주세요. 이 키가 없으면 백업을 복구할 수 없습니다.</string>
     <!-- Dialog positive button text to try entering their recovery key again -->
     <string name="EnterBackupKey_try_again">다시 시도</string>
     <!-- Dialog negative button text to get help with recovery key -->

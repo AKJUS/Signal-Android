@@ -22,6 +22,7 @@
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="inactive_primary_support" translatable="false">https://support.signal.org/hc/articles/9021007554074</string> -->
 
     <!-- First placeholder is productId, second placeholder is app package -->
     <string name="backup_subscription_management_url">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
@@ -715,13 +716,13 @@
     <!-- Text shown in conversation header when in a message request state and to carefully review the user -->
     <string name="ConversationFragment_review_carefully">Faites attention</string>
     <!-- Text shown in conversation header when in a message request state that the name is not verified -->
-    <string name="ConversationFragment_name_not_verified">Contact non confirmé</string>
+    <string name="ConversationFragment_name_not_verified">Ce nom n\'est pas vérifié</string>
     <!-- Label for official chat pill shown in the Note to Self conversation header -->
     <string name="ConversationFragment_official_chat">Conversation officielle</string>
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Le seul canal de diffusion officiel de Signal. Pour découvrir les nouveautés et notes de version.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Le seul canal de diffusion officiel de Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d membre</item>
@@ -766,7 +767,7 @@
     <!-- Summary tip 1 title: Review names and photos -->
     <string name="SafetyTips_summary_tip1_title">Vérifiez le nom et la photo</string>
     <!-- Summary tip 1 message -->
-    <string name="SafetyTips_summary_tip1_message">Soyez vigilant si vous voyez la mention \"Contact non confirmé\". Sur Signal, les utilisateurs choisissent librement leur nom de profil.</string>
+    <string name="SafetyTips_summary_tip1_message">Soyez vigilant si vous voyez la mention \"Ce nom n\'est pas vérifié\". Sur Signal, les utilisateurs choisissent librement leur nom de profil.</string>
     <!-- Summary tip 2 title: Look out for scams -->
     <string name="SafetyTips_summary_tip2_title">Attention aux arnaques</string>
     <!-- Summary tip 2 message -->
@@ -779,7 +780,7 @@
     <!-- Detail tip 1 title -->
     <string name="SafetyTips_detail_tip1_title">Vérifiez le nom et la photo</string>
     <!-- Detail tip 1 message -->
-    <string name="SafetyTips_detail_tip1_message">Soyez vigilant si vous voyez la mention \"Contact non confirmé\". Sur Signal, les utilisateurs choisissent librement leur nom et photo de profil. Si vous avez des doutes sur l\'identité d\'un utilisateur, il vaut mieux ignorer sa demande.</string>
+    <string name="SafetyTips_detail_tip1_message">Soyez vigilant si vous voyez la mention \"Ce nom n\'est pas vérifié\". Sur Signal, les utilisateurs choisissent librement leurs nom et photo de profil. Si vous avez des doutes sur l\'identité d\'un utilisateur, il vaut mieux ignorer sa demande.</string>
     <!-- Detail tip 2 title -->
     <string name="SafetyTips_detail_tip2_title">Messages au contenu vague ou insignifiant</string>
     <!-- Detail tip 2 message -->
@@ -2701,6 +2702,10 @@
     <string name="CallOverflowPopupWindow__lower_hand">Baisser la main</string>
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">Annuler</string>
+    <!-- A clickable button to share your screen in a call -->
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
+    <!-- A clickable button to stop sharing your screen in a call -->
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Afficher</string>
 
@@ -2825,6 +2830,8 @@
 
     <!-- CallToastPopupWindow -->
     <string name="CallToastPopupWindow__swipe_to_view_screen_share">Balayez pour afficher le partage d\'écran</string>
+    <!-- Hint shown to teach the user they can swipe between the grid view and the active speaker view -->
+    <string name="CallToastPopupWindow__swipe_to_view_speaker">Swipe to view speaker</string>
 
     <!-- ProxyBottomSheetFragment -->
     <string name="ProxyBottomSheetFragment_proxy_server">Serveur proxy</string>
@@ -6023,7 +6030,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Qualité des médias envoyés</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">L\'envoi de médias de haute qualité consomme plus de données.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Les stickers et les messages vocaux (de moins de %1$s) sont toujours téléchargés automatiquement.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Haute qualité</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -8235,6 +8242,15 @@
     <string name="UseNewOnDeviceBackups__upgrade">Mettre à niveau</string>
     <!-- Button of a megaphone that will snooze the reminder to upgrade to the new local backups type -->
     <string name="UseNewOnDeviceBackups__not_now">Plus tard</string>
+
+    <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
+    <string name="InactivePrimary__learn_more">Learn more</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
+    <string name="InactivePrimary__got_it">Got it</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Pour restaurer une sauvegarde, réinstallez Signal, puis ouvrez l\'appli. Touchez \"Restaurer une sauvegarde\" et recherchez votre dossier de sauvegarde."</string>

@@ -22,6 +22,7 @@
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="inactive_primary_support" translatable="false">https://support.signal.org/hc/articles/9021007554074</string> -->
 
     <!-- First placeholder is productId, second placeholder is app package -->
     <string name="backup_subscription_management_url">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
@@ -2470,13 +2471,13 @@
     <!-- Text for a 3 member group you are not in. %1$s, %2$s, %3$s are the names of the other members. -->
     <string name="MessageRequestProfileView_group_members_three">%1$s, %2$s и %3$s</string>
     <!-- Text for a 3+ member group. %1$s, %2$s, %3$s are member names. %4$s is the string key MessageRequestProfileView_other_members-->
-    <string name="MessageRequestProfileView_group_members_other">%1$s, %2$s, %3$s и %4$s</string>
+    <string name="MessageRequestProfileView_group_members_other">%1$s, %2$s, %3$s и ещё %4$s</string>
     <!-- Nested in MessageRequestProfileView_group_members_other that shows how many members (besides three) are in the group -->
     <plurals name="MessageRequestProfileView_other_members">
-        <item quantity="one">%1$d другим</item>
-        <item quantity="few">%1$d другими</item>
-        <item quantity="many">%1$d другими</item>
-        <item quantity="other">%1$d другими</item>
+        <item quantity="one">%1$d </item>
+        <item quantity="few">%1$d </item>
+        <item quantity="many">%1$d </item>
+        <item quantity="other">%1$d </item>
     </plurals>
     <!-- Button label to report spam for a conversation when in a message request state -->
     <string name="MessageRequestBottomView_report">Сообщить</string>
@@ -2869,6 +2870,10 @@
     <string name="CallOverflowPopupWindow__lower_hand">Опустить</string>
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">Отменить</string>
+    <!-- A clickable button to share your screen in a call -->
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
+    <!-- A clickable button to stop sharing your screen in a call -->
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Просмотреть</string>
 
@@ -3013,6 +3018,8 @@
 
     <!-- CallToastPopupWindow -->
     <string name="CallToastPopupWindow__swipe_to_view_screen_share">Проведите, чтобы просмотреть показ экрана</string>
+    <!-- Hint shown to teach the user they can swipe between the grid view and the active speaker view -->
+    <string name="CallToastPopupWindow__swipe_to_view_speaker">Swipe to view speaker</string>
 
     <!-- ProxyBottomSheetFragment -->
     <string name="ProxyBottomSheetFragment_proxy_server">Прокси-сервер</string>
@@ -8603,6 +8610,15 @@
     <string name="UseNewOnDeviceBackups__upgrade">Обновить</string>
     <!-- Button of a megaphone that will snooze the reminder to upgrade to the new local backups type -->
     <string name="UseNewOnDeviceBackups__not_now">Не сейчас</string>
+
+    <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
+    <string name="InactivePrimary__learn_more">Learn more</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
+    <string name="InactivePrimary__got_it">Got it</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Чтобы восстановить резервную копию, установите новую версию Signal. Откройте приложение и нажмите «Восстановить резервную копию», затем выберите папку резервной копии."</string>

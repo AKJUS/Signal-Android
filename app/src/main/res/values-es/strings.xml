@@ -22,6 +22,7 @@
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="inactive_primary_support" translatable="false">https://support.signal.org/hc/articles/9021007554074</string> -->
 
     <!-- First placeholder is productId, second placeholder is app package -->
     <string name="backup_subscription_management_url">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
@@ -783,7 +784,7 @@
     <!-- Detail tip 2 title -->
     <string name="SafetyTips_detail_tip2_title">Mensajes confusos o irrelevantes</string>
     <!-- Detail tip 2 message -->
-    <string name="SafetyTips_detail_tip2_message">Los spammers a menudo te envían un mensaje simple, como \"Hola\", para captar tu atención. Si respondes, es posible que interactúen más.</string>
+    <string name="SafetyTips_detail_tip2_message">Los spammers a menudo envían un mensaje simple, como \"Hola\", para captar tu atención. Si respondes, es posible que interactúen más.</string>
     <!-- Detail tip 3 title -->
     <string name="SafetyTips_detail_tip3_title">Mensajes con enlaces web</string>
     <!-- Detail tip 3 message -->
@@ -793,26 +794,26 @@
     <!-- Detail tip 4 message -->
     <string name="SafetyTips_detail_tip4_message">Ten cuidado si alguien que no conoces te envía mensajes sobre criptomonedas como Bitcoin o sobre una oportunidad financiera. Es probable que se trate de spam.</string>
     <!-- Detail tip 5 title -->
-    <string name="SafetyTips_detail_tip5_title">Negocios falsos</string>
+    <string name="SafetyTips_detail_tip5_title">Empresas falsas</string>
     <!-- Detail tip 5 message -->
     <string name="SafetyTips_detail_tip5_message">Ten cuidado con las empresas o agencias gubernamentales que se pongan en contacto contigo. Los mensajes que involucren a entidades como agencias tributarias y empresas de mensajería pueden ser spam.</string>
 
     <!-- Bottom sheet text explaining that profile names are chosen by the account holder. Placeholder will be \'Profile names\' -->
     <string name="ProfileNameBottomSheet__profile_names_on_signal">Los %1$s en Signal los elige quien crea la cuenta.</string>
     <!-- Bottom sheet text explaining that Signal can\'t verify names and photos -->
-    <string name="ProfileNameBottomSheet__signal_cant_verify">Signal no puede verificar los nombres ni las fotos</string>
+    <string name="ProfileNameBottomSheet__signal_cant_verify">Signal no puede verificar los nombres ni las fotos.</string>
     <!-- Bottom sheet text explaining that Signal will never contact you for registration code, PIN, or recovery key -->
-    <string name="ProfileNameBottomSheet__signal_will_never_contact">Signal nunca se pondrá en contacto contigo para pedirte tu código de registro, PIN o clave de recuperación</string>
+    <string name="ProfileNameBottomSheet__signal_will_never_contact">Signal nunca se pondrá en contacto contigo para pedirte tu código de registro, PIN o clave de recuperación.</string>
     <!-- Bottom sheet text explaining that accounts can impersonate other people and to be cautious -->
-    <string name="ProfileNameBottomSheet__be_cautious_of_accounts">Ten cuidado con las cuentas que se hacen pasar por otras personas</string>
+    <string name="ProfileNameBottomSheet__be_cautious_of_accounts">Ten cuidado con las cuentas que se hacen pasar por otras personas.</string>
     <!-- Bottom sheet text explaining that personal information should not be shared with strangers -->
-    <string name="ProfileNameBottomSheet__dont_share_personal">No compartas información personal con personas que no conozcas</string>
+    <string name="ProfileNameBottomSheet__dont_share_personal">No compartas información personal con personas que no conozcas.</string>
     <!-- Bottom sheet text explaining that group names are chosen by the group members. Placeholder will be \'Group names\' -->
     <string name="ProfileNameBottomSheet__group_names_on_signal">Los %1$s los eligen los participantes del grupo.</string>
     <!-- Bottom sheet text explaining that groups can impersonate organizations and to be cautious -->
-    <string name="ProfileNameBottomSheet__be_cautious_of_groups">Ten cuidado con los grupos que se hacen pasar por organizaciones y empresas</string>
+    <string name="ProfileNameBottomSheet__be_cautious_of_groups">Ten cuidado con los grupos que se hacen pasar por organizaciones y empresas.</string>
     <!-- Bottom sheet text explaining that profile names of group members are not verified -->
-    <string name="ProfileNameBottomSheet__profile_names_in_groups">Los nombres de perfil de los participantes de los grupos no se verifican</string>
+    <string name="ProfileNameBottomSheet__profile_names_in_groups">Los nombres de perfil de los participantes de los grupos no se verifican.</string>
 
     <!-- Label for a button displayed in conversation list to clear the chat filter -->
     <string name="ConversationListFragment__clear_filter">Quitar filtro</string>
@@ -2277,7 +2278,7 @@
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_you_removed_them_before">¿Quieres compartir tu nombre y foto de perfil con %1$s y permitir que te envíe mensajes? Has eliminado a esta persona anteriormente.</string>
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_they_wont_know_youve_seen_their_messages_until_you_accept">¿Quieres compartir tu nombre y foto de perfil con esta persona y permitir que te envíe mensajes? No sabrá que has visto sus mensajes hasta que aceptes.</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock a Signal user -->
-    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">¿Quieres compartir tu nombre y foto de perfil con %1$s y permitir que te envíe mensajes? No recibirás ninguno de sus mensajes hasta la desbloquees.</string>
+    <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them">¿Quieres compartir tu nombre y foto de perfil con %1$s y permitir que te envíe mensajes? No recibirás ningún mensaje de esta persona hasta que la desbloquees.</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock an SMS user -->
     <string name="MessageRequestBottomView_do_you_want_to_let_s_message_you_wont_receive_any_messages_until_you_unblock_them_SMS">¿Permitir que %1$s te envíe mensajes? No recibirás ningún mensaje de esta persona hasta que la desbloquees.</string>
     <!-- Shown in message request flow. Describes what will happen if you unblock the Signal release notes channel -->
@@ -2339,7 +2340,7 @@
     <!-- Button label to report spam for a conversation when in a message request state -->
     <string name="MessageRequestBottomView_report">Denunciar</string>
     <!-- Alert dialog title to accept a message request -->
-    <string name="MessageRequestBottomView_accept_request">¿Aceptar la solicitud?</string>
+    <string name="MessageRequestBottomView_accept_request">¿Aceptar solicitud?</string>
     <!-- Alert dialog body to review the message request carefully -->
     <string name="MessageRequestBottomView_review_requests_carefully">Revisa detenidamente las solicitudes. Los nombres de perfil los elige quien crea la cuenta y no se verifican.</string>
     <!-- Alert dialog body for accepting a message request. Contains bold substring placeholder -->
@@ -2701,6 +2702,10 @@
     <string name="CallOverflowPopupWindow__lower_hand">Bajar</string>
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">Cancelar</string>
+    <!-- A clickable button to share your screen in a call -->
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
+    <!-- A clickable button to stop sharing your screen in a call -->
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Ver</string>
 
@@ -2825,6 +2830,8 @@
 
     <!-- CallToastPopupWindow -->
     <string name="CallToastPopupWindow__swipe_to_view_screen_share">Desliza para ver la pantalla compartida</string>
+    <!-- Hint shown to teach the user they can swipe between the grid view and the active speaker view -->
+    <string name="CallToastPopupWindow__swipe_to_view_speaker">Swipe to view speaker</string>
 
     <!-- ProxyBottomSheetFragment -->
     <string name="ProxyBottomSheetFragment_proxy_server">Servidor proxy</string>
@@ -2848,7 +2855,7 @@
     </string>
 
     <!-- Dialog title shown when registering and we want to verify they entered the correct number before proceeding. -->
-    <string name="RegistrationActivity_phone_number_verification_dialog_title">¿Es correcto el siguiente número?</string>
+    <string name="RegistrationActivity_phone_number_verification_dialog_title">¿Es correcto el siguiente número de teléfono?</string>
     <!-- Dialog title shown when re-registering and skip sms flow failed or was aborted and now need perform additional verification via sms and warn about carrier charges -->
     <string name="RegistrationActivity_additional_verification_required">Verificación adicional necesaria</string>
     <!-- Dialog message shown when we need to verify sms and carrier rates may apply. -->
@@ -7514,7 +7521,7 @@
     <!-- Story view receipts toggle title -->
     <string name="StoriesPrivacySettingsFragment__view_receipts">Confirmaciones de visualización</string>
     <!-- Story view receipts toggle message -->
-    <string name="StoriesPrivacySettingsFragment__see_and_share">Mira y comparte las visualizaciones de tus historias. Si desactivas esta opción, no podrás ver ni compartir quién ha visto tus historias.</string>
+    <string name="StoriesPrivacySettingsFragment__see_and_share">Mira y comparte las visualizaciones de tus historias. Si desactivas esta opción, no podrás saber quién ha visto tus historias.</string>
 
     <!-- NewStoryItem -->
     <string name="NewStoryItem__new_story">Nueva historia</string>
@@ -8235,6 +8242,15 @@
     <string name="UseNewOnDeviceBackups__upgrade">Actualizar</string>
     <!-- Button of a megaphone that will snooze the reminder to upgrade to the new local backups type -->
     <string name="UseNewOnDeviceBackups__not_now">Ahora no</string>
+
+    <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
+    <string name="InactivePrimary__learn_more">Learn more</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
+    <string name="InactivePrimary__got_it">Got it</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Para restaurar una copia de seguridad, reinstala Signal. Abre la aplicación, toca \"Restaurar copia\" y busca el archivo de copia de seguridad."</string>
@@ -9045,9 +9061,9 @@
     <!-- Label shown above a list of actions that the recovery key can be used for. -->
     <string name="MessageBackupsKeyEducationScreen__use_this_key_to">Usa esta clave para:</string>
     <!-- Row label indicating that the recovery key can be used to restore an on-device backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_on_device_backup">Restaurar tus copias de seguridad locales</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_on_device_backup">Restaurar tu copia de seguridad local</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">Restaurar una Copia Segura de Signal</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">Restaurar Copia Segura de Signal</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
     <string name="MessageBackupsKeyEducationScreen__restore_your_signal_secure_backup">Restaurar tus Copias Seguras de Signal</string>
     <!-- Action button label -->
@@ -9223,11 +9239,11 @@
     <!-- Screen subtitle for selecting which restore method to use during registration -->
     <string name="SelectRestoreMethodFragment__get_your_signal_account">Recupera tu cuenta e historial de mensajes de Signal en este dispositivo.</string>
     <!-- Option title for restoring via signal secure backups -->
-    <string name="SelectRestoreMethodFragment__restore_signal_backup">Restaurar desde Copias Seguras de Signal</string>
+    <string name="SelectRestoreMethodFragment__restore_signal_backup">Restaurar copia de seguridad de Signal</string>
     <!-- Option subtitle for restoring via signal secure backups -->
     <string name="SelectRestoreMethodFragment__restore_your_text_messages_and_media_from">Restaura tus mensajes y archivos multimedia desde tu plan de copias de seguridad de Signal.</string>
     <!-- Option title for restoring via a local backup file or folder -->
-    <string name="SelectRestoreMethodFragment__restore_on_device_backup">Restaurar copias de seguridad locales</string>
+    <string name="SelectRestoreMethodFragment__restore_on_device_backup">Restaurar copia de seguridad local</string>
     <!-- Option subtitle fdor restoring via a local backup file or folder -->
     <string name="SelectRestoreMethodFragment__restore_your_messages_from">Restaura tus mensajes desde una copia de seguridad que hayas guardado en tu dispositivo.</string>
     <!-- Option title for restoring via a local backup file -->
@@ -9381,7 +9397,7 @@
     <string name="RestoreLocalBackupActivity__disable_backups">Desactivar copias de seguridad</string>
 
     <!-- SelectInstructionsSheet: Title for the select backup folder instruction sheet -->
-    <string name="SelectInstructionsSheet__select_your_backup_folder">Selecciona tu carpeta de copias de seguridad</string>
+    <string name="SelectInstructionsSheet__select_your_backup_folder">Selecciona tu carpeta de copia de seguridad</string>
     <!-- SelectInstructionsSheet: Instruction to tap the select this folder button -->
     <string name="SelectInstructionsSheet__tap_select_this_folder">Toca \"Seleccionar esta carpeta\".</string>
     <!-- SelectInstructionsSheet: Instruction not to select individual files -->
@@ -9398,7 +9414,7 @@
     <string name="SelectInstructionsSheet__continue_button">Continuar</string>
 
     <!-- SelectLocalBackupScreen: Screen title for restoring on-device backup -->
-    <string name="SelectLocalBackupScreen__restore_on_device_backup">Restaurar copias de seguridad locales</string>
+    <string name="SelectLocalBackupScreen__restore_on_device_backup">Restaurar copia de seguridad local</string>
     <!-- SelectLocalBackupScreen: Screen subtitle explaining the restore process -->
     <string name="SelectLocalBackupScreen__restore_your_messages_from_the_backup_folder">Restaura tus mensajes desde una carpeta de copia de seguridad que hayas guardado en tu dispositivo. Si no los restauras ahora, no podrás hacerlo más tarde.</string>
     <!-- SelectLocalBackupScreen: Button to initiate backup restoration -->
@@ -9413,22 +9429,22 @@
     <string name="SelectLocalBackupScreen__your_backup">Tu copia de seguridad:</string>
 
     <!-- SelectLocalBackupSheet: Title for backup selection bottom sheet -->
-    <string name="SelectLocalBackupSheet__choose_a_backup_to_restore">Selecciona una copia de seguridad para restaurar</string>
+    <string name="SelectLocalBackupSheet__choose_a_backup_to_restore">Elegir una copia de seguridad para restaurar</string>
     <!-- SelectLocalBackupSheet: Subtitle warning about choosing an older backup -->
     <string name="SelectLocalBackupSheet__choosing_an_older_backup">Si eliges una copia de seguridad anterior, es posible que pierdas mensajes o archivos.</string>
     <!-- SelectLocalBackupSheet: Continue button text -->
     <string name="SelectLocalBackupSheet__continue_button">Continuar</string>
 
     <!-- SelectLocalBackupTypeScreen: Screen title for selecting backup type -->
-    <string name="SelectLocalBackupTypeScreen__restore_on_device_backup">Restaurar copias de seguridad locales</string>
+    <string name="SelectLocalBackupTypeScreen__restore_on_device_backup">Restaurar copia de seguridad local</string>
     <!-- SelectLocalBackupTypeScreen: Screen subtitle explaining restore options -->
     <string name="SelectLocalBackupTypeScreen__restore_your_messages_from_the_backup">Restaura tus mensajes desde una copia de seguridad que hayas guardado en tu dispositivo. Si no los restauras ahora, no podrás hacerlo más tarde.</string>
     <!-- SelectLocalBackupTypeScreen: Button for users who saved backup as single file -->
     <string name="SelectLocalBackupTypeScreen__i_saved_my_backup_as_a_single_file">He guardado mi copia de seguridad como un único archivo</string>
     <!-- SelectLocalBackupTypeScreen: Card title for choosing backup folder -->
-    <string name="SelectLocalBackupTypeScreen__choose_backup_folder">Selecciona una carpeta de copias de seguridad</string>
+    <string name="SelectLocalBackupTypeScreen__choose_backup_folder">Selecciona una carpeta de copia de seguridad</string>
     <!-- SelectLocalBackupTypeScreen: Card description for choosing backup folder -->
-    <string name="SelectLocalBackupTypeScreen__select_the_folder_on_your_device">Selecciona la carpeta en tu dispositivo donde se guardan tus copias de seguridad</string>
+    <string name="SelectLocalBackupTypeScreen__select_the_folder_on_your_device">Selecciona la carpeta en tu dispositivo donde se almacena tu copia de seguridad</string>
 
     <!-- Email subject when contacting support on a create backup failure -->
     <string name="BackupAlertBottomSheet_network_failure_support_email">Error de red al intentar exportar la copia de seguridad de Signal Android</string>
@@ -9849,7 +9865,7 @@
     <string name="CouldNotCompleteBackupRestoreSheet__title">No se puede restaurar la copia de seguridad</string>
 
     <!-- Body of the sheet shown when a local backup restore could not be completed, explaining the likely cause -->
-    <string name="CouldNotCompleteBackupRestoreSheet__body_error">Se ha producido un error y no se ha podido restaurar tu copia de seguridad. Puede deberse a que la carpeta donde se guardan tus copias de seguridad en el dispositivo se ha movido mientras la restauración estaba en curso.</string>
+    <string name="CouldNotCompleteBackupRestoreSheet__body_error">Se ha producido un error y no se ha podido restaurar tu copia de seguridad. Puede deberse a que la carpeta donde se guarda tu copia de seguridad en el dispositivo se ha movido mientras la restauración estaba en curso.</string>
 
     <!-- Body of the sheet shown when a local backup restore could not be completed, explaining how to try again -->
     <string name="CouldNotCompleteBackupRestoreSheet__body_retry">Para volver a intentarlo, desinstala y vuelve a instalar Signal en este dispositivo y selecciona \"Restaurar o transferir\".</string>

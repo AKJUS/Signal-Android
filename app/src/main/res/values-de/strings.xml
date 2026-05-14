@@ -22,6 +22,7 @@
   <!-- Removed by excludeNonTranslatables <string name="export_account_data_url" translatable="false">https://support.signal.org/hc/articles/5538911756954</string> -->
   <!-- Removed by excludeNonTranslatables <string name="pending_transfer_url" translatable="false">https://support.signal.org/hc/articles/360031949872#pending</string> -->
   <!-- Removed by excludeNonTranslatables <string name="donate_faq_url" translatable="false">https://support.signal.org/hc/articles/360031949872#donate</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="inactive_primary_support" translatable="false">https://support.signal.org/hc/articles/9021007554074</string> -->
 
     <!-- First placeholder is productId, second placeholder is app package -->
     <string name="backup_subscription_management_url">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
@@ -683,7 +684,7 @@
     <!-- Action shown to allow a user to update their application because it has expired -->
     <string name="ConversationFragment__update_build">Signal aktualisieren</string>
     <!-- Action shown to allow a user to re-register as they are no longer registered -->
-    <string name="ConversationFragment__reregister_signal">Signal erneut registrieren</string>
+    <string name="ConversationFragment__reregister_signal">Signal neu registrieren</string>
     <!-- Label for a button displayed in the conversation toolbar to return to the previous screen. -->
     <string name="ConversationFragment__content_description_back_button">Gehe zurück.</string>
     <!-- Label for a button displayed in the conversation toolbar to open the main screen of the app. -->
@@ -721,7 +722,7 @@
     <!-- Description shown in the Signal release notes conversation header -->
     <string name="ConversationFragment_release_notes_description">Der einzige offizielle Chat von Signal. Bleib auf dem Laufenden mit Neuigkeiten und Versionshinweisen.</string>
     <!-- Label shown in place of the input in the Signal release notes conversation -->
-    <string name="ConversationFragment_the_only_official_chat_from_signal">The only official chat from Signal</string>
+    <string name="ConversationFragment_the_only_official_chat_from_signal">Der einzige offizielle Chat von Signal</string>
     <!-- Plural for group member count shown in conversation header. %1$d is the number of members -->
     <plurals name="ConversationFragment_group_member_count">
         <item quantity="one">%1$d Mitglied</item>
@@ -1289,7 +1290,7 @@
 
     <!-- GcmRefreshJob -->
     <string name="GcmRefreshJob_Permanent_Signal_communication_failure">Dauerhafter Signal-Kommunikationsfehler!</string>
-    <string name="GcmRefreshJob_Signal_was_unable_to_register_with_Google_Play_Services">Signal konnte nicht für die Google-Play-Dienste registriert werden. Signal-Nachrichten und ‑Anrufe wurden daher deaktiviert. Bitte registriere Signal erneut in Signal → Einstellungen → Datenschutz → Erweiterte Einstellungen.</string>
+    <string name="GcmRefreshJob_Signal_was_unable_to_register_with_Google_Play_Services">Signal konnte nicht für die Google-Play-Dienste registriert werden. Signal-Nachrichten und ‑Anrufe wurden daher deaktiviert. Bitte versuche es erneut unter Signal → Einstellungen → Datenschutz → Erweiterte Einstellungen.</string>
 
 
     <!-- GiphyActivity -->
@@ -2701,6 +2702,10 @@
     <string name="CallOverflowPopupWindow__lower_hand">Hand senken</string>
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">Abbrechen</string>
+    <!-- A clickable button to share your screen in a call -->
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
+    <!-- A clickable button to stop sharing your screen in a call -->
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Anzeigen</string>
 
@@ -2825,6 +2830,8 @@
 
     <!-- CallToastPopupWindow -->
     <string name="CallToastPopupWindow__swipe_to_view_screen_share">Wische, um Bildschirmfreigabe anzuzeigen</string>
+    <!-- Hint shown to teach the user they can swipe between the grid view and the active speaker view -->
+    <string name="CallToastPopupWindow__swipe_to_view_speaker">Swipe to view speaker</string>
 
     <!-- ProxyBottomSheetFragment -->
     <string name="ProxyBottomSheetFragment_proxy_server">Proxyserver</string>
@@ -3532,7 +3539,7 @@
     <!-- Message shown in a reminder banner when the user\'s device is no longer registered -->
     <string name="UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device">Dieses Gerät ist nicht mehr registriert. Das liegt wahrscheinlich daran, dass du deine Telefonnummer mit Signal auf einem anderen Gerät registriert hast.</string>
     <!-- Action in reminder banner that will take user to re-register -->
-    <string name="UnauthorizedReminder_reregister_action">Gerät erneut registrieren</string>
+    <string name="UnauthorizedReminder_reregister_action">Gerät neu registrieren</string>
 
     <!-- Push notification when the app is forcibly logged out by the server. -->
     <string name="LoggedOutNotification_you_have_been_logged_out">Du wurdest auf diesem Gerät von Signal abgemeldet.</string>
@@ -3965,9 +3972,9 @@
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
     <string name="EditProfileFragment_unregistered_dialog_title">Gerät nicht registriert</string>
     <!-- The body of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
-    <string name="EditProfileFragment_unregistered_dialog_body">Dieses Gerät ist nicht mehr registriert. Registriere dich erneut, um Signal auf diesem Gerät weiterhin verwenden zu können.</string>
+    <string name="EditProfileFragment_unregistered_dialog_body">Dieses Gerät ist nicht mehr registriert. Registriere dich neu, um Änderungen an deinem Konto vorzunehmen.</string>
     <!-- The button on a dialog informing the user that they cannot use this app feature when they are unregistered. When clicked, the user will be taken to a screen to help them re-register. -->
-    <string name="EditProfileFragment_unregistered_dialog_reregister_button">Erneut registrieren</string>
+    <string name="EditProfileFragment_unregistered_dialog_reregister_button">Neu registrieren</string>
 
     <!-- EditProfileNameFragment -->
     <string name="EditProfileNameFragment_your_name">Dein Name</string>
@@ -4885,7 +4892,7 @@
 
     <!-- AccountLockedFragment -->
     <string name="AccountLockedFragment__account_locked">Konto gesperrt</string>
-    <string name="AccountLockedFragment__your_account_has_been_locked_to_protect_your_privacy">Dein Konto wurde gesperrt, um deine Privatsphäre und Sicherheit zu schützen. Nach Ablauf von %1$d Tagen ohne Kontoaktivität kannst du diese Telefonnummer ohne PIN erneut registrieren. Alle Inhalte werden dabei gelöscht.</string>
+    <string name="AccountLockedFragment__your_account_has_been_locked_to_protect_your_privacy">Dein Konto wurde gesperrt, um deine Privatsphäre und Sicherheit zu schützen. Nach Ablauf von %1$d Tagen ohne Kontoaktivität kannst du diese Telefonnummer ohne PIN neu registrieren. Alle Inhalte werden dabei gelöscht.</string>
     <string name="AccountLockedFragment__next">Weiter</string>
     <string name="AccountLockedFragment__learn_more">Mehr erfahren</string>
   <!-- Removed by excludeNonTranslatables <string name="AccountLockedFragment__learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
@@ -4915,8 +4922,8 @@
     </plurals>
 
     <plurals name="RegistrationLockFragment__if_you_run_out_of_attempts_your_account_will_be_locked_for_d_days">
-        <item quantity="one">Falls du alle Versuche aufbrauchst, wird dein Konto für %1$d Tag gesperrt. Nach %1$d Tag ohne Aktivität kannst du dich ohne deine PIN erneut registrieren. Dein Konto wird dabei zurückgesetzt und alle Inhalte werden gelöscht.</item>
-        <item quantity="other">Falls du alle Versuche aufbrauchst, wird dein Konto für %1$d Tage gesperrt. Nach %1$d Tagen ohne Aktivität kannst du dich ohne deine PIN erneut registrieren. Dein Konto wird dabei zurückgesetzt und alle Inhalte werden gelöscht.</item>
+        <item quantity="one">Falls du alle Versuche aufbrauchst, wird dein Konto für %1$d Tag gesperrt. Nach %1$d Tag ohne Aktivität kannst du dich ohne deine PIN neu registrieren. Dein Konto wird dabei zurückgesetzt und alle Inhalte werden gelöscht.</item>
+        <item quantity="other">Falls du alle Versuche aufbrauchst, wird dein Konto für %1$d Tage gesperrt. Nach %1$d Tagen ohne Aktivität kannst du dich ohne deine PIN neu registrieren. Dein Konto wird dabei zurückgesetzt und alle Inhalte werden gelöscht.</item>
     </plurals>
 
     <plurals name="RegistrationLockFragment__you_have_d_attempts_remaining">
@@ -5124,7 +5131,7 @@
     <string name="Recipient_deleted_account">Gelöschtes Konto</string>
 
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
-    <string name="preferences_account_reregister">Konto erneut registrieren</string>
+    <string name="preferences_account_reregister">Konto neu registrieren</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
     <string name="preferences_account_update_signal">Signal aktualisieren</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
@@ -6023,7 +6030,7 @@
     <string name="DataAndStorageSettingsFragment__sent_media_quality">Medienqualität für Versand</string>
     <string name="DataAndStorageSettingsFragment__sending_high_quality_media_will_use_more_data">Das Senden von Medieninhalten hoher Qualität verbraucht mehr Datenvolumen.</string>
     <!-- Disclaimer shown under the media auto-download settings. Placeholder is a formatted size like "100 KB". -->
-    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Voice messages and stickers (under %1$s) are always auto-downloaded.</string>
+    <string name="DataAndStorageSettingsFragment__voice_messages_and_stickers_under_size_are_always_auto_downloaded">Sprachnachrichten und Sticker (unter %1$s) werden immer automatisch heruntergeladen.</string>
     <!-- Setting option that can be selected to default media to be sent as high quality by default -->
     <string name="DataAndStorageSettingsFragment__high">Hoch</string>
     <!-- Setting option that can be selected to default media to be sent as standard quality by default -->
@@ -6556,9 +6563,9 @@
     <!-- Title of dialog telling user they need to re-register signal -->
     <string name="ReregisterSignalDialog__title">Gerät nicht registriert</string>
     <!-- Message of dialog telling user they need to re-register signal as it is no longer registered -->
-    <string name="ReregisterSignalDialog__message">Dieses Gerät ist nicht mehr registriert. Registriere dich erneut, um Signal auf diesem Gerät weiterhin verwenden zu können.</string>
+    <string name="ReregisterSignalDialog__message">Dieses Gerät ist nicht mehr registriert. Registriere dich neu, um Signal auf diesem Gerät weiterhin verwenden zu können.</string>
     <!-- Button text of re-registration dialog to re-register the device.  -->
-    <string name="ReregisterSignalDialog__reregister_action">Erneut registrieren</string>
+    <string name="ReregisterSignalDialog__reregister_action">Neu registrieren</string>
     <!-- Button text of re-registration dialog to cancel the dialog.  -->
     <string name="ReregisterSignalDialog__cancel_action">Abbrechen</string>
 
@@ -8236,6 +8243,15 @@
     <!-- Button of a megaphone that will snooze the reminder to upgrade to the new local backups type -->
     <string name="UseNewOnDeviceBackups__not_now">Jetzt nicht</string>
 
+    <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
+    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
+    <string name="InactivePrimary__learn_more">Learn more</string>
+    <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
+    <string name="InactivePrimary__got_it">Got it</string>
+
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Um ein lokales Backup wiederherzustellen, installiere einfach eine neue Version von Signal. Öffne die App, tippe auf »Backup wiederherstellen« und suche dann den Backup-Ordner."</string>
 
@@ -8454,7 +8470,7 @@
     <!-- Backup redemption error sheet text line 1 -->
     <string name="BackupAlertBottomSheet__too_many_devices_have_tried">Diesen Monat wurde versucht, dein Abo von zu vielen Geräten aus einzulösen. Das könnte folgende Gründe haben:</string>
     <!-- Backup redemption error sheet bullet point 1 -->
-    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">Du hast dein Signal-Konto auf zu vielen Geräten registriert.</string>
+    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">Du hast dein Signal-Konto zu oft neu registriert.</string>
     <!-- Backup redemption error sheet bullet point 2 -->
     <string name="BackupAlertBottomSheet__have_too_many_devices_using_the_same_subscription">Du verwendest auf zu vielen Geräten dasselbe Abo.</string>
 
