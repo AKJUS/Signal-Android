@@ -58,7 +58,7 @@
     <!-- Menu option to link this as a device -->
     <string name="RegistrationActivity_link_device">ချိတ်ဆက်ထားသော စက်</string>
     <!-- Clickable text that opens a corresponding URL -->
-    <string name="RegistrationActivity_learn_more">Learn more</string>
+    <string name="RegistrationActivity_learn_more">ပိုမိုလေ့လာရန်</string>
 
     <!-- CountryCodePickerScreen -->
     <!-- Title of the country code selection screen -->
@@ -279,12 +279,12 @@
     <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
     <string name="RemoteRestoreScreen__s_of_s_s">%2$s မှ %1$s (%3$s)</string>
     <!-- Shown when attempting to open a URL in the web browser, but a browser app cannot be found. -->
-    <string name="LinkActions_error_no_browser_found">No web browser found.</string>
+    <string name="LinkActions_error_no_browser_found">Web browser ကိုရှာမတွေ့ပါ</string>
 
     <!-- Title for screen when your account is locked -->
-    <string name="AccountLockedScreen__account_locked">Account locked</string>
+    <string name="AccountLockedScreen__account_locked">အကောင့်သော့ခတ်ထားပါတယ်</string>
     <!-- Description for screen when account is locked -->
-    <string name="AccountLockedScreen__your_account">Your account has been locked to protect your privacy and security. After %1$d days of inactivity in your account you\'ll be able to re-register this phone number without needing your PIN. All content will be deleted.</string>
+    <string name="AccountLockedScreen__your_account">သင့်ကိုယ်ပိုင်အချက်အလက် လုံခြုံရေးအတွက် သင့်အကောင့်ကို ပိတ်လိုက်ပါပြီ။ အသုံးပြုမှုမရှိဘဲ %1$d ရက်အကြာတွင် ပင်နံပါတ်မလိုဘဲ သင့်ဖုန်းနံပါတ်ဖြင့် ပြန်လည် စာရင်းသွင်းနိုင်ပါမည်။ သို့သော် အကောင့်ထဲရှိ အကြောင်းအရာများအားလုံး ဖျက်သိမ်းသွားပါမည်။</string>
 
     <!-- Step 1 to quick restore -->
     <string name="QuickRestoreQRScreen__step_1">On your old phone, open Signal</string>
@@ -301,7 +301,7 @@
     <!-- Confirmation dialog when qr code is successfully scanned -->
     <string name="QuickRestoreQRScreen__scanned">QR code scanned</string>
     <!-- Button text to retry scanning the QR code -->
-    <string name="QuickRestoreQRScreen__retry">Retry</string>
+    <string name="QuickRestoreQRScreen__retry">ထပ်ကြိုးစားပါ</string>
     <!-- Failure text when a code could not be generated -->
     <string name="QuickRestoreQRScreen__failed">"Failed to generate QR code"</string>
 </resources>

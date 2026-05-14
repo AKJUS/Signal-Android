@@ -2621,7 +2621,7 @@
     <!-- A clickable button to share your screen in a call -->
     <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">停止共享</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">查看</string>
 
@@ -8060,13 +8060,13 @@
     <string name="UseNewOnDeviceBackups__not_now">稍后再说</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">在您的手机上打开Signal</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <string name="InactivePrimary__body">要使您的账户保持活跃状态，请在您的主设备上打开 Signal。</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">了解详情</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">知道了</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"如要恢复备份，请安装新版 Signal。打开应用并点击“恢复备份”，然后找到备份文件夹。"</string>

@@ -2705,7 +2705,7 @@
     <!-- A clickable button to share your screen in a call -->
     <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">توقف اشتراک‌گذاری</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">مشاهده</string>
 
@@ -8244,13 +8244,13 @@
     <string name="UseNewOnDeviceBackups__not_now">حالا نه</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">باز کردن سیگنال روی گوشی</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <string name="InactivePrimary__body">برای فعال نگه داشتن حسابتان، سیگنال را در دستگاه اصلی خود باز کنید.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">اطلاعات بیشتر</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">فهمیدم</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"برای بازیابی نسخه پشتیبان، یک نسخه جدید از سیگنال نصب کنید. برنامه را باز کنید و روی «بازیابی نسخه پشتیبان» ضربه بزنید، سپس محل ذخیره فایل پشتیبان را مکان‌یابی کنید."</string>

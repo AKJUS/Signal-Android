@@ -8244,13 +8244,13 @@
     <string name="UseNewOnDeviceBackups__not_now">Hindi na muna</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">I-open ang Signal sa iyong phone</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
     <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">Matuto pa</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">OK</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Para mag-restore ng backup, mag-install ng bagong kopya ng Signal. Buksan ang app at i-tap ang Restore backup, pagkatapos ay maghanap ng backup file."</string>

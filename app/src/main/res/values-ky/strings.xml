@@ -2705,7 +2705,7 @@
     <!-- A clickable button to share your screen in a call -->
     <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">Бөлүшүүнү токтотуу</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Карап көрүү</string>
 
@@ -8244,13 +8244,13 @@
     <string name="UseNewOnDeviceBackups__not_now">Азыр эмес</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">Телефонуңузда Signal\'ды ачыңыз</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
     <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">Кененирээк маалымат</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">Түшүндүм</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Камдык көчүрмөнү калыбына келтирүү үчүн Signal\'дын жаңы көчүрмөсүн орнотуңуз. Колдонмону ачып, \"Камдык көчүрмөнү калыбына келтирүү\" дегенди басып, камдык көчүрмөлөр сакталган папканы табыңыз."</string>

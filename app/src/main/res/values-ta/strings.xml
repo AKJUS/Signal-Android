@@ -2705,7 +2705,7 @@
     <!-- A clickable button to share your screen in a call -->
     <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">பகிர்வதை நிறுத்துங்கள்</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">காண்க</string>
 
@@ -8244,13 +8244,13 @@
     <string name="UseNewOnDeviceBackups__not_now">இப்போது வேண்டாம்</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">உங்கள் மொபைலில் சிக்னல்-ஐத் திறக்கவும்</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
     <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">மேலும் அறிக</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">அறிந்துகொண்டேன்</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"காப்புப்பிரதியை மீட்டமைக்க, சிக்னலின் புதிய பிரதியை நிறுவவும். செயலியைத் திறந்து, காப்புப்பிரதியை மீட்டமை என்பதைத் தட்டி, பின்னர் காப்புப்பிரதி கோப்பைக் கண்டறியவும்."</string>

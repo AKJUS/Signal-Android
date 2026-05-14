@@ -2705,7 +2705,7 @@
     <!-- A clickable button to share your screen in a call -->
     <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">Arrêter le partage</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">Afficher</string>
 
@@ -8244,13 +8244,13 @@
     <string name="UseNewOnDeviceBackups__not_now">Plus tard</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">Ouvrez Signal sur votre téléphone</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <string name="InactivePrimary__body">Pour que votre compte reste actif, ouvrez Signal sur votre appareil principal.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">En savoir plus</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">J\'ai compris</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Pour restaurer une sauvegarde, réinstallez Signal, puis ouvrez l\'appli. Touchez \"Restaurer une sauvegarde\" et recherchez votre dossier de sauvegarde."</string>

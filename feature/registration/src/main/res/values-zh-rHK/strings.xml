@@ -58,7 +58,7 @@
     <!-- Menu option to link this as a device -->
     <string name="RegistrationActivity_link_device">連結裝置</string>
     <!-- Clickable text that opens a corresponding URL -->
-    <string name="RegistrationActivity_learn_more">Learn more</string>
+    <string name="RegistrationActivity_learn_more">了解更多</string>
 
     <!-- CountryCodePickerScreen -->
     <!-- Title of the country code selection screen -->
@@ -279,12 +279,12 @@
     <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
     <string name="RemoteRestoreScreen__s_of_s_s">共 %2$s 中的 %1$s ( %3$s )</string>
     <!-- Shown when attempting to open a URL in the web browser, but a browser app cannot be found. -->
-    <string name="LinkActions_error_no_browser_found">No web browser found.</string>
+    <string name="LinkActions_error_no_browser_found">找不到網頁瀏覽器</string>
 
     <!-- Title for screen when your account is locked -->
-    <string name="AccountLockedScreen__account_locked">Account locked</string>
+    <string name="AccountLockedScreen__account_locked">帳戶已鎖定</string>
     <!-- Description for screen when account is locked -->
-    <string name="AccountLockedScreen__your_account">Your account has been locked to protect your privacy and security. After %1$d days of inactivity in your account you\'ll be able to re-register this phone number without needing your PIN. All content will be deleted.</string>
+    <string name="AccountLockedScreen__your_account">您的帳戶已被鎖定，以保護您的隱私和安全性。在您的帳戶閒置 %1$d 天後，您將可重新註冊此電話號碼而無須使用您的 PIN 碼。但所有內容將會被刪除。</string>
 
     <!-- Step 1 to quick restore -->
     <string name="QuickRestoreQRScreen__step_1">On your old phone, open Signal</string>
@@ -301,7 +301,7 @@
     <!-- Confirmation dialog when qr code is successfully scanned -->
     <string name="QuickRestoreQRScreen__scanned">QR code scanned</string>
     <!-- Button text to retry scanning the QR code -->
-    <string name="QuickRestoreQRScreen__retry">Retry</string>
+    <string name="QuickRestoreQRScreen__retry">重試</string>
     <!-- Failure text when a code could not be generated -->
     <string name="QuickRestoreQRScreen__failed">"Failed to generate QR code"</string>
 </resources>

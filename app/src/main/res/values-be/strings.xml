@@ -8612,13 +8612,13 @@
     <string name="UseNewOnDeviceBackups__not_now">Не зараз</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">Open Signal on your phone</string>
+    <string name="InactivePrimary__title">Адкрыйце Signal на сваім тэлефоне</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">To keep your account active, open Signal on your primary device.</string>
+    <string name="InactivePrimary__body">Каб ваш уліковы запіс заставаўся актыўным, адкрыйце Signal на сваёй асноўнай прыладзе.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
-    <string name="InactivePrimary__learn_more">Learn more</string>
+    <string name="InactivePrimary__learn_more">Даведацца больш</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
-    <string name="InactivePrimary__got_it">Got it</string>
+    <string name="InactivePrimary__got_it">Зразумела</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
     <string name="OnDeviceBackupsScreen__to_restore_a_backup">"Каб аднавіць рэзервовую копію, усталюйце новую копію Signal. Адкрыйце праграму і націсніце «Аднавіць рэзервовую копію», потым выберыце файл рэзервовай копіі."</string>
