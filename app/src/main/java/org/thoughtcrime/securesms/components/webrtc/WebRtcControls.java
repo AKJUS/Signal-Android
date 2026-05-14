@@ -167,7 +167,7 @@ public final class WebRtcControls {
 
   public boolean displayOverflow() {
     boolean connectedGroupCall = isGroupCall() && groupCallState == GroupCallState.CONNECTED && hasAtLeastOneRemote;
-    boolean connected1to1Call  = !isGroupCall() && callState == CallState.ONGOING && SignalStore.labs().getScreenShare();
+    boolean connected1to1Call  = !isGroupCall() && callState == CallState.ONGOING && RemoteConfig.screenSharing();
     return isAtLeastOutgoing() && (connectedGroupCall || connected1to1Call);
   }
 
@@ -284,7 +284,7 @@ public final class WebRtcControls {
     return callState.isAtLeast(CallState.OUTGOING);
   }
 
-  private boolean isGroupCall() {
+  public boolean isGroupCall() {
     return groupCallState != GroupCallState.NONE;
   }
 

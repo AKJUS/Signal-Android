@@ -56,7 +56,6 @@ class OutgoingVideoSourceRouter(
 
   override fun setOrientation(orientation: Int?) {
     camera.setOrientation(orientation)
-    screenShareCapturer?.onConfigurationChanged()
   }
 
   val cameraState: CameraState

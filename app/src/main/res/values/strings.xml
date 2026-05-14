@@ -2706,9 +2706,9 @@
     <!-- A negative button for a dialog confirming the user wants to lower their hand (withdraw a raised hand) -->
     <string name="CallOverflowPopupWindow__cancel">Cancel</string>
     <!-- A clickable button to share your screen in a call -->
-    <string name="CallOverflowPopupWindow__share_screen" translatable="false">Share screen (Labs)</string>
+    <string name="CallOverflowPopupWindow__share_screen">Share screen</string>
     <!-- A clickable button to stop sharing your screen in a call -->
-    <string name="CallOverflowPopupWindow__stop_screen_share" translatable="false">Stop sharing (Labs)</string>
+    <string name="CallOverflowPopupWindow__stop_screen_share">Stop sharing</string>
     <!-- A button to take you to a list of participants with raised hands -->
     <string name="CallOverflowPopupWindow__view">View</string>
 

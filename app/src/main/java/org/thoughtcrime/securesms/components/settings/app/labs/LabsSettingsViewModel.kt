@@ -46,10 +46,6 @@ class LabsSettingsViewModel : ViewModel() {
         SignalStore.labs.starredMessages = event.enabled
         _state.value = _state.value.copy(starredMessages = event.enabled)
       }
-      is LabsSettingsEvents.ToggleScreenShare -> {
-        SignalStore.labs.screenShare = event.enabled
-        _state.value = _state.value.copy(screenShare = event.enabled)
-      }
     }
   }
 
@@ -61,9 +57,7 @@ class LabsSettingsViewModel : ViewModel() {
       groupSuggestionsForMembers = SignalStore.labs.groupSuggestionsForMembers,
       betterSearch = SignalStore.labs.betterSearch,
       autoLowerHand = SignalStore.labs.autoLowerHand,
-
-      starredMessages = SignalStore.labs.starredMessages,
-      screenShare = SignalStore.labs.screenShare
+      starredMessages = SignalStore.labs.starredMessages
     )
   }
 }

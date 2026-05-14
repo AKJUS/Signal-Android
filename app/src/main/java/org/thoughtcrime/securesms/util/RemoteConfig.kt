@@ -1376,5 +1376,16 @@ object RemoteConfig {
     hotSwappable = true
   )
 
+  /**
+   * Whether screen sharing is available during calls.
+   */
+  @JvmStatic
+  @get:JvmName("screenSharing")
+  val screenSharing: Boolean by remoteBoolean(
+    key = "android.calling.screenSharing",
+    defaultValue = false,
+    hotSwappable = true
+  )
+
   // endregion
 }

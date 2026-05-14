@@ -48,6 +48,7 @@ data class AdditionalActionsState(
   val isSelfHandRaised: Boolean = false,
   val isScreenSharing: Boolean = false,
   val displayScreenShareToggle: Boolean = false,
+  val isGroupCall: Boolean = true,
   @Stable val listener: AdditionalActionsListener = AdditionalActionsListener.Empty
 )
 
@@ -85,15 +86,18 @@ private fun AdditionalActionsPopupContent(
   Column(
     verticalArrangement = spacedBy(12.dp),
     modifier = Modifier
-      .width(IntrinsicSize.Min)
+      .width(IntrinsicSize.Max)
       .padding(12.dp)
   ) {
-    CallReactionScrubber(
-      reactions = state.reactions,
-      listener = state.listener
-    )
+    if (state.isGroupCall) {
+      CallReactionScrubber(
+        reactions = state.reactions,
+        listener = state.listener
+      )
+    }
 
     CallScreenMenu(
+      isGroupCall = state.isGroupCall,
       onRaiseHandClick = state.listener::onRaiseHandClick,
       isSelfHandRaised = state.isSelfHandRaised,
       isScreenSharing = state.isScreenSharing,
@@ -141,6 +145,7 @@ private fun CallReactionScrubber(
 
 @Composable
 private fun CallScreenMenu(
+  isGroupCall: Boolean,
   isSelfHandRaised: Boolean,
   onRaiseHandClick: (Boolean) -> Unit,
   isScreenSharing: Boolean = false,
@@ -152,11 +157,13 @@ private fun CallScreenMenu(
       .fillMaxWidth()
       .background(SignalTheme.colors.colorSurface2, RoundedCornerShape(18.dp))
   ) {
-    CallScreenMenuOption(
-      imageVector = ImageVector.vectorResource(R.drawable.symbol_raise_hand_24),
-      title = if (isSelfHandRaised) stringResource(R.string.CallOverflowPopupWindow__lower_hand) else stringResource(R.string.CallOverflowPopupWindow__raise_hand),
-      onClick = { onRaiseHandClick(!isSelfHandRaised) }
-    )
+    if (isGroupCall) {
+      CallScreenMenuOption(
+        imageVector = ImageVector.vectorResource(R.drawable.symbol_raise_hand_24),
+        title = if (isSelfHandRaised) stringResource(R.string.CallOverflowPopupWindow__lower_hand) else stringResource(R.string.CallOverflowPopupWindow__raise_hand),
+        onClick = { onRaiseHandClick(!isSelfHandRaised) }
+      )
+    }
 
     if (displayScreenShareToggle) {
       CallScreenMenuOption(
@@ -226,6 +233,31 @@ private fun CallScreenAdditionalActionsPopupPreview() {
   Previews.Preview {
     AdditionalActionsPopupContent(
       state = AdditionalActionsState(
+        isShown = false,
+        reactions = persistentListOf(
+          "\u2764\ufe0f",
+          "\ud83d\udc4d",
+          "\ud83d\udc4e",
+          "\ud83d\ude02",
+          "\ud83d\ude2e",
+          "\ud83d\ude22"
+        ),
+        isSelfHandRaised = false,
+        listener = AdditionalActionsListener.Empty,
+        triggerAlignedPopupState = TriggerAlignedPopupState.rememberTriggerAlignedPopupState()
+      )
+    )
+  }
+}
+
+@NightPreview
+@Composable
+private fun CallScreenAdditionalActionsScreenSharingPreview() {
+  Previews.Preview {
+    AdditionalActionsPopupContent(
+      state = AdditionalActionsState(
+        isGroupCall = false,
+        displayScreenShareToggle = true,
         isShown = false,
         reactions = persistentListOf(
           "\u2764\ufe0f",

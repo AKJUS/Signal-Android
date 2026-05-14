@@ -77,11 +77,11 @@ import org.thoughtcrime.securesms.events.CallParticipantId
 import org.thoughtcrime.securesms.events.GroupCallRaiseHandEvent
 import org.thoughtcrime.securesms.events.GroupCallReactionEvent
 import org.thoughtcrime.securesms.events.WebRtcViewModel
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.ringrtc.CameraState
 import org.thoughtcrime.securesms.service.webrtc.PendingParticipantCollection
+import org.thoughtcrime.securesms.util.RemoteConfig
 import kotlin.math.max
 import kotlin.math.round
 import kotlin.time.Duration.Companion.milliseconds
@@ -181,7 +181,8 @@ fun CallScreen(
       reactions = callScreenState.reactions,
       isSelfHandRaised = localParticipant.isHandRaised,
       isScreenSharing = callScreenState.isLocalScreenSharing,
-      displayScreenShareToggle = callControlsState.displayEndCallButton && SignalStore.labs.screenShare,
+      displayScreenShareToggle = callControlsState.displayEndCallButton && RemoteConfig.screenSharing,
+      isGroupCall = callControlsState.isGroupCall,
       listener = additionalActionsListener,
       triggerAlignedPopupState = additionalActionsPopupState
     )
