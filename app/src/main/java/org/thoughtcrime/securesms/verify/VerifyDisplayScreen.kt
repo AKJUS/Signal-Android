@@ -188,6 +188,7 @@ private fun SafetyNumberQr(
   val fingerprint = (state.fingerprintHolder as? FingerprintHolder.Initialised)?.fingerprint
   var animateSuccess by remember { mutableStateOf(false) }
   var animateFailure by remember { mutableStateOf(false) }
+  var initialLoad by remember { mutableStateOf(true) }
 
   AndroidView(
     factory = { SafetyNumberQrView(it) },
@@ -197,7 +198,8 @@ private fun SafetyNumberQr(
     // TODO - animateVerifiedSuccess // animateVerifiedFailure
 
     if (fingerprint != null) {
-      it.setFingerprintViews(fingerprint.fingerprint, true) // TODO - animateCodeChanges
+      it.setFingerprintViews(fingerprint.fingerprint, initialLoad) // TODO - animateCodeChanges
+      initialLoad = false
     }
 
     if (animateSuccess) {
