@@ -403,7 +403,7 @@
     <string name="ContactsCursorLoader__chat_types">대화 유형</string>
 
     <!-- ContactsDatabase -->
-    <string name="ContactsDatabase_message_s">%1$s에 메시지 보내기</string>
+    <string name="ContactsDatabase_message_s">메시지 %1$s</string>
     <string name="ContactsDatabase_signal_call_s">Signal 음성 통화 %1$s</string>
     <string name="ContactsDatabase_signal_video_call_s">Signal 영상 통화 %1$s</string>
 
@@ -1432,7 +1432,7 @@
     <string name="PendingMembersActivity_revoke_invite">초대 취소</string>
     <string name="PendingMembersActivity_revoke_invites">초대 취소</string>
     <plurals name="PendingMembersActivity_revoke_d_invites">
-        <item quantity="other">%1$d 초대 취소</item>
+        <item quantity="other">초대 %1$d개 취소하기</item>
     </plurals>
     <plurals name="PendingMembersActivity_error_revoking_invite">
         <item quantity="other">초대 취소 오류</item>
@@ -1441,9 +1441,9 @@
     <!-- RequestingMembersFragment -->
     <string name="RequestingMembersFragment_pending_member_requests">대기 중인 멤버 요청</string>
     <string name="RequestingMembersFragment_no_member_requests_to_show">현재 멤버 요청이 없습니다.</string>
-    <string name="RequestingMembersFragment_explanation">이 목록에는 그룹 링크를 통해 참여를 요청한 사람들이 표시됩니다.</string>
+    <string name="RequestingMembersFragment_explanation">그룹 링크를 통해 참가 요청을 한 사용자들입니다.</string>
     <string name="RequestingMembersFragment_added_s">"%1$s 님을 추가했습니다"</string>
-    <string name="RequestingMembersFragment_denied_s">"거절됨 : \"%1$s\""</string>
+    <string name="RequestingMembersFragment_denied_s">"%1$s 님을 거절했습니다"</string>
 
     <!-- AddMembersActivity -->
     <string name="AddMembersActivity__done">확인</string>
@@ -1468,11 +1468,11 @@
     <string name="AddGroupDetailsFragment__you_can_add_or_invite_friends_after_creating_this_group">그룹을 만든 후에 친구들을 추가하거나 초대할 수 있습니다.</string>
     <string name="AddGroupDetailsFragment__group_name_required">그룹 이름(필수)</string>
     <string name="AddGroupDetailsFragment__group_name_optional">그룹 이름(선택 사항)</string>
-    <string name="AddGroupDetailsFragment__this_field_is_required">이 입력창은 필수입니다.</string>
+    <string name="AddGroupDetailsFragment__this_field_is_required">필수 입력 항목입니다.</string>
     <string name="AddGroupDetailsFragment__group_creation_failed">그룹 생성 실패</string>
     <string name="AddGroupDetailsFragment__try_again_later">나중에 다시 시도하세요.</string>
-    <string name="AddGroupDetailsFragment__remove">제거</string>
-    <string name="AddGroupDetailsFragment__sms_contact">SMS 연락</string>
+    <string name="AddGroupDetailsFragment__remove">내보내기</string>
+    <string name="AddGroupDetailsFragment__sms_contact">SMS 연락처</string>
     <string name="AddGroupDetailsFragment__remove_s_from_this_group">이 그룹에서 %1$s 님을 내보낼까요?</string>
     <!-- Info message shown in the middle of the screen, displayed when adding group details to an MMS Group -->
     <string name="AddGroupDetailsFragment__youve_selected_a_contact_that_doesnt_support">Signal 그룹 기능을 지원하지 않는 연락처가 포함되어 이 그룹은 MMS로 전환됩니다. 설정한 MMS 그룹 이름과 사진은 나에게만 표시됩니다.</string>
@@ -1484,12 +1484,12 @@
     <string name="ManageGroupActivity_who_can_edit_this_groups_info">그룹 정보를 수정할 수 있는 사용자를 선택하세요.</string>
 
     <plurals name="ManageGroupActivity_added">
-        <item quantity="other">%1$d 멤버가 추가됨</item>
+        <item quantity="other">멤버 %1$d명이 추가됨.</item>
     </plurals>
 
     <string name="ManageGroupActivity_you_dont_have_the_rights_to_do_this">이 작업을 수행할 권한이 없습니다.</string>
-    <string name="ManageGroupActivity_not_capable">추가한 사람은 새 그룹을 지원하지 않으며 Signal을 업데이트해야 합니다.</string>
-    <string name="ManageGroupActivity_not_announcement_capable">추가한 사용자는 알림 그룹을 지원하지 않으며 Signal을 업데이트해야 합니다.</string>
+    <string name="ManageGroupActivity_not_capable">추가한 사용자가 새 그룹을 지원하지 않으며, Signal을 업데이트해야 합니다.</string>
+    <string name="ManageGroupActivity_not_announcement_capable">추가한 사용자가 알림 그룹을 지원하지 않으며, Signal을 업데이트해야 합니다.</string>
     <string name="ManageGroupActivity_failed_to_update_the_group">그룹을 업데이트하지 못했습니다</string>
     <string name="ManageGroupActivity_youre_not_a_member_of_the_group">그룹의 멤버가 아닙니다.</string>
     <string name="ManageGroupActivity_failed_to_update_the_group_please_retry_later">그룹을 업데이트하지 못했습니다. 나중에 다시 시도해 주세요.</string>
@@ -1505,8 +1505,8 @@
     <string name="ManageGroupActivity_upgrade_this_group">그룹을 업그레이드하세요.</string>
     <string name="ManageGroupActivity_this_is_an_insecure_mms_group">보안이 적용되지 않은 MMS 그룹입니다. 비공개로 대화하려면 연락처를 Signal에 초대하세요.</string>
     <string name="ManageGroupActivity_invite_now">지금 초대하기</string>
-    <string name="ManageGroupActivity_more">더</string>
-    <string name="ManageGroupActivity_add_group_description">그룹 설명 추가하기…</string>
+    <string name="ManageGroupActivity_more">더 보기</string>
+    <string name="ManageGroupActivity_add_group_description">그룹 설명 추가하기</string>
 
     <!-- RemoteRestoreActivity -->
     <!-- Progress dialog label when downloading a backup -->
@@ -1567,7 +1567,7 @@
     <!-- GroupMentionSettingDialog -->
     <string name="GroupMentionSettingDialog_notify_me_for_mentions">멘션 알림</string>
     <string name="GroupMentionSettingDialog_receive_notifications_when_youre_mentioned_in_muted_chats">알림을 끈 대화에서 멘션될 경우 알림을 받아보시겠어요?</string>
-    <string name="GroupMentionSettingDialog_always_notify_me">항상 알림받기</string>
+    <string name="GroupMentionSettingDialog_always_notify_me">항상 알림 받기</string>
     <string name="GroupMentionSettingDialog_dont_notify_me">알림 받지않기</string>
 
     <!-- ManageProfileFragment -->
@@ -1616,14 +1616,14 @@
     </plurals>
 
     <plurals name="GroupMemberList_invited">
-        <item quantity="other">%1$s 님이 %2$d명을 초대했습니다.</item>
+        <item quantity="other">%1$s 님이 %2$d명을 초대했어요</item>
     </plurals>
 
     <!-- CustomNotificationsDialogFragment -->
     <string name="CustomNotificationsDialogFragment__custom_notifications">맞춤 알림</string>
     <string name="CustomNotificationsDialogFragment__messages">메시지</string>
     <string name="CustomNotificationsDialogFragment__use_custom_notifications">맞춤 알림 사용하기</string>
-    <string name="CustomNotificationsDialogFragment__notification_sound">알림 벨소리</string>
+    <string name="CustomNotificationsDialogFragment__notification_sound">알림 소리</string>
     <string name="CustomNotificationsDialogFragment__vibrate">진동</string>
     <!-- Button text for customizing notification options -->
     <string name="CustomNotificationsDialogFragment__customize">맞춤 설정</string>
@@ -1660,7 +1660,7 @@
     <string name="GroupJoinBottomSheetDialogFragment_request_to_join">참가 요청하기</string>
     <string name="GroupJoinBottomSheetDialogFragment_unable_to_join_group_please_try_again_later">그룹에 참가할 수 없습니다. 나중에 다시 시도해 주세요.</string>
     <string name="GroupJoinBottomSheetDialogFragment_encountered_a_network_error">네트워크 오류가 발생했습니다.</string>
-    <string name="GroupJoinBottomSheetDialogFragment_this_group_link_is_not_active">이 그룹 링크가 비활성화 되었습니다.</string>
+    <string name="GroupJoinBottomSheetDialogFragment_this_group_link_is_not_active">그룹 링크가 비활성화되어 있습니다</string>
     <!-- Toast message shown when trying to join a group via link but the group has been ended -->
     <string name="GroupJoinBottomSheetDialogFragment_this_group_has_been_ended">이 그룹에 참여할 수 없습니다.</string>
     <!-- Toast message shown when trying to join a group by link but the group is full -->
@@ -1679,12 +1679,12 @@
     <string name="GroupJoinBottomSheetDialogFragment_direct_join">그룹에 참가하고 내 이름과 사진을 멤버들과 공유하시겠어요?</string>
     <string name="GroupJoinBottomSheetDialogFragment_admin_approval_needed">이 그룹에 가입하려면 그룹의 관리자가 요청을 승인해야 합니다. 가입을 요청하면 내 이름과 사진이 공유됩니다.</string>
     <plurals name="GroupJoinBottomSheetDialogFragment_group_dot_d_members">
-        <item quantity="other">그룹: 멤버 %1$d명</item>
+        <item quantity="other">그룹 · 멤버 %1$d명</item>
     </plurals>
 
     <!-- GroupJoinUpdateRequiredBottomSheetDialogFragment -->
     <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal_to_use_group_links">그룹 링크를 사용하기 위해서 Signal을 업데이트하세요</string>
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">사용 중인 Signal 버전에서는 이 그룹 링크를 지원하지 않습니다. 링크를 통해 이 그룹에 가입하려면 최신 버전으로 업데이트하세요.</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">사용 중인 Signal 버전에서는 이 그룹 링크를 지원하지 않습니다. 링크를 통해 그룹에 가입하려면 최신 버전으로 업데이트하세요.</string>
     <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal">시그널 업데이트하기</string>
     <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_group_link_is_not_valid">그룹 링크가 유효하지 않습니다.</string>
 
@@ -5047,7 +5047,7 @@
     <string name="NewDeviceTransferSetup__waiting_for_old_device_to_connect">이전 Android 장치 연결을 기다리는 중…</string>
     <string name="NewDeviceTransferSetup__signal_needs_the_location_permission_to_discover_and_connect_with_your_old_device">Signal이 이전 Android 장치를 검색하고 연결하려면 위치 권한이 필요합니다.</string>
     <string name="NewDeviceTransferSetup__signal_needs_location_services_enabled_to_discover_and_connect_with_your_old_device">Signal이 이전 Android 기기를 검색하고 연결하려면 위치 서비스를 활성화해야 합니다.</string>
-    <string name="NewDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_old_device">Signal이 기존 Android 장치를 검색하고 연결하려면 Wi-Fi가 켜져 있어야 합니다. Wi-Fi가 켜져 있어야 하지만 Wi-Fi 네트워크에 연결되어 있지 않아도 됩니다.</string>
+    <string name="NewDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_old_device">Signal이 기존 Android 기기를 검색하고 연결하려면 Wi-Fi가 켜져 있어야 합니다. Wi-Fi만 켜져 있으면 되며, 특정 Wi-Fi 네트워크에 연결되어 있을 필요는 없습니다.</string>
     <string name="NewDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">죄송합니다. 이 장치는 Wi-Fi Direct를 지원하지 않는 것 같습니다. Signal은 Wi-Fi Direct를 사용하여 이전 Android 장치를 검색하고 연결합니다. 여전히 백업을 복원하여 이전 Android 장치에서 계정을 복원할 수 있습니다.</string>
     <string name="NewDeviceTransferSetup__restore_a_backup">백업 복원</string>
     <string name="NewDeviceTransferSetup__an_unexpected_error_occurred_while_attempting_to_connect_to_your_old_device">이전 Android 장치에 연결하는 동안 예기치 않은 오류가 발생했습니다.</string>
@@ -6598,13 +6598,13 @@
     <!-- Preset selectable name for a profile name, shown as list in edit/create screen -->
     <string name="EditNotificationProfileFragment__work">직장</string>
     <!-- Preset selectable name for a profile name, shown as list in edit/create screen -->
-    <string name="EditNotificationProfileFragment__sleep">수면</string>
+    <string name="EditNotificationProfileFragment__sleep">취침 중</string>
     <!-- Preset selectable name for a profile name, shown as list in edit/create screen -->
-    <string name="EditNotificationProfileFragment__driving">운전</string>
+    <string name="EditNotificationProfileFragment__driving">운전 중</string>
     <!-- Preset selectable name for a profile name, shown as list in edit/create screen -->
-    <string name="EditNotificationProfileFragment__downtime">휴식</string>
+    <string name="EditNotificationProfileFragment__downtime">휴식 중</string>
     <!-- Preset selectable name for a profile name, shown as list in edit/create screen -->
-    <string name="EditNotificationProfileFragment__focus">집중</string>
+    <string name="EditNotificationProfileFragment__focus">집중 모드</string>
     <!-- Error message shown when attempting to next/save without a profile name -->
     <string name="EditNotificationProfileFragment__profile_must_have_a_name">이름은 비워둘 수 없습니다.</string>
 
